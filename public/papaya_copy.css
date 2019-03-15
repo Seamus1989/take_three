@@ -1,0 +1,1056 @@
+@viewport {
+  width: device-width ;
+  zoom: 1.0 ;
+}
+/*   ANIMATION + BROWSER COMPATIBILITY  *//*   ANIMATION + BROWSER COMPATIBILITY  */
+/*   ANIMATION + BROWSER COMPATIBILITY  *//*   ANIMATION + BROWSER COMPATIBILITY  */
+@-webkit-keyframes  animatetop {
+  from {transform: translateY(100%); opacity:0}
+  to {transform: translateY(0); opacity:0.94}
+}
+@keyframes  animatetop {
+  from {transform: translateY(100%); opacity:0}
+  to {transform: translateY(0); opacity:0.94}
+}
+@-moz-keyframes  animatetop {
+  from {transform: translateY(100%); opacity:0}
+  to {transform: translateY(0); opacity:0.94}
+}
+@-ms-keyframes  animatetop {
+  from {transform: translateY(100%); opacity:0}
+  to {transform: translateY(0); opacity:0.94}
+}
+@-o-keyframes animatetop {
+  from {transform: translateX(-100%); opacity:0}
+  to {transform: translateX(100%); opacity:0.94}
+}
+/*    OTHER ANIMATION    */
+@-webkit-keyframes  animateAcross {
+  from {transform: translateX(100vw)}
+  to {transform: translateX(-185%)}
+}
+@keyframes  animateAcross {
+  from {transform: translateX(100vw)}
+  to {transform: translateX(-185%)}
+}
+@-moz-keyframes  animateAcross {
+  from {transform: translateX(100vw)}
+  to {transform: translateX(-185%)}
+}
+@-ms-keyframes  animateAcross {
+  from {transform: translateX(100vw)}
+  to {transform: translateX(-185%)}
+}
+@-o-keyframes animateAcross {
+  from {transform: translateX(100vw)}
+  to {transform: translateX(-185%)}
+}
+
+html {
+  background: url(../images/pole.jpg) no-repeat center center fixed;
+  font-family: roboto;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  -ms-background-size : cover;
+  background-size: cover;
+  opacity:0.94; /*    MAYBE SWITCH OFF */
+}
+/*   MEDIA QUERY    */  /*   MEDIA QUERY    *//*   MEDIA QUERY    */  /*   MEDIA QUERY    */
+/*   MEDIA QUERY    */  /*   MEDIA QUERY    *//*   MEDIA QUERY    */  /*   MEDIA QUERY    */
+@media only screen and (min-width: 550px) {
+  div.nav ul li {
+    font-size:30px;
+  }
+  div.modal-body {
+    grid-template-columns: minmax(50px, 80px) minmax(50px, 80px) minmax(50px, 80px) minmax(50px, 80px);
+  }
+  div.gridButtons {
+    grid-gap:75px 30px;
+  }
+  div.gridButtons .Btn {
+    min-height:4vw;;
+    max-height:10vw;
+    min-width:10vw;
+    max-width:38vw;
+    border-radius:15px;
+    font-size : 19px;
+    font-weight:200;
+    background-color:rgba(0,0,0,0.74);
+  }
+  div.gridButtons .BtnClicked {
+    background-color:rgba(255, 177, 10, 0.57);
+    min-height:4vw;;
+    max-height:9vw;
+    min-width:5vw;
+    max-width:30vw;
+    font-size : 20px;
+    border-radius:12px;
+  }
+  div.gridButtons .Btn:hover, div.gridButtons .Btn:active {
+    background-color:rgba(255, 177, 10, 0.57)
+  }
+  div.gridButtons .selectBtn {
+    min-height:2vw;;
+    max-height:7vw;
+    min-width:5vw;
+    max-width:40vw;
+    border-radius:15px;
+    font-size : 3vw;
+    font-weight:300;
+    background-color:rgba(0,0,0,0.74);
+  }
+  div.gridButtons .selectBtn:hover, div.gridButtons .selectBtn:active {
+    background-color:rgba(255, 177, 10, 0.57);
+  }
+  div.gridButtons.selectedBtn {
+    background-color:rgba(255, 177, 10, 0.7);
+    min-height:2vw;;
+    max-height:7vw;
+    min-width:5vw;
+    max-width:30vw;
+    font-size : 3.2vw;
+    border-radius:12px;
+  }
+  div.gridButtons .finals {
+
+  }
+  div.gridButtons .finals:hover, div.gridButtons .finals:active{
+    background-color:rgba(255, 177, 10, 0.3);
+  }
+  div.gridButtons .finals {
+    min-height:30px;;
+    max-height:100px;
+    min-width:200px;
+    max-width:450vw;
+    font-size : 3vw;
+    font-weight:300;
+  }
+  div.gridButtons .finals:hover, div.gridButtons .finals:active{
+    background-color:rgba(255, 177, 10, 0.3);
+  }
+  div.gridButtons .raceBtnClicked {
+    min-height:30px;;
+    max-height:100px;
+    min-width:200px;
+    max-width:450vw;
+    font-size : 3.2vw;
+    font-weight:300;
+    background-color:rgba(255, 177, 10, 0.6)
+  }
+}
+/*   MEDIA QUERY    */  /*   MEDIA QUERY    *//*   MEDIA QUERY    */  /*   MEDIA QUERY    */
+/*   MEDIA QUERY    */  /*   MEDIA QUERY    *//*   MEDIA QUERY    */  /*   MEDIA QUERY    */
+@media only screen and (min-width: 750px) {
+  div.modal div.modal-content div.modal-body {
+    grid-template-columns: minmax(50px, 80px) minmax(50px, 80px) minmax(50px, 80px) minmax(50px, 80px) minmax(50px, 80px);
+  }
+  div.gridButtons .Btn, div.gridButtons .selectBtn {
+    min-height:23px;;
+    max-height:46px;
+    min-width:40px;
+    max-width:30vw;
+    border-radius:15px;
+    font-size : 19px;
+    font-weight:200;
+    background-color:rgba(0,0,0,0.74);
+  }
+  div.gridButtons {
+    grid-gap:95px 35px;
+  }
+  div.gridButtons .BtnClicked, div.gridButtons .selectedBtn {
+    background-color:rgba(255, 177, 10, 0.57);
+    min-height:23px;;
+    max-height:46px;
+    min-width:40px;
+    max-width:30vw;
+    border-radius:15px;
+    font-size : 21px;
+  }
+  div.gridButtons .Btn:hover, div.gridButtons .Btn:active, div.gridButtons .selectBtn:hover, div.gridButtons .selectBtn:active {
+    background-color:rgba(255, 177, 10, 0.57)
+  }
+  div.gridButtons .finals {
+    min-height:30px;;
+    max-height:100px;
+    min-width:200px;
+    max-width:450vw;
+    font-size : 24px;
+    font-weight:300;
+  }
+  div.gridButtons .finals:hover, div.gridButtons .finals:active{
+    background-color:rgba(255, 177, 10, 0.3);
+  }
+  div.gridButtons .raceBtnClicked {
+    min-height:30px;;
+    max-height:100px;
+    min-width:200px;
+    max-width:450vw;
+    font-size : 24px;
+    font-weight:300;
+    background-color:rgba(255, 177, 10, 0.3)
+  }
+}
+/* The Modal (background) AND RACES Modal*/  /* The Modal (background) AND RACES Modal*/
+/* The Modal (background) AND RACES Modal*/  /* The Modal (background) AND RACES Modal*/
+.modal, .raceModal, .regModal, .ruleModal {
+  display: none; /* Hidden by default - its hidden YEAH then we change its property */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top:100px; /* Location of box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height *//* Enable scroll if needed */
+  background-color: rgb(255, 255, 255); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.35);/* Black w/ opacity */
+}
+.modal-content, .raceModal-content, .regModal-content, .ruleModal-content {
+  position:relative; /* Allows us to specify position using bop, bottom etc.*/
+  background-color: #fefefe;
+  margin: auto; /* auto means left/right centered */
+  padding: 0; /* ZERO PADDING - default value*/
+  border: 2px solid rgb(255, 177, 10);
+  border-radius:20px;
+  min-width: 65vw;
+  max-width:85vw;
+  min-height: 65vh;
+  max-height:88vh;    /* Could be more or less, depending on screen size */
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.19),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.48s;
+  -moz-animation-name: animatetop;
+  -moz-animation-duration: 0.48s;
+  -ms-animation-name: animatetop;
+  -ms-animation-duration: 0.48s;
+  -o-animation-name: animatetop;
+  -o-animation-duration: 0.48s;
+  animation-name: animatetop;
+  animation-duration: 0.48s;
+  bottom : 13vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+.ruleModal-content {
+  width : 100%;
+  height : 100%;
+}
+.modal-body, .raceModal-body, .regModal-body {
+  display:grid;
+  justify-content: center;
+  grid-template-rows: auto;
+  grid-template-columns: minmax(50px, 80px) minmax(50px, 80px);
+  padding-left:9vw;
+  padding-right:9vw;
+  padding-bottom:8vh;
+  padding-top:8vh;
+  grid-gap: 3vh 8vw;
+  /*grid-auto-rows:auto;*/
+}
+.raceModal-body {
+  grid-template-columns: minmax(20vw, 65vw);
+  grid-row-gap:10vh;
+}
+.modal .modal-header, .raceModal .raceModal-header, .regModal-header, .ruleModal-header {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  position: -moz-sticky;
+  position: -ms-sticky;
+  position: -o-sticky;
+  top:0;
+  font-family:roboto;
+  padding: 1px 5px;
+  color:rgb(255,255,255);
+  background-color:rgb(255, 177, 10);
+  z-index:3;
+}
+.modal .modal-footer, .raceModal .raceModal-footer {
+  font-family:roboto;
+  color:rgb(255,255,255);
+  padding: 1px 8px;
+  background-color:rgb(255, 177, 10);
+  font-size:78%;
+}
+.raceModal-footer h2 {
+  color:rgba(0,0,0, 0.1);
+  margin:10px;
+}
+/*    The PREDICTION SAVED FLASH ANIMATION   */   /*    The PREDICTION SAVED FLASH ANIMATION   */
+/*    The PREDICTION SAVED FLASH ANIMATION   */   /*    The PREDICTION SAVED FLASH ANIMATION   */
+.ResultModal {
+  display: none; /* Hidden by default - its hidden YEAH then we change its property */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top:100px; /* Location of box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height *//* Enable scroll if needed */
+  /*background-color: rgb(255, 255, 255);  Fallback color */
+  /*background-color: rgba(0, 0, 0, 0.35); Black w/ opacity */
+}
+.resultModal-content {
+  position:relative; /* Allows us to specify position using bop, bottom etc.*/
+  background-color: rgba(255, 177, 10, 0.9);
+  margin: auto; /* auto means left/right centered */
+  padding: 0; /* ZERO PADDING - default value*/
+  border: 2px solid rgb(255, 177, 10);
+  border-radius:20px;
+  width : 180vh;
+  height:70vh;    /* Could be more or less, depending on screen size */
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.19),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-name: animateAcross;
+  -webkit-animation-duration:5s;
+  -moz-animation-name: animateAcross;
+  -moz-animation-duration: 5s;
+  -ms-animation-name: animateAcross;
+  -ms-animation-duration: 5s;
+  -o-animation-name: animateAcross;
+  -o-animation-duration: 5s;
+  animation-name: animateAcross;
+  animation-duration: 5s;
+  bottom : 20vh;
+}
+.resultModal-content h2 {
+  position:fixed;
+  bottom:-25px;
+  color:rgba(0,0,0, 0.4);
+  font-family:roboto;
+  font-size:70px;
+  width:max-content;
+  padding-left : 60px;
+}
+/*    WHEEEEEEEEL    */  /*    WHEEEEEEEEL    */  /*    WHEEEEEEEEL    */
+/*    WHEEEEEEEEL    */  /*    WHEEEEEEEEL    */  /*    WHEEEEEEEEL    */
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 51px;
+  height: 51px;
+  margin: 6px;
+  border: 6px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: rgba(255, 177, 10, 0) transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/*      *//*      *//*    Main Screen Buttons  *//*      *//*      */
+/*      *//*      *//*    Main Screen Buttons  *//*      *//*      *//*      *//*      *//*    Main Screen Buttons  *//*      *//*      */
+/*      *//*      *//*    Main Screen Buttons  *//*      *//*      *//*      *//*      *//*    Main Screen Buttons  *//*      *//*      */
+/*      *//*      *//*    Main Screen Buttons  *//*      *//*      *//*      *//*      *//*    Main Screen Buttons  *//*      *//*      */
+/*      *//*      *//*    Main Screen Buttons  *//*      *//*      */
+.Btn {
+  background-color:rgba(0,0,0,0.74);
+  color:white;
+  position:auto;
+  font-family:roboto;
+  min-height:25px;
+  max-height:35px;
+  min-width:70px;
+  max-width:130px;
+  border :1.2px solid black;
+  border-radius:12px;
+  font-weight:200;
+  font-size:12px;
+  padding-left:20px;
+  padding-right:20px;
+  white-space: normal;
+}
+#Pole {
+  min-height:25px;
+  max-height:55px;
+}
+.BtnClicked {
+  background-color:rgba(255, 177, 10, 0.57);
+  color:white;
+  position:auto;
+  font-family:roboto;
+  min-height:25px;
+  max-height:55px;
+  padding-left:15px;
+  padding-right:15px;
+  min-width:80px;
+  max-width:180px;
+  border :1.35px solid black;
+  border-radius:12px;
+  white-space: normal;
+  font-weight:300;
+  font-size:12.3px;
+}
+.Btn:hover, .Btn:active {
+  background-color:rgba(255, 177, 10, 0.57);
+}
+.gridButtons {
+  display:grid;
+  grid-template-rows: auto;
+  grid-template-columns: minmax(40vw, 48vw) minmax(40vw, 48vw);
+  grid-gap: 10vw 1vh;
+  grid-auto-rows:auto;
+  justify-items :center;
+  padding-top:55vh;
+}
+#poleTime {
+  minimum-width: 27vw;
+  maximum-width : 45vw;
+  background-color:rgba(0, 0, 0, 0.08);
+  border: 1px solid rgb(255, 177, 10);
+  border-radius : 5px;
+  padding: 1vh 1vw 1vh 1vw;
+  position:relative;
+  bottom:25px;
+}
+#special {
+  position:relative;
+  bottom:25px;
+  left:5px;
+  background-color:rgba(0, 0, 0, 0.08);
+  border: 1px solid rgb(255, 177, 10);
+  border-radius : 5px;
+}
+#special:hover, #special:active {
+  background-color:rgba(255, 177, 10, 0.9);
+}
+/*        Driver buttons       */   /*        Driver buttons       */   /*        Driver buttons       */
+/*        Driver buttons       */   /*        Driver buttons       */   /*        Driver buttons       */
+.driverBtn, .raceBtn {
+  border-radius:12px;
+  background-color:rgba(0, 0, 0, 0.08);
+  min-height:25px;
+  max-height:55px;
+  min-width:60px;
+  max-width:130px;
+  margin : auto;
+}
+.raceBtnClicked {
+  min-height:25px;
+  max-height:65px;
+  min-width:80px;
+  max-width:430px;
+  background-color:rgba(255, 177, 10, 0.65);
+  color:white;
+  position:auto;
+  font-family:roboto;
+  border :1.35px solid black;
+  border-radius:12px;
+  white-space: normal
+}
+/*  Hover and active clicks (for phone usage) *//*  Hover and active clicks (for phone usage) */
+.driverBtn:hover, .driverBtn:active, .raceBtn:hover, .raceBtn:active {
+  background-color:rgba(0, 0, 0, 0.14);
+  border:1px solid rgba(0, 0, 0, 0.48);
+}
+.clearBtn {
+  border-radius:5px;
+  min-width:40px;
+  max-width:60px;
+  background-color:rgba(255,255, 255, 0.98);
+  position:relative;
+  bottom:10px;
+  left:5px;
+}
+/* The Close Button */   /* The Close Button */   /* The Close Button */   /* The Close Button */
+.close {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  position: -moz-sticky;
+  position: -ms-sticky;
+  position: -o-sticky;
+  top:0;
+  z-index:6;
+  color: #aaa;
+  float: right;
+  font-size: 22px;
+  font-weight: bold;
+  margin-top:5px;
+  margin-right:15px;
+  margin-left:5px;
+}
+.close:hover, .close:active,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  font-family:roboto;
+  opacity: 1; /* Firefox */
+}
+.button {
+  font-family:roboto;
+}
+.description {
+  color : rgb(0,0,0,0.7);
+  background-color:rgb(255, 177, 10);
+  font-weight: 400;
+  position:relative;
+  bottom:16px;
+  padding-right:10px;
+  left:8px;
+  padding-left: 0.5em;
+  padding-bottom:10px;
+}
+
+#points { /*The h2 for top ten title*/
+  position:relative;
+  bottom:6px;
+  left:12px;
+  font-weight:400;
+}
+.titles {
+  position:relative;
+  bottom:6px;
+  left:12px;
+  font-weight:400;
+}
+.tilde {
+  font-size:140%;
+  line-height:19.5px;
+}
+.selectBtn {
+  background-color:rgba(0,0,0,0.8);
+  color:white;
+  position:auto;
+  font-family:roboto;
+  min-height:25px;
+  max-height:35px;
+  min-width:30px;
+  max-width:140px;
+  border :1.2px solid black;
+  border-radius:12px;
+  white-space: normal;
+}
+.selectBtn:hover, .selectBtn:active {
+  background-color:rgba(255, 177, 10, 0.57);
+}
+.selectedBtn {
+  background-color:rgba(255, 177, 10, 0.8);
+  color:white;
+  position:auto;
+  font-family:roboto;
+  min-height:25px;
+  max-height:35px;
+  min-width:80px;
+  max-width:150px;
+  border :1.35px solid black;
+  border-radius:12px;
+  white-space: normal;
+}
+.timer {
+  font-family:roboto;
+  color:rgba(0,0,0,0.95);
+  font-weight:900;
+  border-radius:15px;
+  font-size:17px;
+  min-height:25px;
+  max-height:55px;
+  min-width:60px;
+  max-width:380px;
+  margin : auto;
+  white-space: normal
+}
+/*    */     /*    Main screen Grid location controls   *//*    */     /*    Main screen Grid location controls   */
+/*    */     /*    Main screen Grid location controls   *//*    */     /*    Main screen Grid location controls   */
+/*    */     /*    Main screen Grid location controls   *//*    */     /*    Main screen Grid location controls   */
+/*    */     /*    Main screen Grid location controls   *//*    */     /*    Main screen Grid location controls   */
+.one{
+  grid-row:1/2;
+  grid-column: 1;
+}
+.two{
+  grid-row:2/3;
+  grid-column: 2;
+}
+.three{
+  grid-row:3/4;
+  grid-column:1;
+}
+.four{
+  grid-row:4/5;
+  grid-column: 2;
+}
+.five{
+  grid-row:5/6;
+  grid-column:1;
+}
+.six{
+  grid-row:6/7;
+  grid-column: 2;
+}
+.seven{
+  grid-row:7/8;
+  grid-column:1;
+}
+.eight{
+  grid-row:8/9;
+  grid-column: 2;
+}
+.nine{
+  grid-row:9/10;
+  grid-column:1;
+}
+.ten{
+  grid-row:10/11;
+  grid-column: 2;
+}
+.eleven{
+  grid-row:11/12;
+  grid-column: 1;
+
+}
+.twelve{
+  grid-row:12/13;
+  grid-column: 2;
+}
+.thirteen{
+  grid-row:13/14;
+  grid-column: 1;
+}
+.fourteen{
+  grid-row:14/15;
+  grid-column: 2;
+}
+.fifteen{
+  grid-row:15/16;
+  grid-column: 1;
+}
+.sixteen{
+  grid-row:16/17;
+  grid-column: 2;
+}
+.seventeen{
+  grid-row:17/18;
+  grid-column: 1;
+}
+.eighteen{
+  grid-row:18/19;
+  column-span: 1/2;
+}
+.end4{
+  grid-row:19/20;
+  grid-column:1/-1;
+}
+.end1 {
+  grid-row:20/21;
+  grid-column: 1/-1;
+  max-width:360px;
+  min-width:120px;
+  display : flex;
+}
+.end5 {
+  grid-row:21/22;
+  grid-column:1/-1;
+  max-width:360px;
+  min-width:120px;
+  display : flex;
+}
+.end2 {
+  grid-row:22/23;
+  grid-column: 1/-1;
+  max-width:360px;
+  min-width:120px;
+  display : flex;
+}
+.end3 {
+  grid-row:23/24;
+  grid-column: 1/-1;
+  max-width:220px;
+  min-width:120px;
+  display : flex;
+}
+.finals {
+  background-color:rgba(0, 0, 0, 0.4);
+  color:white;
+  font-family:roboto;
+  min-height:25px;
+  max-height:35px;
+  min-width:150px;
+  border :1.2px solid black;
+  border-radius:12px;
+}
+.finals:hover, .finals:active{
+  background-color:rgba(255, 177, 10, 0.4);
+}
+/*      *//*      *//*      *//*      *//*  NAVIGATION down bottom    *//*      *//*      *//*      *//*      */
+/*      *//*      *//*      *//*      *//*  NAVIGATION down bottom    *//*      *//*      *//*      *//*      */
+/*      *//*      *//*      *//*      *//*  Selector down bottom    *//*      *//*      *//*      *//*      */
+/*      *//*      *//*      *//*      *//*  Selector down bottom    *//*      *//*      *//*      *//*      */
+/*  The Stuff About the Selector   */
+.nav ul li:hover, .nav ul li:active {
+  background: rgb(246, 135, 40);/*#117bff;*/
+  cursor: pointer;
+  transition: background 0.75s;
+}
+.helpMe { /* HELP ME IS HOW I FIXED A BUG ONCE IN NAV AND KEPT IT COS IT WORKED AND ITS FUNNY */
+  background: #000;
+  opacity:0.45;
+  text-shadow: 5px 5px 7px black;
+  position: fixed;
+  font-family:roboto;
+  font-weight : 200;
+  bottom : 0;
+  left : 0;
+  right: 0;
+  display : flex;
+}
+.nav ul li {
+  display: inline-block;
+  list-style: none;
+  transition: background .5s;
+  text-decoration: none;
+  font-size : 5.4vw;
+  margin:auto;
+  text-align: center;
+  line-height : 9.2vh;
+  flex:1 1 100%;
+}
+.nav ul li a {
+  color: #fff;
+  text-decoration:none;
+}
+/*             RULES MODAL LAYOUT           */   /*             RULES MODAL LAYOUT           */   /*             RULES MODAL LAYOUT           */
+/*             RULES MODAL LAYOUT           */   /*             RULES MODAL LAYOUT           */   /*             RULES MODAL LAYOUT           */
+/*             RULES MODAL LAYOUT           */   /*             RULES MODAL LAYOUT           */   /*             RULES MODAL LAYOUT           */
+
+.regModal-body, .ruleModal-body {
+  display :initial;
+  padding-top:5px;
+}
+.rulesContent {
+  padding-left:13px;
+  padding-right:13px;
+  font-size: 11.5px;
+  position:relative;
+  top:8px;
+}
+.w3Hide {
+  display:none;
+}
+.w3Show {
+  display:inline;
+}
+
+.smallerIndent {
+  list-style-type: none;
+  padding-left: 17px;
+  padding-top:5px;
+}
+.smallerIndentSpecial {
+  list-style-type: none;
+  padding-left: 17px;
+  padding-top:5px;
+  line-height:1.65em;
+
+}
+.ruleModal-body {
+
+}
+.ruleModal-header {
+  z-index: 3;
+}
+.paragraphDescription {
+  padding-left : 6.5px;
+  padding-bottom:0px;
+  padding-right:4px;
+}
+.tableDescription {
+  margin-left : 20px;
+  margin-right:15px;
+}
+.ruleHeader1, .ruleHeader {
+  border:none;
+  margin-top:0px;
+  margin-bottom:0;
+  font-size:1.15em;
+  line-height:95%;
+}
+
+.ruleHeader {
+  font-size : 1.5em;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  position: -moz-sticky;
+  position: -ms-sticky;
+  position: -o-sticky;
+  top: 65px;
+  line-height:40px;
+  background-color:#fefefe;
+  width :100%;
+  padding-right :100px;
+}
+.equation {
+  line-height:2.1em;
+  padding-left: 62px;
+}
+/*.specialequation {
+  background-color:rgba(255, 184, 77, 0.31);
+  border:1px solid rgba(255, 184, 77, 0.81);
+  border-radius:12px;
+  padding:5px;
+}*/
+.notBold{
+  font-weight:normal;
+  padding-left : 8px;
+}​
+table, th, td {
+  border: 1px solid black;
+  font-size:85%;
+}
+/*
+.table {
+  font-family:roboto;
+  font-size:100px;
+  letter-spacing:0.022em;
+  border: 2px solid rgba(250,250,250,0.15);
+  border-radius:11px;
+  color:rgba(0,0,0,1);
+  height : min-content;
+  background-color:rgba(250,250,250,0.25);
+  padding-left:5vw;
+}
+table {
+    display: table;
+    border-collapse: separate;
+    border: 2px solid rgba(250,250,250,0.15);
+    border-radius:11px;
+}
+*/
+/*          Login / Register Modal Layout  */     /*          Login / Register Modal Layout  */
+/*          Login / Register Modal Layout  */     /*          Login / Register Modal Layout  */
+/*          Login / Register Modal Layout  */     /*          Login / Register Modal Layout  */
+
+
+
+
+/*.regModal-footer {
+  font-family:roboto;
+  padding: 5px 15px;
+  color:rgba(0,0,0, 0.1);
+  background-color:rgb(255, 177, 10);
+  width : 100%;
+}
+#papaya{
+  background-color:rgb(255, 177, 10);
+  position:relative;
+  color:rgba(255, 162, 0, 1);
+  left:0;
+}*/
+.regModal-content {
+  width : 80vw;
+  height: 55vh;
+}
+#check, #check2, #check3 {
+  min-width: 35vw;
+  max-width:55vw;
+  min-height : 26px;
+  max-height : 36px;
+  font-family: roboto;
+  position : relative;
+  left:5vw;
+  top:2.2vh;
+  padding-bottom:6px;
+  font-size: 0.75em;
+}
+.inputField {
+  border-radius:5px;
+  background-color:rgba(0, 0, 0, 0.04);
+  border:1px solid rgba(0,0,0, 0.4);
+  position : relative;
+  top:3vh;
+  height:18px;
+  font-size: 13px;
+  min-width:18vw;
+  max-width: 300px;
+  padding-left:5px;
+  padding-right:5px;
+  margin-left:5px;
+  margin-top:15px;
+  margin-right:10px;
+  margin-bottom:10px;
+  left:2vw;
+  top:2.5vh;
+}
+.inputField:hover, .inputField:active {
+  background-color:rgba(0, 0, 0, 0.08);
+  border:1px solid rgba(0, 0, 0, 0.45);
+}
+#registerForm {
+  position: absolute;
+  top:60vh;
+}
+.regModal-header {
+  z-index:5;
+}
+.loginFields {
+  border-radius:5px;
+  background-color:rgba(0, 0, 0, 0.04);
+  border:1px solid rgba(0,0,0, 0.4);
+  position : relative;
+  padding-left:5px;
+  padding-right:5px;
+  margin-left:5px;
+  margin-top:15px;
+  margin-right:10px;
+  margin-bottom:10px;
+  left:2vw;
+  top:2.5vh;
+  height:18px;
+  font-size: 13px;
+  min-width:18vw;
+  max-width: 300px;
+}
+
+.registerOne, .registerThree, .registerSendButton {
+  padding-left:5px;
+  padding-right:5px;
+  margin-left:5px;
+  margin-top:15px;
+  margin-right:10px;
+  margin-bottom:10px;
+  left:2vw;
+  top:2.5vh;
+  background-color:rgba(0,0,0,0.2);
+  border-color:none;
+  color:rgba(0,0,0,0.8);
+  position:relative;
+  font-weight:300;
+  border-radius : 5px;
+}
+.registerSendButton {
+  margin-top:15px;
+  margin-bottom:25px;
+  top:5vh;
+}
+
+
+
+
+
+/*
+  background-color:rgba(0,0,0,0.8);
+  color:white;
+  position:auto;
+  font-family:roboto;
+  min-height:25px;
+  max-height:35px;
+  min-width:70px;
+  max-width:130px;
+  border :2px solid black;
+  border-radius:12px;
+  font-weight:200;
+  padding-left:10px;
+  padding-right:10px;
+  white-space: normal;
+}
+.
+
+
+}
+.regModal-footer {
+  font-family:roboto;
+  color:rgb(255,255,255);
+  padding: 1px 8px;
+  background-color:rgb(255, 177, 10);
+  position: sticky;
+  position: -webkit-sticky;
+  position: -moz-sticky;
+  position: -ms-sticky;
+  position: -o-sticky;
+  bottom:0px;
+  height:25px;
+}*/
+/*.registerButtons {
+  display:grid;
+  grid-template-columns: Max-content Max-content Max-content;
+  grid-template-rows:max-content;
+  grid-gap:10px;
+}
+.registerOne {
+  grid-column:1;
+  grid-row:1;
+}
+.registerTwo {
+  grid-column:2;
+  grid-row:1;
+}
+.registerThree {
+  grid-column:3;
+  grid-row:1;
+}*/
+
+.messageModal.show {
+    opacity: 1;
+    position : fixed;
+    top:0;
+    left:0;
+    right:0;
+    padding-top:150px;
+}
+
+
+.messageModal { /* Hidden by default - its hidden YEAH then we change its property */
+  position: fixed;
+  display:none;/* Stay in place */
+  z-index: 11; /* Sit on top */
+  padding-top:130px; /* Location of box */
+  left: 0;
+  top: -100%;
+  opacity: 0;
+  transition: top 0.3s, opacity 0.22s;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height *//* Enable scroll if needed */
+  background-color: rgba(255, 255, 255,0.4); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.17);/* Black w/ opacity */
+}
+#messageModal-content {
+  position:relative; /* Allows us to specify position using bop, bottom etc.*/
+  color:rgb(255,255,255);
+  background-color:rgba(255, 177, 10,0.7);
+  /*margin: auto;  auto means left/right centered */
+  padding: 0; /* ZERO PADDING - default value*/
+  border: 1px solid black;
+  margin:auto;
+  width:80vw;
+  height:18vh;
+  border-radius:20px;
+  /*min-width: 45vw;
+  max-width:45vw;
+  min-height: 55vh;
+  max-height:65vh;*/    /* Could be more or less, depending on screen size */
+  box-shadow: 0 3px 6px 0 rgba(0,0,0,0.19),0 2px 4px 0 rgba(0,0,0,0.19);
+}
+#messageModalMessage {
+  text-align: center;
+  font-weight:300;
+  padding-top:10px;
+  padding-bottom:20px;
+  /*margin-left:auto;
+  margin-top :20px;
+  margin-bottom:10px;
+  margin-right:auto;
+  padding:15px;*/
+}
