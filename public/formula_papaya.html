@@ -108,12 +108,12 @@
          <button id = "Res3" onclick= "myFunction(Res3, this.id)" class = "driverBtn" style = "display:none">Reserve Driver 3</button>
          <button id = "Res4" onclick= "myFunction(Res4, this.id)" class = "driverBtn" style = "display:none">Reserve Driver 4</button>
       </div>
-      <div id = "poleTimeDiv"><center><input type="time" step="0.001" id = "poleTime" style = "display : none" value = "00:01:23.456" min = "00:00:00.000 "max = "00:05:59.999" required></input><button  style = "display : none" id = "special" onclick = "specialPoleFunction()">&#10004;</button></center>
+      <div id = "poleTimeDiv"><center><input type="text" id = "poleTime" style = "display : none" value = "01:23.456" placeholder = "01:23.456" required></input><button  style = "display : none" id = "special" onclick = "specialPoleFunction()">&#10004;</button></center>
       <div id = "poleTimeString"><p></p></div></div>
     <div class = "modal-footer">
 
      <h2 id = "points">Driver Selection <br></h2>
-     <p id = "PoleD" style = "display : none" class = "description"> Enter the time estimate in the form [HH:mm:ss.SSS] for pole position, and the driver.
+     <p id = "PoleD" style = "display : none" class = "description"> Enter the time estimate in the form [mm:ss.SSS] for pole position (note the colon and decimal point), and the driver.
          Points are awarded as follows:<br>
           &nbsp;&nbsp;&nbsp;&nbsp; <b>Exact time</b> <span class = "tilde">&#8764;</span> <i>25 Points</i><br>
         &nbsp;&nbsp;&nbsp;&nbsp; <b> ±0.100</b> <span class = "tilde">&#8764;</span> <i>15 Points</i><br>
@@ -550,7 +550,7 @@
       <ul class = "smallerIndent">
 
         <li><h4 class = "ruleHeader1">Pole Position</h4>
-      <p class = "paragraphDescription">Enter the time estimate in the form [HH:mm:ss.SSS] (currently have to input hours, dont ask me why - I will work on a solution) for pole position, and the driver.
+      <p class = "paragraphDescription">Enter the time estimate in the form [mm:ss.SSS] for pole position, and the driver. <b>Note input time format (with colon and decimal point) please do enter times in the correct format. Times entered in the wrong format will not work and will blow up.</b> I will fix this, its just decided to piss me off. Lots of love!
             Points are awarded as follows:
             <div class = "smallerIndentSpecial">
        <b>Exact time</b> - <i>25 Points</i><br>
@@ -993,7 +993,7 @@ let newTimeData;
 function specialPoleFunction() {
   modal.style.display = "none";
   var defaultPoleTime = document.getElementById("poleTime").value;
-  let timeNotSet = defaultPoleTime.substring(3, 12);
+  let timeNotSet = defaultPoleTime.substring(0, 9);
   let newTimeData = defaultPoleTime
   document.getElementById("Pole").setAttribute("data-random", newTimeData)
   document.getElementById("poleTime").setAttribute("data-random", newTimeData);
@@ -1239,6 +1239,7 @@ function splitPoleTimeAndDriverPartDriver() {
   let allText = document.getElementById("Pole").value;
   let lengthOfWholeString = allText.length
   let justDriver = allText.substring(7, lengthOfWholeString - 12)
+  alert(justDriver)
   return justDriver
 }
 
@@ -1246,6 +1247,7 @@ function splitPoleTimeAndDriverPartTime() {
   let allText = document.getElementById("Pole").value;
   let lengthOfWholeString = allText.length;
   let justTime = allText.substring(lengthOfWholeString - 9, lengthOfWholeString);
+  alert(justTime)
   return justTime
 }
 /*
@@ -1319,9 +1321,9 @@ async function submitTheForm() {
   }) //So if we fail test, and fieldsMissed has length, and then fill in missing fields, it still has length.
   // so create function that empties an array, apply it up there
   if (fieldsMissed.length === 0 ) {
-    alert("1")
+    //alert("1")
     try {
-      alert("2")
+      //alert("2")
       let responseObject = await fetch('/formSend', {
         method : 'POST',
         headers: {
