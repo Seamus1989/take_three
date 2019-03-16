@@ -73,19 +73,35 @@ app.post('/getPrediction', function(req, res, next) {
     let userIdentify = req.user;
     if (req.body.Race === "AUS") {
       db.get("SELECT * FROM Australia WHERE Name = ?", (userIdentify), function(err, row) {
-        res.send({success : true, row})
+        if (!row) {
+          res.send({success : false, message : "No predictions found for selected event!"})
+        } else if (row) {
+          res.send({success : true, row})
+        }
       });
     } else if (req.body.Race === "BAH") {
       db.get("SELECT * FROM Bahrain WHERE Name = ?", (userIdentify), function(err, row) {
-        res.send({success : true, row})
+        if (!row) {
+          res.send({success : false, message : "No predictions found for selected event!"})
+        } else if (row) {
+          res.send({success : true, row})
+        }
       })
     } else if (req.body.Race === "CHI") {
       db.get("SELECT * FROM China WHERE Name = ?", (userIdentify), function(err, row) {
-        res.send({success : true, row})
+        if (!row) {
+          res.send({success : false, message : "No predictions found for selected event!"})
+        } else if (row) {
+          res.send({success : true, row})
+        }
       })
     } else if (req.body.Race === "AZB") {
       db.get("SELECT * FROM Baku WHERE Name = ?", (userIdentify), function(err, row) {
-        res.send({success : true, row})
+        if (!row) {
+          res.send({success : false, message : "No predictions found for selected event!"})
+        } else if (row) {
+          res.send({success : true, row})
+        }
       })
     }
   }
