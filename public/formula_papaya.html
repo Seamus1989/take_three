@@ -151,7 +151,7 @@
 <h2>Race</h2>
     </div>
     <div class = "raceModal-body">
-      <button id = "AUS" class = "raceBtn" name = "The Australian Grand Prix, Albert Park" onclick = "raceSelectFunction(this.id)"  data-dateTime = "Sat Mar 16 2019 06:23:00 GMT+0000 (Greenwich Mean Time)">Melbourne, Australia</button>
+      <button id = "AUS" class = "raceBtn" name = "The Australian Grand Prix, Albert Park" onclick = "raceSelectFunction(this.id)"  data-dateTime = "Sat Mar 16 2019 23:30:00 GMT+0000 (Greenwich Mean Time)">Melbourne, Australia</button>
       <h3 class = "timer" id = "mel">Melbourne, Australia</h3>
        <!--    OF THE FORM function countdownTimer(deadlineDate, idOfDestination, raceId) { // "Jan 5, 2021 15:37:25"    March 10, 2019 01:00:25      LIKE THIS - Thu Jan 31 2019 02:14:17 GMT+0000 (Greenwich Mean Time) -->
       <button id = "BAH" class = "raceBtn" name = "The Bahrain Grand Prix, Bahrain International Circuit" onclick = "raceSelectFunction(this.id)" data-dateTime = "Sat Mar 31 2019 15:23:00 GMT+0000 (Greenwich Mean Time)">Sakhir, Bahrain</button>
@@ -234,9 +234,9 @@
 
       <div id = "registerForm">
          <!-- action = "forms/form.txt" method = "POST" enctype="application/json" --><!--   Username (password retype password) name DOB email nationality home-city #1 driver senna/prost   -->
-      <input id = "username" oninput = "inputUserFunction(this.id)" class = "inputField" type = "text" placeholder = "Username:" name = "username" minlength = "8" required pattern="^\S+$"><p id = "check2"></p><!--<p id = "usernameAlreadyTaken"></p>onchange = "if(this.value != '') callAjaxFunction('username', this.value, this.id)"-->
-      <input id = "psw" oninput = "inputFirstPassword(this.id)" type  = "password" class = "inputField" placeholder = "Password:" name = "psw" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required> <!--- JAVASCRIPT NEEDED FOR VALIDATION OF PASSWORD -->
-      <input id = "psw2" oninput = "inputSecondPassword(this.id)" type  = "password" class = "inputField" placeholder = "Retype Password:" name = "psw"><p id = "check"></p>
+      <input id = "username" class = "inputField" type = "text" placeholder = "Username:" name = "username" minlength = "2" required pattern="^\S+$"><p id = "check2"></p><!--<p id = "usernameAlreadyTaken"></p>onchange = "if(this.value != '') callAjaxFunction('username', this.value, this.id)"--><!-- oninput = "inputUserFunction(this.id)"-->
+      <input id = "psw" type  = "password" class = "inputField" placeholder = "Password:" name = "psw"> <!--- JAVASCRIPT NEEDED FOR VALIDATION OF PASSWORD --><!--oninput = "inputFirstPassword(this.id)"  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required-->
+      <input id = "psw2" type  = "password" class = "inputField" placeholder = "Retype Password:" name = "psw"><p id = "check"></p><!-- oninput = "inputSecondPassword(this.id)"-->
       <input id = "email" oninput = "inputFunction(this.id)" type class = "inputField" = "email" placeholder = "Email Address:" name = "email" required>
 
 
@@ -1191,6 +1191,8 @@ function resetAll() {
   document.getElementById("DotD").setAttribute("class","Btn");
   identifier = document.getElementById("PSSInput");
   identifier.setAttribute("value", "");
+  identifier.setAttribute("name", "");
+  document.getElementById("idForPSSGet").innerHTML = "Winning Strategy";
   document.getElementById("PSSInput").setAttribute("class","selectBtn");
   identifier = document.getElementById("Fastest");
   identifier.setAttribute("name", "");
@@ -1239,7 +1241,7 @@ function splitPoleTimeAndDriverPartDriver() {
   let allText = document.getElementById("Pole").value;
   let lengthOfWholeString = allText.length
   let justDriver = allText.substring(7, lengthOfWholeString - 12)
-  alert(justDriver)
+  //alert(justDriver)
   return justDriver
 }
 
@@ -1247,7 +1249,7 @@ function splitPoleTimeAndDriverPartTime() {
   let allText = document.getElementById("Pole").value;
   let lengthOfWholeString = allText.length;
   let justTime = allText.substring(lengthOfWholeString - 9, lengthOfWholeString);
-  alert(justTime)
+  //alert(justTime)
   return justTime
 }
 /*
@@ -1388,6 +1390,7 @@ function inputFunction(identity) {
   var x = document.getElementById(identity).value;
   document.getElementById(identity).setAttribute("name", identity + ": " + x)
 }
+/*
 function inputUserFunction(identity) {
   var x = document.getElementById(identity).value;
   document.getElementById(identity).setAttribute("name", identity + ": " + x)
@@ -1398,7 +1401,8 @@ function inputUserFunction(identity) {
     setTimeout(function(){ document.getElementById("check2").innerHTML = "&#10004"; document.getElementById("check2").style.color = "green"; }, 500);
     setTimeout(function(){ document.getElementById("check2").innerHTML = ""; document.getElementById("check2").style.color = "black";}, 1000);
   }
-}
+}*/
+/*
 function inputFirstPassword(idd) {
   var a = document.getElementById(idd).value;
   var b = document.getElementById("psw2").value;
@@ -1432,7 +1436,7 @@ function inputSecondPassword(identity) {
     document.getElementById("check").innerHTML = "Password must be 8 characters long, contain one number and one uppercase letter."
   }
 }
-
+*/
 
 function registerScrollFunction(identity) {
   document.getElementById("psw").scrollIntoView({ behavior: 'smooth' });
@@ -1590,7 +1594,7 @@ async function registrationSendFunction() {
     "favourite" : regVariable6,
     "yearJoined" : nowYear
   }
-  if (document.getElementById("username").checkValidity() && document.getElementById("psw2").checkValidity() && document.getElementById("psw").checkValidity() && document.getElementById("psw").value=== document.getElementById("psw2").value) {
+  if (document.getElementById("username").checkValidity() && document.getElementById("psw").value === document.getElementById("psw2").value) {
     try {
       let responseObject = await fetch('/register', {
         method : 'POST',
@@ -1729,6 +1733,7 @@ async function getItMate(race) {
             let P10 = getPredictionObject.row.Tenth;
             document.getElementById("P10").setAttribute("name", P10);
             document.getElementById("P10").setAttribute("value", "P10: "+ P10);
+            topTenList.push(P1, P2, P3, P4, P5, P6, P7, P8, P9, P10)
             let PoleD = getPredictionObject.row.PoleD;
             let PoleT = getPredictionObject.row.PoleT;
             document.getElementById("Pole").setAttribute("name", PoleD);
@@ -1764,7 +1769,8 @@ async function getItMate(race) {
             }, 1800);
             //////////////////////////////////////
           } else if (getPredictionObject.success === false) {
-            document.getElementById("messageModalMessage").innerHTML = "Log in to load predictions!";
+            theMessage = getPredictionObject.message
+            document.getElementById("messageModalMessage").innerHTML = theMessage;
             document.getElementById("myMessageModal").style.display = "block";
             setTimeout(function(){theMessageModal.classList.add('show');}, 300)
             setTimeout(function(){

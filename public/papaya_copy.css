@@ -47,14 +47,13 @@
 }
 
 html {
-  background: url(https://i.imgur.com/3ACwHZg.jpg) no-repeat center center fixed;
-  font-family: roboto;
+  background: url(https://www.racefans.net/wp-content/uploads/2019/03/racefansdotnet-20190315-045211-13.jpg) no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  -ms-background-size : cover;
   background-size: cover;
-  opacity:0.94; /*    MAYBE SWITCH OFF */
+  opacity:0.9;
+  opacity:0.9;
 }
 /*   MEDIA QUERY    */  /*   MEDIA QUERY    *//*   MEDIA QUERY    */  /*   MEDIA QUERY    */
 /*   MEDIA QUERY    */  /*   MEDIA QUERY    *//*   MEDIA QUERY    */  /*   MEDIA QUERY    */
