@@ -2,6 +2,9 @@
   width: device-width ;
   zoom: 1.0 ;
 }
+@-ms-viewport {
+  width: device-width ;
+}
 /*   ANIMATION + BROWSER COMPATIBILITY  *//*   ANIMATION + BROWSER COMPATIBILITY  */
 /*   ANIMATION + BROWSER COMPATIBILITY  *//*   ANIMATION + BROWSER COMPATIBILITY  */
 @-webkit-keyframes  animatetop {
@@ -47,20 +50,110 @@
 }
 
 html {
-  background: url(https://www.racefans.net/wp-content/uploads/2019/03/racefansdotnet-20190315-045211-13.jpg) no-repeat center center fixed; 
+  background: black url(https://i.imgur.com/Rj3eqXm.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
   opacity:0.9;
-  opacity:0.9;
+  font-family: roboto;
+  width:100vw;
+
 }
 /*   MEDIA QUERY    */  /*   MEDIA QUERY    *//*   MEDIA QUERY    */  /*   MEDIA QUERY    */
 /*   MEDIA QUERY    */  /*   MEDIA QUERY    *//*   MEDIA QUERY    */  /*   MEDIA QUERY    */
-@media only screen and (min-width: 550px) {
+@media only screen and (min-height : 150px) {
   div.nav ul li {
-    font-size:30px;
+    line-height : 30px;
+    font-size : 10px;
   }
+}
+@media only screen and (min-height : 180px) and (max-height : 299px) {
+  /*.raceModal-content, .ruleModal-content {
+    width: 95vw;
+    height: 95vh;
+    position:relative;
+    top:-28vh;
+  }
+  .modal .modal-header, .raceModal .raceModal-header, .regModal-header, .ruleModal-header {
+    font-size:70%;
+  }*/
+  div#myModalContent.modal-content, div#regModalId.regModal-content, div.raceModal-content, div.ruleModal-content  {
+    width: 90vw;
+    height: 90vh;
+    position:relative;
+    top:-32vh;
+  }
+  /*div#regModalId.regModal-content {
+    width : 90vw;
+    height: 70vh;
+    position:relative;
+    top:-15vh;
+  }*/
+  h3.ruleHeader {
+    position:sticky;
+    top:35px;
+    line-height:30px;
+  }
+}
+@media only screen and (min-height : 300px) and (max-height : 419px) {
+  /*.modal-content, .raceModal-content, .ruleModal-content {
+    width: 85vw;
+    height: 80vh;
+    position:relative;
+    top:-15vh;
+  }
+  .modal .modal-header, .raceModal .raceModal-header, .regModal-header, .ruleModal-header {
+    font-size:80%;
+  }*/
+  div#regModalId.regModal-content, div#myModalContent.modal-content, div.raceModal-content, div.ruleModal-content {
+    width : 72vw;
+    height: 70vh;
+    position:relative;
+    top:-15vh;
+  }
+  h3.ruleHeader {
+    top: 40px;
+    line-height:30px;
+  }
+}
+@media only screen and (min-height : 420px) and (max-height : 499px) {
+  div.nav ul li {
+    line-height : 35px;
+    font-size : 24px;
+  }
+  /*.modal-content, .raceModal-content, .ruleModal-content {
+    width: 85vw;
+    position:relative;
+    height: 85vh;
+    bottom:-8vh;
+  }*/
+  div#regModalId.regModal-content, div#myModalContent.modal-content, div.raceModal-content, div.ruleModal-content {
+    width : 65vw;
+    height: 55vh;
+    position:relative;
+  }
+  h3.ruleHeader {
+    top: 41px;
+    line-height:35px;
+  }
+}
+@media only screen and (min-height : 500px) {
+  div.nav ul li {
+    line-height : 50px;
+    font-size : 30px
+  }
+}
+@media only screen and (max-width: 500px) {
+  div#regModalId.regModal-content, div#myModalContent.modal-content, div.raceModal-content, div.ruleModal-content {
+    width : 85vw;
+  }
+  div.nav ul li {
+    line-height : 36px;
+    font-size : 12px
+  }
+}
+@media only screen and (min-width: 550px) {
   div.modal-body {
     grid-template-columns: minmax(50px, 80px) minmax(50px, 80px) minmax(50px, 80px) minmax(50px, 80px);
   }
@@ -190,6 +283,9 @@ html {
     background-color:rgba(255, 177, 10, 0.3)
   }
 }
+div.ruleModal-header h2 {
+  margin:10px;
+}
 /* The Modal (background) AND RACES Modal*/  /* The Modal (background) AND RACES Modal*/
 /* The Modal (background) AND RACES Modal*/  /* The Modal (background) AND RACES Modal*/
 .modal, .raceModal, .regModal, .ruleModal {
@@ -206,15 +302,16 @@ html {
 }
 .modal-content, .raceModal-content, .regModal-content, .ruleModal-content {
   position:relative; /* Allows us to specify position using bop, bottom etc.*/
+  top:-15vh;
   background-color: #fefefe;
   margin: auto; /* auto means left/right centered */
+  margin-top:0px;
+  margin-bottom:0px;
   padding: 0; /* ZERO PADDING - default value*/
   border: 2px solid rgb(255, 177, 10);
   border-radius:20px;
-  min-width: 65vw;
-  max-width:85vw;
-  min-height: 65vh;
-  max-height:88vh;    /* Could be more or less, depending on screen size */
+  width:70vw;
+  height: 80vh;   /* Could be more or less, depending on screen size */
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.19),0 6px 20px 0 rgba(0,0,0,0.19);
   -webkit-animation-name: animatetop;
   -webkit-animation-duration: 0.48s;
@@ -226,16 +323,12 @@ html {
   -o-animation-duration: 0.48s;
   animation-name: animatetop;
   animation-duration: 0.48s;
-  bottom : 13vh;
   overflow-y: scroll;
   overflow-x: hidden;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling:touch
 }
-.ruleModal-content {
-  width : 100%;
-  height : 100%;
-}
+
 .modal-body, .raceModal-body, .regModal-body {
   display:grid;
   justify-content: center;
@@ -267,10 +360,11 @@ html {
 }
 .modal .modal-footer, .raceModal .raceModal-footer {
   font-family:roboto;
-  color:rgb(255,255,255);
+  color:rgb(0,0,0,0.7);
   padding: 1px 8px;
   background-color:rgb(255, 177, 10);
   font-size:78%;
+  overflow: hidden;
 }
 .raceModal-footer h2 {
   color:rgba(0,0,0, 0.1);
@@ -365,6 +459,9 @@ html {
 /*      *//*      *//*    Main Screen Buttons  *//*      *//*      *//*      *//*      *//*    Main Screen Buttons  *//*      *//*      */
 /*      *//*      *//*    Main Screen Buttons  *//*      *//*      */
 .Btn {
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-appearance: none;
   background-color:rgba(0,0,0,0.74);
   color:white;
   position:auto;
@@ -386,6 +483,9 @@ html {
   max-height:55px;
 }
 .BtnClicked {
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-appearance: none;
   background-color:rgba(255, 177, 10, 0.57);
   color:white;
   position:auto;
@@ -406,6 +506,9 @@ html {
   background-color:rgba(255, 177, 10, 0.57);
 }
 .gridButtons {
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-appearance: none;
   display:grid;
   grid-template-rows: auto;
   grid-template-columns: minmax(40vw, 48vw) minmax(40vw, 48vw);
@@ -438,6 +541,9 @@ html {
 /*        Driver buttons       */   /*        Driver buttons       */   /*        Driver buttons       */
 /*        Driver buttons       */   /*        Driver buttons       */   /*        Driver buttons       */
 .driverBtn, .raceBtn {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
   border-radius:12px;
   background-color:rgba(0, 0, 0, 0.08);
   min-height:25px;
@@ -447,6 +553,9 @@ html {
   margin : auto;
 }
 .raceBtnClicked {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
   min-height:25px;
   max-height:65px;
   min-width:80px;
@@ -465,6 +574,9 @@ html {
   border:1px solid rgba(0, 0, 0, 0.48);
 }
 .clearBtn {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
   border-radius:5px;
   min-width:40px;
   max-width:60px;
@@ -496,14 +608,16 @@ html {
   text-decoration: none;
   cursor: pointer;
 }
+.regModal-content {
+  width : 60vw;
+  height: 50vh;
+}
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
   font-family:roboto;
   opacity: 1; /* Firefox */
 }
-.button {
-  font-family:roboto;
-}
 .description {
+  -webkit-text-fill:rgb(0,0,0,0.7);
   color : rgb(0,0,0,0.7);
   background-color:rgb(255, 177, 10);
   font-weight: 400;
@@ -532,14 +646,19 @@ html {
   line-height:19.5px;
 }
 .selectBtn {
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-appearance: none;
   background-color:rgba(0,0,0,0.8);
   color:white;
   position:auto;
   font-family:roboto;
   min-height:25px;
   max-height:35px;
-  min-width:30px;
-  max-width:140px;
+  min-width:40px;
+  max-width:180px;
+  padding-left:10px;
+  padding-right:10px;
   border :1.2px solid black;
   border-radius:12px;
   white-space: normal;
@@ -548,6 +667,9 @@ html {
   background-color:rgba(255, 177, 10, 0.57);
 }
 .selectedBtn {
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-appearance: none;
   background-color:rgba(255, 177, 10, 0.8);
   color:white;
   position:auto;
@@ -556,6 +678,7 @@ html {
   max-height:35px;
   min-width:80px;
   max-width:150px;
+  padding-left:15px;
   border :1.35px solid black;
   border-radius:12px;
   white-space: normal;
@@ -683,6 +806,9 @@ html {
   display : flex;
 }
 .finals {
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-appearance: none;
   background-color:rgba(0, 0, 0, 0.4);
   color:white;
   font-family:roboto;
@@ -722,16 +848,18 @@ html {
   list-style: none;
   transition: background .5s;
   text-decoration: none;
-  font-size : 5.4vw;
+  font-size : 5vw;
   margin:auto;
   text-align: center;
-  line-height : 9.2vh;
+  line-height : 9.5vh;
   flex:1 1 100%;
 }
+
 .nav ul li a {
   color: #fff;
   text-decoration:none;
 }
+
 /*             RULES MODAL LAYOUT           */   /*             RULES MODAL LAYOUT           */   /*             RULES MODAL LAYOUT           */
 /*             RULES MODAL LAYOUT           */   /*             RULES MODAL LAYOUT           */   /*             RULES MODAL LAYOUT           */
 /*             RULES MODAL LAYOUT           */   /*             RULES MODAL LAYOUT           */   /*             RULES MODAL LAYOUT           */
@@ -796,7 +924,7 @@ html {
   position: -moz-sticky;
   position: -ms-sticky;
   position: -o-sticky;
-  top: 65px;
+  top: 45px;
   line-height:40px;
   background-color:#fefefe;
   width :100%;
@@ -859,10 +987,6 @@ table {
   color:rgba(255, 162, 0, 1);
   left:0;
 }*/
-.regModal-content {
-  width : 80vw;
-  height: 55vh;
-}
 #check, #check2, #check3 {
   min-width: 35vw;
   max-width:55vw;
@@ -892,7 +1016,6 @@ table {
   margin-right:10px;
   margin-bottom:10px;
   left:2vw;
-  top:2.5vh;
 }
 .inputField:hover, .inputField:active {
   background-color:rgba(0, 0, 0, 0.08);
@@ -928,11 +1051,11 @@ table {
   padding-left:5px;
   padding-right:5px;
   margin-left:5px;
-  margin-top:15px;
+  margin-top:10px;
   margin-right:10px;
-  margin-bottom:10px;
+  margin-bottom:15px;
   left:2vw;
-  top:2.5vh;
+  top:2vh;
   background-color:rgba(0,0,0,0.2);
   border-color:none;
   color:rgba(0,0,0,0.8);
@@ -1043,6 +1166,7 @@ table {
   max-height:65vh;*/    /* Could be more or less, depending on screen size */
   box-shadow: 0 3px 6px 0 rgba(0,0,0,0.19),0 2px 4px 0 rgba(0,0,0,0.19);
 }
+
 #messageModalMessage {
   text-align: center;
   font-weight:300;
