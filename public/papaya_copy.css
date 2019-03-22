@@ -63,10 +63,13 @@ html {
 @media only screen and (min-height : 150px) {
   div.nav ul li {
     line-height : 40px;
-    font-size : 22px;
+    font-size : 25px;
   }
 }
 @media only screen and (min-height : 180px) and (max-height : 299px) {
+  div.gridButtons .Btn, div.gridButtons .selectBtn {
+    background-color:rgba(0,0,0,0.5);
+  }
   /*.raceModal-content, .ruleModal-content {
     width: 95vw;
     height: 95vh;
@@ -80,7 +83,7 @@ html {
     width: 90vw;
     height: 90vh;
     position:relative;
-    top:-32vh;
+    top:-30vh;
   }
   /*div#regModalId.regModal-content {
     width : 90vw;
@@ -95,8 +98,12 @@ html {
   }
 }
 @media only screen and (min-height : 300px) and (max-height : 419px) {
+  div.gridButtons .Btn, div.gridButtons .selectBtn {
+    background-color:rgba(0,0,0,0.5);
+  }
   div.ruleModal-header h2 {
     padding-left:20px;
+    padding-right:20px;
     border-radius:10px;
   }
   /*.modal-content, .raceModal-content, .ruleModal-content {
@@ -112,7 +119,7 @@ html {
     width : 72vw;
     height: 70vh;
     position:relative;
-    top:-15vh;
+    top:-13vh;
   }
   h3.ruleHeader {
     top: 40px;
@@ -120,9 +127,12 @@ html {
   }
 }
 @media only screen and (min-height : 420px) and (max-height : 499px) {
+  div.gridButtons .Btn, div.gridButtons .selectBtn {
+    background-color:rgba(0,0,0,0.6);
+  }
   div.nav ul li {
     line-height : 35px;
-    font-size : 26px;
+    font-size : 29px;
   }
   /*.modal-content, .raceModal-content, .ruleModal-content {
     width: 85vw;
@@ -132,7 +142,7 @@ html {
   }*/
   div#regModalId.regModal-content, div#myModalContent.modal-content, div.raceModal-content, div.ruleModal-content {
     width : 65vw;
-    height: 55vh;
+    height: 58vh;
     position:relative;
   }
   h3.ruleHeader {
@@ -143,16 +153,17 @@ html {
 @media only screen and (min-height : 500px) {
   div.ruleModal-header h2 {
     padding-left:15px;
+    padding-right:20px;
     border-radius:10px;
   }
   div.nav ul li {
     line-height : 58px;
-    font-size : 35px
+    font-size : 39px
   }
 }
 @media only screen and (max-width: 500px) {
   html {
-    background: black url(https://i.imgur.com/1rsbFo5.jpg) no-repeat center center fixed;
+    background: black url(https://i.imgur.com/cJdZqed.jpg) no-repeat center center fixed;
     -webkit-background-size:100vw auto;
     -moz-background-size:100vw auto;
     -o-background-size:100vw auto;
@@ -160,15 +171,17 @@ html {
   }
   div#regModalId.regModal-content, div#myModalContent.modal-content, div.raceModal-content, div.ruleModal-content {
     width : 85vw;
+    height:80vh;
   }
   div.nav ul li {
     line-height : 36px;
-    font-size : 12px
+    font-size : 20px
   }
 }
 @media only screen and (min-width: 550px) {
   div.ruleModal-header h2 {
     padding-left:15px;
+    padding-right:20px;
     border-radius:10px;
   }
   div.modal-body {
@@ -185,7 +198,7 @@ html {
     border-radius:15px;
     font-size : 19px;
     font-weight:200;
-    background-color:rgba(0,0,0,0.74);
+    background-color:rgba(0,0,0,0.67);
   }
   div.gridButtons .BtnClicked {
     background-color:rgba(255, 177, 10, 0.57);
@@ -207,7 +220,7 @@ html {
     border-radius:15px;
     font-size : 3vw;
     font-weight:300;
-    background-color:rgba(0,0,0,0.74);
+    background-color:rgba(0,0,0,0.67);
   }
   div.gridButtons .selectBtn:hover, div.gridButtons .selectBtn:active {
     background-color:rgba(255, 177, 10, 0.57);
@@ -262,7 +275,7 @@ html {
     border-radius:15px;
     font-size : 19px;
     font-weight:200;
-    background-color:rgba(0,0,0,0.74);
+    background-color:rgba(0,0,0,0.7);
   }
   div.gridButtons {
     grid-gap:95px 35px;
@@ -303,6 +316,7 @@ html {
 div.ruleModal-header h2 {
   padding-left:10px;
   border-radius:10px;
+  padding-right:20px;
 }
 /* The Modal (background) AND RACES Modal*/  /* The Modal (background) AND RACES Modal*/
 /* The Modal (background) AND RACES Modal*/  /* The Modal (background) AND RACES Modal*/
@@ -481,7 +495,7 @@ div.ruleModal-header h2 {
   -moz-appearance: none;
   appearance: none;
   -webkit-appearance: none;
-  background-color:rgba(0,0,0,0.74);
+  background-color:rgba(0,0,0,0.67);
   color:white;
   position:auto;
   font-family:roboto;
@@ -534,17 +548,31 @@ div.ruleModal-header h2 {
   grid-gap: 10vw 1vh;
   grid-auto-rows:auto;
   justify-items :center;
-  padding-top:55vh;
+  padding-top:70vh;
 }
-#poleTime {
-  minimum-width: 27vw;
-  maximum-width : 45vw;
+poleTimeDiv {
+  display:grid;
+  grid-template-columns: 35px 35px 45px;
+}
+#poleTime,#poleTime1,#poleTime2 {
   background-color:rgba(0, 0, 0, 0.08);
   border: 1px solid rgb(255, 177, 10);
-  border-radius : 5px;
-  padding: 1vh 1vw 1vh 1vw;
+  border-radius : 3px;
+  padding: 0.5vh 0.4vw 0.5vh 0.4vw;
   position:relative;
   bottom:25px;
+}
+#poleTime {
+  grid-column:1;
+  width:36px;
+}
+#poleTime1 {
+  grid-column:2;
+  width:29px;
+}
+#poleTime2 {
+  grid-column:3;
+  width:35px;
 }
 #special {
   position:relative;
@@ -1199,3 +1227,27 @@ table {
   margin-right:auto;
   padding:15px;*/
 }
+.clearDriverBtn {
+  margin:0px auto 25px auto;
+  display:block;
+  background-color:rgba(0,0,0,0.2);
+  border-color:none;
+  color:rgba(0,0,0,0.8);
+  border-radius : 5px;
+}/*
+padding-left:5px;
+padding-right:5px;
+margin-left:5px;
+margin-top:10px;
+margin-right:10px;
+margin-bottom:15px;
+left:2vw;
+top:2vh;
+background-color:rgba(0,0,0,0.2);
+border-color:none;
+color:rgba(0,0,0,0.8);
+position:relative;
+font-weight:300;
+border-radius : 5px;
+}
+*/
