@@ -650,8 +650,8 @@ function messageModal(theMessageIs) {
   setTimeout(function(){
     myResultModal.classList.remove('show1');
     setTimeout(function() {myResultModal.style.display = "none"}, 100);
-  }, 1300);*/
-}
+  }, 1300);
+}*/
 // three different functions all return true, all independent
 
 
