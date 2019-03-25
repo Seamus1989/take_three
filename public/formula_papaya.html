@@ -110,8 +110,8 @@
       </div>
       <div id = "poleTimeDiv"><center>
         <div><button id = "clearDriver" class = "clearDriverBtn" style = "display : none" onclick = "clearButtonFunction()">Clear Entry</button></div>
-        <input type="number" id = "poleTime" style = "display : none" placeholder = " m:" min = "0" max = "9" required>
-        <input type="number" id = "poleTime1" style = "display : none" placeholder = " ss."  min = "0" max = "59"required>
+        <input type="number" id = "poleTime" style = "display : none" placeholder = " m:" min = "0" max = "9" required onkeypress = "specialPoleFunctionEvent(this.id)">
+        <input type="number" id = "poleTime1" style = "display : none" placeholder = " ss."  min = "0" max = "59"required onkeypress = "specialPoleFunctionEvent(this.id)">
         <input type = "number" id = "poleTime2" style = "display : none" placeholder = " SSS"  min = "0" max = "999"required>
         <button style = "display : none" id = "special" onclick = "specialPoleFunction()">&#10004;</button>
       </center>
@@ -239,7 +239,8 @@
       </div>
 
       <div id = "registerForm">
-        <br><br><br><br><br><br><br>
+        <br><br>
+        <div id = "Hole"></div>
          <!-- action = "forms/form.txt" method = "POST" enctype="application/json" --><!--   Username (password retype password) name DOB email nationality home-city #1 driver senna/prost   -->
       <input id = "username" class = "inputField" type = "text" placeholder = "Username:" name = "username" minlength = "2" required pattern="^\S+$"><!--<p id = "check2"></p><p id = "usernameAlreadyTaken"></p>onchange = "if(this.value != '') callAjaxFunction('username', this.value, this.id)"--><!-- oninput = "inputUserFunction(this.id)"-->
       <input id = "psw" type  = "password" class = "inputField" placeholder = "Password:" name = "psw"> <!--- JAVASCRIPT NEEDED FOR VALIDATION OF PASSWORD --><!--oninput = "inputFirstPassword(this.id)"  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required-->
@@ -748,7 +749,7 @@
            <div class = "helpMe">
            <li><a>Profile</li></a>
            <li onclick = "openRules()"><a>Rules</a></li>
-           <li><a>About</li></a>
+           <li onclick = "predictorModal()"><a>About</li></a>
            <li onclick = "openReg()"><a id = "navLogin">Login</a></li>
        </div></ul>
 </div>

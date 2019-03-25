@@ -77,6 +77,7 @@ function findIndex(list,searchElement) {
 
 
 function clearButtonFunction() {
+  document.getElementById("clearDriver").style.display = "none"
   modal.style.display = "none";
   document.getElementById(selection).setAttribute("name","");
   checkNameEmptyBtnClicked(selection)
@@ -345,6 +346,20 @@ function specialPoleFunction() {
   }
   checkNameEmptyBtnClicked(selection)
 }
+function specialPoleFunctionEvent(identify) {
+  setTimeout(function(){
+    if (identify === "poleTime") {
+      if (document.getElementById(identify).value.length > 1) {
+        document.getElementById("poleTime1").focus();
+      };
+    } else if (identify === "poleTime1") {
+      if (document.getElementById(identify).value.length > 1) {
+        document.getElementById("poleTime2").focus();
+      };
+    };
+  }, 1);
+}
+
 //////////// This function closes the modal when selecting a driver    ////closeSecondList() closePrimaryList() closeQuallyList()
 function myFunction(driver,clicked_id) {
   if (checkInList(primary_list, selection)) {
@@ -616,12 +631,26 @@ function submitTheForm() {
 function messageModal(theMessageIs) {
   document.getElementById("messageModalMessage").innerHTML = theMessageIs;
   document.getElementById("myMessageModal").style.display = "block";
-  setTimeout(function(){theMessageModal.classList.add('show');}, 330)
+  setTimeout(function(){theMessageModal.classList.add('show');},30)
   setTimeout(function(){
     theMessageModal.classList.remove('show');
     document.getElementById("messageModalMessage").innerHTML = "";
-    setTimeout(function() {document.getElementById("myMessageModal").style.display = "none"}, 280);
-  }, 1950);
+    setTimeout(function() {document.getElementById("myMessageModal").style.display = "none"}, 100);
+  }, 2000);
+}
+
+/*function predictorModal(theMessageIs) {
+  myResultModal.style.display = "grid"
+  setTimeout(function(){
+    myResultModal.style.display = "none"
+  }, 2250);
+  /*
+  myResultModal.style.display = "block";
+  setTimeout(function(){myResultModal.classList.add('show1');},30)
+  setTimeout(function(){
+    myResultModal.classList.remove('show1');
+    setTimeout(function() {myResultModal.style.display = "none"}, 100);
+  }, 1300);*/
 }
 // three different functions all return true, all independent
 
@@ -763,7 +792,7 @@ function inputSecondPassword(identity) {
 */
 
 function registerScrollFunction(identity) {// need to make it smaller again maybe?
-  document.getElementById("username").scrollIntoView({ behavior: 'smooth' });
+  document.getElementById("Hole").scrollIntoView({ behavior: 'smooth' });
   document.getElementById("changableHeader").innerHTML = "Register";
   document.getElementById("regModalId").style.height = "80vh";
 
@@ -810,8 +839,8 @@ async function submitTheLoginForm() {
 
         } else if(ourResponse.success === false) {
           document.getElementById("check3").innerHTML = theMessage;
-          document.getElementById("loginUsername").scrollIntoView({ behavior: 'smooth' })
-          setTimeout(function() {document.getElementById("check3").innerHTML = "";}, 1800)
+          //document.getElementById("loginUsername").scrollIntoView({ behavior: 'smooth' })
+          setTimeout(function() {document.getElementById("check3").innerHTML = "";}, 2000)
         }
       }
   }
@@ -875,7 +904,7 @@ async function registrationSendFunction() {
             messageModal(theMessage)
           } else if (ourResponse.success === false) {
             //document.getElementById("check2").innerHTML = theMessage;
-            document.getElementById("username").scrollIntoView({ behavior: 'smooth' })
+            document.getElementById("Hole").scrollIntoView({ behavior: 'smooth' })
             //setTimeout(function() {document.getElementById("check2").innerHTML = "";}, 1800)
           }
         }
@@ -883,7 +912,7 @@ async function registrationSendFunction() {
       catch(error) {
     }
   } else {
-    document.getElementById("username").scrollIntoView({ behavior: 'smooth' })
+    document.getElementById("Hole").scrollIntoView({ behavior: 'smooth' })
   }
 }
 
@@ -1007,6 +1036,5 @@ async function getItMate(race) {
         }
     }
     catch(error) {
-
     }
 }
