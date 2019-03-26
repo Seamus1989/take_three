@@ -24,8 +24,8 @@
   to {transform: translateY(0); opacity:0.94}
 }
 @-o-keyframes animatetop {
-  from {transform: translateX(-100%); opacity:0}
-  to {transform: translateX(100%); opacity:0.94}
+  from {transform: translateX(100%); opacity:0}
+  to {transform: translateX(0); opacity:0.94}
 }
 /*    OTHER ANIMATION    */
 @-webkit-keyframes  animateAcross {
@@ -49,15 +49,16 @@
   to {transform: translateX(-185%)}
 }
 
-html {
+html: {
   background: black url(https://i.imgur.com/Qis4o5U.jpg) no-repeat center center fixed;
-  -webkit-background-size:100vw auto;
-  -moz-background-size:100vw auto;
-  -o-background-size:100vw auto;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
   opacity:0.9;
-  background-size:100vw auto;
+  background-size: cover;
   font-family: roboto;
 }
+
 /*position:fixed and overflow-y: scroll
 display: block;
   position: fixed;
@@ -84,6 +85,9 @@ display: block;
   div.gridButtons .Btn, div.gridButtons .selectBtn {
     background-color:rgba(0,0,0,0.5);
   }
+  div.gridButtons .Btn, div.gridButtons .BtnClicked, div.gridButtons .selectBtn, div.gridButtons .finals {
+    font-size:107.5%;
+  }
   /*.raceModal-content, .ruleModal-content {
     width: 95vw;
     height: 95vh;
@@ -94,10 +98,10 @@ display: block;
     font-size:70%;
   }*/
   div#myModalContent.modal-content, div#regModalId.regModal-content, div.raceModal-content, div.ruleModal-content  {
-    width: 90vw;
-    height: 90vh;
+    width: 95vw;
+    height: 95vh;
     position:relative;
-    top:-28.5vh;
+    top:-30.5vh;
   }
   /*div#regModalId.regModal-content {
     width : 90vw;
@@ -106,8 +110,7 @@ display: block;
     top:-15vh;
   }*/
   h3.ruleHeader {
-    position:sticky;
-    top:35px;
+    position:static;
     line-height:30px;
   }
 }
@@ -115,8 +118,12 @@ display: block;
   div.gridButtons .Btn, div.gridButtons .selectBtn {
     background-color:rgba(0,0,0,0.5);
   }
+  div.gridButtons .Btn, div.gridButtons .BtnClicked, div.gridButtons .selectBtn, div.gridButtons .finals {
+    font-size:105%;
+  }
   div.ruleModal-header h2 {
     padding-left:20px;
+    position:static;
     padding-right:20px;
     border-radius:10px;
   }
@@ -130,10 +137,10 @@ display: block;
     font-size:80%;
   }*/
   div#regModalId.regModal-content, div#myModalContent.modal-content, div.raceModal-content, div.ruleModal-content {
-    width : 72vw;
-    height: 70vh;
+    width : 82vw;
+    height: 80vh;
     position:relative;
-    top:-17.5vh;
+    top:-19.5vh;
   }
   h3.ruleHeader {
     top: 68px;
@@ -142,7 +149,10 @@ display: block;
 }
 @media only screen and (min-height : 420px) and (max-height : 499px) {
   div.gridButtons .Btn, div.gridButtons .selectBtn {
-    background-color:rgba(0,0,0,0.6);
+    background-color:rgba(0,0,0,0.5);
+  }
+  div.gridButtons .Btn, div.gridButtons .BtnClicked, div.gridButtons .selectBtn, div.gridButtons .finals {
+    font-size:103%;
   }
   div.nav ul li {
     line-height : 35px;
@@ -155,10 +165,10 @@ display: block;
     bottom:-8vh;
   }*/
   div#regModalId.regModal-content, div#myModalContent.modal-content, div.raceModal-content, div.ruleModal-content {
-    width : 65vw;
-    height: 58vh;
+    width : 85vw;
+    height: 78vh;
     position:relative;
-    top:-14vh;
+    top:-18vh;
   }
   h3.ruleHeader {
     top: 64px;
@@ -178,24 +188,22 @@ display: block;
 }
 @media only screen and (max-width: 500px) {
   html {
-    background: black url(https://i.imgur.com/cJdZqed.jpg) no-repeat center center fixed;
-    position:fixed;
-    overflow-y: scroll;
+    content: "";
     display: block;
     position: fixed;
     left: 0;
     top: 0;
-    width: 100vw;
-    height: auto;
+    background: black url(https://i.imgur.com/cJdZqed.jpg) no-repeat center center fixed;
     z-index: -10;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    opacity:0.9;
   }
   div#regModalId.regModal-content, div#myModalContent.modal-content, div.raceModal-content, div.ruleModal-content {
-    width : 85vw;
-    height:80vh;
+    width : 90vw;
+    height:85vh;
   }
   div.nav ul li {
     line-height : 36px;
@@ -673,6 +681,7 @@ poleTimeDiv {
   z-index:6;
   color: #aaa;
   float: right;
+  overflow:hidden;
   font-size: 22px;
   font-weight: bold;
   margin-top:5px;
