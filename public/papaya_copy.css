@@ -49,7 +49,7 @@
   to {transform: translateX(-185%)}
 }
 
-html: {
+html {
   background: black url(https://i.imgur.com/Qis4o5U.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -86,7 +86,7 @@ display: block;
     background-color:rgba(0,0,0,0.5);
   }
   div.gridButtons .Btn, div.gridButtons .BtnClicked, div.gridButtons .selectBtn, div.gridButtons .finals {
-    font-size:107.5%;
+    font-size:103.5%;
   }
   /*.raceModal-content, .ruleModal-content {
     width: 95vw;
@@ -119,7 +119,7 @@ display: block;
     background-color:rgba(0,0,0,0.5);
   }
   div.gridButtons .Btn, div.gridButtons .BtnClicked, div.gridButtons .selectBtn, div.gridButtons .finals {
-    font-size:105%;
+    font-size:104%;
   }
   div.ruleModal-header h2 {
     padding-left:20px;
@@ -188,11 +188,6 @@ display: block;
 }
 @media only screen and (max-width: 500px) {
   html {
-    content: "";
-    display: block;
-    position: fixed;
-    left: 0;
-    top: 0;
     background: black url(https://i.imgur.com/cJdZqed.jpg) no-repeat center center fixed;
     z-index: -10;
     -webkit-background-size: cover;
@@ -200,6 +195,13 @@ display: block;
     -o-background-size: cover;
     background-size: cover;
     opacity:0.9;
+    height: 100%;
+    overflow: hidden;
+  }
+  body {
+    height:100%;
+    overflow-y:scroll;
+    -webkit-overflow-scrolling: touch;
   }
   div#regModalId.regModal-content, div#myModalContent.modal-content, div.raceModal-content, div.ruleModal-content {
     width : 90vw;
@@ -207,7 +209,7 @@ display: block;
   }
   div.nav ul li {
     line-height : 36px;
-    font-size : 20px
+    font-size : 18.5px
   }
 }
 @media only screen and (min-width: 550px) {
@@ -228,7 +230,7 @@ display: block;
     min-width:10vw;
     max-width:38vw;
     border-radius:15px;
-    font-size : 19px;
+    font-size : 18.5px;
     font-weight:200;
     background-color:rgba(0,0,0,0.48);
   }
@@ -238,7 +240,7 @@ display: block;
     max-height:9vw;
     min-width:5vw;
     max-width:30vw;
-    font-size : 20px;
+    font-size : 18px;
     border-radius:12px;
   }
   div.gridButtons .Btn:hover, div.gridButtons .Btn:active {
