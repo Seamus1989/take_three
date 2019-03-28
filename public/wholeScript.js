@@ -243,45 +243,6 @@ function closeFunction(y) {
   }
   checkNameEmptyBtnClicked(selection);
 }
-/*
-function closeFunction(y) {
-  modal.style.display = "none";
-  if (checkInList(primary_list, selection)) {
-    document.getElementById("positionTitle").innerHTML = "";
-    document.getElementById("Top Ten Points").style.display = "none"
-    if (document.getElementById(selection).name != "") {
-      changeClass(selection, "BtnClicked");
-    } else {
-      changeClass(selection, "Btn")
-    }
-  } else if (checkInList(secondary_list, selection)) {
-    document.getElementById(sel).style.display = "none";
-    document.getElementById(se).style.display = "none";
-    if (document.getElementById(selection).name != "") {
-      changeClass(selection, "BtnClicked");
-    } else {
-      changeClass(selection, "Btn")
-    }
-  } else if (checkInList(qually_list, selection)) {
-    //var timeNotSet = document.getElementById("poleTime").value; // value = "00:01:23.456"
-    //let timeNotSet = defaultPoleTime.substring(3, 12); // 01:23:456
-    //var defaultVal = document.getElementById("Pole").name; // when clicked = driver name
-    //document.getElementById("poleTime").setAttribute("value", timeNotSet);
-    //document.getElementById("Pole").setAttribute("value","Pole : " + defaultVal + " - " + timeNotSet)
-    document.getElementById(sel).style.display = "none";
-    document.getElementById(se).style.display = "none";
-    document.getElementById("poleTime").style.display = "none";
-    document.getElementById("poleTime1").style.display = "none";
-    document.getElementById("poleTime2").style.display = "none";
-    document.getElementById("special").style.display = "none";
-    if (document.getElementById("poleTime").value != "") {
-      changeClass(selection, "BtnClicked");
-    } else {
-      changeClass(selection, "Btn")
-    }
-  }
-}
-*/
 
 /////// Closes modal when we click on the exterior window ///////////////
 window.onclick = function(event) {
@@ -325,6 +286,7 @@ function specialPoleFunction() {
   let theThirdBit = document.getElementById("poleTime2").value
   if (theFirstBit.length > 1) {
     theFirstBit = theFirstBit.substr(1);
+
   }
   if (theSecondBit.length === 1) {
     theSecondBit = "0"+theSecondBit
@@ -380,28 +342,6 @@ function myFunction(driver,clicked_id) {
     }
 }
 
-/////////////////////// TEST ////////////////////////
-/*
-function scrollTo(element, to, duration) {
-    if (duration <= 0) return;
-    var difference = to - element.scrollTop;
-    var perTick = difference / duration * 10;
-
-    setTimeout(function() {
-        element.scrollTop = element.scrollTop + perTick;
-        if (element.scrollTop === to) return;
-        scrollTo(element, to, duration - 10);
-    }, 10);
-}
-*/
-// THIS FUNCTION
-// does everything but does not quit unless pole time has changed
- // if we click on driver and pole time is unchanged, dont quit
- // if we click on driver and pole time has changed, then quit.
-//var defaultPoleTime = document.getElementById("poleTime").value; // value = "00:01:23.456"
-//let timeNotSet = defaultPoleTime.substring(3, 12); // 01:23:456
-//var defaultVal = document.getElementById("Pole").name; // when clicked = driver name
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////// Random functions used throughout //////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -439,22 +379,7 @@ function deleteEntireList(list) {
 function changeClass(ofThisId, toThisValue) {
   return document.getElementById(ofThisId).setAttribute("class",toThisValue);
 }
-////////////////////// Change Name of Element ////////////////////////////////////////////
 
-/*function changeName(ofThisId, toThisName) {
-  return document.getElementById(ofThisId).setAttribute("Name",toThisName);
-}
-
-function elementNameInList(ofElement, list) {
-  var zoey = document.getElementById(selection).name;
-  var seamusy = list.indexOf(zoey);
-  if (seamusy > -1) {
-    return true;
-  } else {
-    return false;
-  }
-}
-*/
 //////////////////////////////////////////////// RESET BUTTON //////////////////////////////////////////////////
 ////////////////// RESET BUTTON ////////////////////// RESET BUTTON ////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -585,48 +510,6 @@ function splitPoleTimeAndDriverPartTime() {
   //alert(justTime)
   return justTime
 }
-/*
-function submitTheForm() {
-  let newDriverString = splitPoleTimeAndDriverPartDriver();
-  let newTimeString = splitPoleTimeAndDriverPartTime();
-  let listDataToSendInForm = [document.getElementById("raceBtn").name, document.getElementById("P1").name, document.getElementById("P2").name, document.getElementById("P3").name, document.getElementById("P4").name, document.getElementById("P5").name, document.getElementById("P6").name, document.getElementById("P7").name, document.getElementById("P8").name, document.getElementById("P9").name, document.getElementById("P10").name, newDriverString, newTimeString,
-  document.getElementById("Team Delta").name, document.getElementById("DotD").name, document.getElementById("First Lap").name, document.getElementById("MPG").name, document.getElementById("Fastest").name, document.getElementById("PSSInput").value]
-  // Sending and receiving data in JSON format using POST method https://stackoverflow.com/questions/24468459/sending-a-json-to-server-and-retrieving-a-json-in-return-without-jquery
-  const xhr = new XMLHttpRequest();
-  const url = "/formSend";
-  xhr.open("POST", url, true);
-  xhr.setRequestHeader("Content-Type", "application/json");
-  let objectDataToSendInForm = predictionArrayIntoObject(listDataToSendInForm)
-  const data = JSON.stringify(objectDataToSendInForm);
-  //ORDER Race, (P1 -- P10), pole driver, pole time, delta, DotD, first lap, mpg, fastest, PSS.
-
-  allListElements.forEach(function(element) {
-    let theElement = element;
-    let testVariable = document.getElementById(theElement).name;
-    let testVariable2 = document.getElementById(theElement).value;
-    if (testVariable === "") {
-      fieldsMissed.push(" " + testVariable2);
-    }
-  })
-  if (fieldsMissed.length === 0 ) {
-    loadingWheel.style.borderColor = "rgba(255, 177, 10, 0.5) transparent transparent transparent"
-    xhr.send(data);
-  } else {
-    //alert("Please check entries for: " + fieldsMissed)
-  }
-  xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4 && xhr.status === 200) { // readyState 4 = DONE
-          let responseString = xhr.response;
-          let JsonParser = JSON.parse(responseString);
-          myResultModal.style.display = "grid"
-          loadingWheel.style.borderColor = "rgba(255, 177, 10, 0) transparent transparent transparent"
-          setTimeout(function(){
-            myResultModal.style.display = "none"
-          }, 4750);
-      }
-  };
-}
-*/
 
 function messageModal(theMessageIs) {
   document.getElementById("messageModalMessage").innerHTML = theMessageIs;
@@ -638,23 +521,6 @@ function messageModal(theMessageIs) {
     setTimeout(function() {document.getElementById("myMessageModal").style.display = "none"}, 100);
   }, 2000);
 }
-
-/*function predictorModal(theMessageIs) {
-  myResultModal.style.display = "grid"
-  setTimeout(function(){
-    myResultModal.style.display = "none"
-  }, 2250);
-  /*
-  myResultModal.style.display = "block";
-  setTimeout(function(){myResultModal.classList.add('show1');},30)
-  setTimeout(function(){
-    myResultModal.classList.remove('show1');
-    setTimeout(function() {myResultModal.style.display = "none"}, 100);
-  }, 1300);
-}*/
-// three different functions all return true, all independent
-
-
 
 function checkAllBoolean() {
   if (document.getElementById("P1").name != "" && document.getElementById("P2").name != "" && document.getElementById("P3").name != "" && document.getElementById("P4").name != "" && document.getElementById("P5").name != "" && document.getElementById("P6").name != "" && document.getElementById("P7").name != "" && document.getElementById("P8").name != "" && document.getElementById("P9").name != "" && document.getElementById("P10").name != "" && document.getElementById("Team Delta").name != "" && document.getElementById("First Lap").name != "" && document.getElementById("MPG").name != "" && document.getElementById("DotD").name != "" && document.getElementById("Fastest").name != "" && document.getElementById("PSSInput").value && document.getElementById("poleTime").checkValidity() && document.getElementById("poleTime1").checkValidity() && document.getElementById("poleTime2").checkValidity() && document.getElementById("raceBtn").name !="") {
@@ -700,7 +566,7 @@ async function submitTheForm() {
           myResultModal.style.display = "grid"
           setTimeout(function(){
             myResultModal.style.display = "none"
-          }, 4750);
+          }, 2550);
         }
       }
       catch(error) {

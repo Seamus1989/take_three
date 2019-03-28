@@ -57,22 +57,15 @@ html {
   opacity:0.9;
   background-size: cover;
   font-family: roboto;
-}
-
-/*position:fixed and overflow-y: scroll
-display: block;
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
   height: 100%;
-  z-index: -10;
-  background: url(photos/2452.jpg) no-repeat center center;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}*/
+  overflow: hidden;
+  z-index:-10;
+}
+body {
+  height:100%;
+  overflow-y:scroll;
+  -webkit-overflow-scrolling: touch;
+}
 /*   MEDIA QUERY    */  /*   MEDIA QUERY    *//*   MEDIA QUERY    */  /*   MEDIA QUERY    */
 /*   MEDIA QUERY    */  /*   MEDIA QUERY    *//*   MEDIA QUERY    */  /*   MEDIA QUERY    */
 @media only screen and (min-height : 150px) {
@@ -88,27 +81,13 @@ display: block;
   div.gridButtons .Btn, div.gridButtons .BtnClicked, div.gridButtons .selectBtn, div.gridButtons .finals {
     font-size:103.5%;
   }
-  /*.raceModal-content, .ruleModal-content {
-    width: 95vw;
-    height: 95vh;
-    position:relative;
-    top:-28vh;
-  }
-  .modal .modal-header, .raceModal .raceModal-header, .regModal-header, .ruleModal-header {
-    font-size:70%;
-  }*/
+
   div#myModalContent.modal-content, div#regModalId.regModal-content, div.raceModal-content, div.ruleModal-content  {
     width: 95vw;
     height: 95vh;
     position:relative;
     top:-30.5vh;
   }
-  /*div#regModalId.regModal-content {
-    width : 90vw;
-    height: 70vh;
-    position:relative;
-    top:-15vh;
-  }*/
   h3.ruleHeader {
     position:static;
     line-height:30px;
@@ -127,15 +106,6 @@ display: block;
     padding-right:20px;
     border-radius:10px;
   }
-  /*.modal-content, .raceModal-content, .ruleModal-content {
-    width: 85vw;
-    height: 80vh;
-    position:relative;
-    top:-15vh;
-  }
-  .modal .modal-header, .raceModal .raceModal-header, .regModal-header, .ruleModal-header {
-    font-size:80%;
-  }*/
   div#regModalId.regModal-content, div#myModalContent.modal-content, div.raceModal-content, div.ruleModal-content {
     width : 82vw;
     height: 80vh;
@@ -158,12 +128,6 @@ display: block;
     line-height : 35px;
     font-size : 29px;
   }
-  /*.modal-content, .raceModal-content, .ruleModal-content {
-    width: 85vw;
-    position:relative;
-    height: 85vh;
-    bottom:-8vh;
-  }*/
   div#regModalId.regModal-content, div#myModalContent.modal-content, div.raceModal-content, div.ruleModal-content {
     width : 85vw;
     height: 78vh;
@@ -188,7 +152,7 @@ display: block;
 }
 @media only screen and (max-width: 500px) {
   html {
-    background: black url(https://i.imgur.com/cJdZqed.jpg) no-repeat center center fixed;
+    background: black url(https://i.imgur.com/ydjY458.jpg) no-repeat center center fixed;
     z-index: -10;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -231,7 +195,7 @@ display: block;
     max-width:38vw;
     border-radius:15px;
     font-size : 18.5px;
-    font-weight:200;
+    font-weight:300;
     background-color:rgba(0,0,0,0.48);
   }
   div.gridButtons .BtnClicked {
@@ -308,7 +272,7 @@ display: block;
     max-width:30vw;
     border-radius:15px;
     font-size : 19px;
-    font-weight:200;
+    font-weight:300;
     background-color:rgba(0,0,0,0.7);
   }
   div.gridButtons {
@@ -542,7 +506,7 @@ div.ruleModal-header h2 {
   max-width:130px;
   border :1.2px solid black;
   border-radius:12px;
-  font-weight:200;
+  font-weight:300;
   font-size:12px;
   padding-left:20px;
   padding-right:20px;
@@ -1022,12 +986,6 @@ poleTimeDiv {
   line-height:2.1em;
   padding-left: 62px;
 }
-/*.specialequation {
-  background-color:rgba(255, 184, 77, 0.31);
-  border:1px solid rgba(255, 184, 77, 0.81);
-  border-radius:12px;
-  padding:5px;
-}*/
 .notBold{
   font-weight:normal;
   padding-left : 8px;
@@ -1036,25 +994,7 @@ table, th, td {
   border: 1px solid black;
   font-size:85%;
 }
-/*
-.table {
-  font-family:roboto;
-  font-size:100px;
-  letter-spacing:0.022em;
-  border: 2px solid rgba(250,250,250,0.15);
-  border-radius:11px;
-  color:rgba(0,0,0,1);
-  height : min-content;
-  background-color:rgba(250,250,250,0.25);
-  padding-left:5vw;
-}
-table {
-    display: table;
-    border-collapse: separate;
-    border: 2px solid rgba(250,250,250,0.15);
-    border-radius:11px;
-}
-*/
+
 /*          Login / Register Modal Layout  */     /*          Login / Register Modal Layout  */
 /*          Login / Register Modal Layout  */     /*          Login / Register Modal Layout  */
 /*          Login / Register Modal Layout  */     /*          Login / Register Modal Layout  */
@@ -1062,19 +1002,6 @@ table {
 
 
 
-/*.regModal-footer {
-  font-family:roboto;
-  padding: 5px 15px;
-  color:rgba(0,0,0, 0.1);
-  background-color:rgb(255, 177, 10);
-  width : 100%;
-}
-#papaya{
-  background-color:rgb(255, 177, 10);
-  position:relative;
-  color:rgba(255, 162, 0, 1);
-  left:0;
-}*/
 #check, #check2, #check3 {
   min-width: 35vw;
   max-width:55vw;
@@ -1157,62 +1084,6 @@ table {
   top:5vh;
 }
 
-
-
-
-
-/*
-  background-color:rgba(0,0,0,0.8);
-  color:white;
-  position:auto;
-  font-family:roboto;
-  min-height:25px;
-  max-height:35px;
-  min-width:70px;
-  max-width:130px;
-  border :2px solid black;
-  border-radius:12px;
-  font-weight:200;
-  padding-left:10px;
-  padding-right:10px;
-  white-space: normal;
-}
-.
-
-
-}
-.regModal-footer {
-  font-family:roboto;
-  color:rgb(255,255,255);
-  padding: 1px 8px;
-  background-color:rgb(255, 177, 10);
-  position: sticky;
-  position: -webkit-sticky;
-  position: -moz-sticky;
-  position: -ms-sticky;
-  position: -o-sticky;
-  bottom:0px;
-  height:25px;
-}*/
-/*.registerButtons {
-  display:grid;
-  grid-template-columns: Max-content Max-content Max-content;
-  grid-template-rows:max-content;
-  grid-gap:10px;
-}
-.registerOne {
-  grid-column:1;
-  grid-row:1;
-}
-.registerTwo {
-  grid-column:2;
-  grid-row:1;
-}
-.registerThree {
-  grid-column:3;
-  grid-row:1;
-}*/
-
 .messageModal.show {
     opacity: 1;
     position : fixed;
@@ -1221,8 +1092,6 @@ table {
     right:0;
     padding-top:150px;
 }
-
-
 .messageModal { /* Hidden by default - its hidden YEAH then we change its property */
   position: fixed;
   display:none;/* Stay in place */
@@ -1240,31 +1109,27 @@ table {
 #messageModal-content {
   position:relative; /* Allows us to specify position using bop, bottom etc.*/
   color:rgb(255,255,255);
-  background-color:rgba(255, 177, 10,0.7);
+  background-color:rgba(255, 177, 10,0.8);
   /*margin: auto;  auto means left/right centered */
   padding: 0; /* ZERO PADDING - default value*/
   border: 1px solid black;
   margin:auto;
   width:80vw;
-  height:18vh;
+  height:25vh;
   border-radius:14px;
+  font-size:5vh;
   /*min-width: 45vw;
   max-width:45vw;
   min-height: 55vh;
   max-height:65vh;*/    /* Could be more or less, depending on screen size */
   box-shadow: 0 3px 6px 0 rgba(0,0,0,0.19),0 2px 4px 0 rgba(0,0,0,0.19);
 }
-
-#messageModalMessage {
+#messageModalMessageDiv {
   text-align: center;
   font-weight:300;
+  margin-bottom:15px;
   padding:20px;
   margin:5;
-  /*margin-left:auto;
-  margin-top :20px;
-  margin-bottom:10px;
-  margin-right:auto;
-  padding:15px;*/
 }
 .clearDriverBtn {
   margin:0px auto 25px auto;
@@ -1273,23 +1138,7 @@ table {
   border-color:none;
   color:rgba(0,0,0,0.8);
   border-radius : 5px;
-}/*
-padding-left:5px;
-padding-right:5px;
-margin-left:5px;
-margin-top:10px;
-margin-right:10px;
-margin-bottom:15px;
-left:2vw;
-top:2vh;
-background-color:rgba(0,0,0,0.2);
-border-color:none;
-color:rgba(0,0,0,0.8);
-position:relative;
-font-weight:300;
-border-radius : 5px;
 }
-*/
 #Hole {
   margin:30px 0px;
   padding:13px 0px;
