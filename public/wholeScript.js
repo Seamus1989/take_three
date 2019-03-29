@@ -19,7 +19,7 @@ let sel;
 let se;
 //let driver_variable;
 let fieldsMissed = [];
-let raceList = ["AUS","BAH", "CHI", "AZB","SPA", "MON", "CAN", "FRA", "RBR", "BRI", "GER", "HUN", "SPA", "MNZ", "MBS", "RUS","SUZ", "MEX", "USA", "BRA", "ABU"];
+let raceList = ["AUS","BAH", "CHI", "AZB","ESP", "MON", "CAN", "FRA", "RBR", "BRI", "GER", "HUN", "SPA", "MNZ", "MBS", "RUS","SUZ", "MEX", "USA", "BRA", "ABU"];
 let headerRaceList = ["mel", "bhr", "sha", "bak","cat","mnt", "vil", "ric","spe","sil","hnh", "hgr","spf", "itl", "sing", "soch","suzu", "rodi","tex","palo","yas"];
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -32,6 +32,7 @@ let loadingWheel = document.getElementById("loadingWheel");
 let ruleModal = document.getElementById("myRuleModal");
 let regModal = document.getElementById("myRegModal");
 let theMessageModal = document.getElementById("myMessageModal");
+let theProfileModal = document.getElementById("myProfileModal");
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////// Timer function for opening the page init /////////////////////////////////////////////
 /////////////////// It sets timers for the races, and detects Authentication /////////////////////////////
@@ -108,7 +109,9 @@ function openRules() {
 
 function openReg() {
   regModal.style.display = "grid"
-
+}
+function openProfile() {
+  theProfileModal.style.display = "grid"
 }
 function showAllDrivers() {
   driverList.forEach(function(element) {
@@ -211,6 +214,9 @@ function closeRuleFunction() {
 function closeRegFunction() {
   regModal.style.display = "none";
 }
+function closeProfileFunction() {
+  theProfileModal.style.display = "none"
+}
 function raceSelectFunction(identify) {
   raceModal.style.display = "none";
   var raceElement = document.getElementById(identify);
@@ -274,6 +280,8 @@ window.onclick = function(event) {
     regModal.style.display = "none";
   } else if (event.target == raceModal) {
     raceModal.style.display = "none";
+  } else if (event.target == theProfileModal) {
+    theProfileModal.style.display = "none"
   }
 }
 //The first person we click is foreever losttttttt, maybe switch them all back on in opening. THEN, each decides to show or not.
@@ -523,7 +531,7 @@ function messageModal(theMessageIs) {
 }
 
 function checkAllBoolean() {
-  if (document.getElementById("P1").name != "" && document.getElementById("P2").name != "" && document.getElementById("P3").name != "" && document.getElementById("P4").name != "" && document.getElementById("P5").name != "" && document.getElementById("P6").name != "" && document.getElementById("P7").name != "" && document.getElementById("P8").name != "" && document.getElementById("P9").name != "" && document.getElementById("P10").name != "" && document.getElementById("Team Delta").name != "" && document.getElementById("First Lap").name != "" && document.getElementById("MPG").name != "" && document.getElementById("DotD").name != "" && document.getElementById("Fastest").name != "" && document.getElementById("PSSInput").value && document.getElementById("poleTime").checkValidity() && document.getElementById("poleTime1").checkValidity() && document.getElementById("poleTime2").checkValidity() && document.getElementById("raceBtn").name !="") {
+  if (document.getElementById("P1").name != "" && document.getElementById("P2").name != "" && document.getElementById("P3").name != "" && document.getElementById("P4").name != "" && document.getElementById("P5").name != "" && document.getElementById("P6").name != "" && document.getElementById("P7").name != "" && document.getElementById("P8").name != "" && document.getElementById("P9").name != "" && document.getElementById("P10").name != "" && document.getElementById("Team Delta").name != "" && document.getElementById("First Lap").name != "" && document.getElementById("MPG").name != "" && document.getElementById("DotD").name != "" && document.getElementById("Fastest").name != "" && document.getElementById("PSSInput").hasAttribute("value") && document.getElementById("poleTime").checkValidity() && document.getElementById("poleTime1").checkValidity() && document.getElementById("poleTime2").checkValidity() && document.getElementById("raceBtn").name !="") {
     return true
   } else {
     return false
@@ -566,7 +574,7 @@ async function submitTheForm() {
           myResultModal.style.display = "grid"
           setTimeout(function(){
             myResultModal.style.display = "none"
-          }, 2550);
+          }, 2250);
         }
       }
       catch(error) {
@@ -903,4 +911,57 @@ async function getItMate(race) {
     }
     catch(error) {
     }
+}
+async function getOldPredictions() {
+  try {
+    let responseObject = await fetch('/getOldPrediction', {
+      method : 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'},
+        credentials: "include"
+      });
+        if (responseObject.ok) {
+          const getOldPredictionObject = await responseObject.json();
+          if (getOldPredictionObject.success === true) {
+            messageModal("Not working just yet init")
+            //////////////////////////////////////
+            //////////////////////////////////////
+          } else if (getPredictionObject.success === false) {
+            theMessage = getPredictionObject.message
+            messageModal(theMessage);
+          }
+        }
+    }
+    catch(error) {
+    }
+}
+function getScore() {
+  messageModal("Coming soon buthole")
+  /*  async
+  try {
+    let responseObject = await fetch('/getScore', {
+      method : 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'},
+        credentials: "include",
+        body : JSON.stringify({Race : raceToGet})});
+        if (responseObject.ok) {
+          const getOldPredictionObject = await responseObject.json();
+          if (getOldPredictionObject.success === true) {
+            //////////////////////////////////////
+            //////////////////////////////////////
+          } else if (getPredictionObject.success === false) {
+            theMessage = getPredictionObject.message
+            messageModal(theMessage);
+          }
+        }
+    }
+    catch(error) {
+    }
+
+
+
+  */
 }

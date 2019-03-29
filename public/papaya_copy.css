@@ -318,19 +318,20 @@ div.ruleModal-header h2 {
 }
 /* The Modal (background) AND RACES Modal*/  /* The Modal (background) AND RACES Modal*/
 /* The Modal (background) AND RACES Modal*/  /* The Modal (background) AND RACES Modal*/
-.modal, .raceModal, .regModal, .ruleModal {
+.modal, .raceModal, .regModal, .ruleModal, .profileModal {
   display: none; /* Hidden by default - its hidden YEAH then we change its property */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
   padding-top:100px; /* Location of box */
   left: 0;
   top: 0;
+  overflow: hidden;
   width: 100%; /* Full width */
   height: 100%; /* Full height *//* Enable scroll if needed */
   background-color: rgb(255, 255, 255); /* Fallback color */
   background-color: rgba(0, 0, 0, 0.35);/* Black w/ opacity */
 }
-.modal-content, .raceModal-content, .regModal-content, .ruleModal-content {
+.modal-content, .raceModal-content, .regModal-content, .ruleModal-content, .profileModal-content {
   position:relative; /* Allows us to specify position using bop, bottom etc.*/
   top:-12vh;
   background-color: #fefefe;
@@ -375,7 +376,7 @@ div.ruleModal-header h2 {
   grid-template-columns: minmax(20vw, 65vw);
   grid-row-gap:10vh;
 }
-.modal .modal-header, .raceModal .raceModal-header, .regModal-header, .ruleModal-header {
+.modal .modal-header, .raceModal .raceModal-header, .regModal-header, .ruleModal-header, .profileModal-header {
   position: -webkit-sticky; /* Safari */
   position: sticky;
   position: -moz-sticky;
@@ -1117,10 +1118,10 @@ table, th, td {
   width:80vw;
   height:25vh;
   border-radius:14px;
-  font-size:5vh;
+  font-size:4.25vh;
   /*min-width: 45vw;
   max-width:45vw;
-  min-height: 55vh;
+  min-height: 55vh;al
   max-height:65vh;*/    /* Could be more or less, depending on screen size */
   box-shadow: 0 3px 6px 0 rgba(0,0,0,0.19),0 2px 4px 0 rgba(0,0,0,0.19);
 }
@@ -1142,4 +1143,12 @@ table, th, td {
 #Hole {
   margin:30px 0px;
   padding:13px 0px;
+}
+.profileButton {
+  list-style: none;
+}
+.profileButton button {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
 }

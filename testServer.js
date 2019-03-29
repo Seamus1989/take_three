@@ -98,6 +98,22 @@ app.post('/getPrediction', function(req, res, next) {
           res.send({success : true, row})
         }
       })
+    } else if (req.body.Race === "ESP") {
+      db.get("SELECT * FROM Spain WHERE Name = ?", (userIdentify), function(err, row) {
+        if (!row) {
+          res.send({success : false, message : "No predictions found for selected event!"})
+        } else if (row) {
+          res.send({success : true, row})
+        }
+      });
+    } else if (req.body.Race === "MON") {
+      db.get("SELECT * FROM Monaco WHERE Name = ?", (userIdentify), function(err, row) {
+        if (!row) {
+          res.send({success : false, message : "No predictions found for selected event!"})
+        } else if (row) {
+          res.send({success : true, row})
+        }
+      });
     }
   }
 })
@@ -209,7 +225,46 @@ app.post('/formSend', function(req, res, next) {
           };
         });
       });
-    }/* else if () {
+    } else if (req.body.Race === "The Spanish Grand Prix, Circuit de Barcelona-Catalyuna") {
+      db.serialize(function() {
+        db.run('CREATE TABLE IF NOT EXISTS Spain (Name TEXT, First TEXT, Second TEXT, Third TEXT, Fourth TEXT, Fifth TEXT, Sixth TEXT, Seventh TEXT, Eighth TEXT, Ninth TEXT, Tenth TEXT, PoleD TEXT, PoleT TEXT, TeamDriver TEXT, DriverDay TEXT, BestFirst TEXT, MostPG TEXT, FastestLap TEXT, Pit TEXT)');
+        db.get('SELECT Name FROM Spain WHERE Name = ?', (userVariable), function(err, row) {
+          if(err) {
+            console.log(err)
+            res.send({success : false, message : "An error occured, please try again."})
+          } else if (!row) {
+            res.send({success : true, message : "First Submission Saved!"})
+            db.run('INSERT INTO Spain (Name, First, Second, Third, Fourth, Fifth, Sixth, Seventh, Eighth, Ninth, Tenth, PoleD, PoleT, TeamDriver, DriverDay, BestFirst, MostPG, FastestLap, Pit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [userVariable, first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, poleD, poleT, TDD, DotD, BFL, MPG, FL, pit]);
+          } else if (row) {
+            db.serialize(function() {
+              db.run('DELETE FROM Spain WHERE Name = ?', (userVariable));
+              db.run('INSERT INTO Spain (Name, First, Second, Third, Fourth, Fifth, Sixth, Seventh, Eighth, Ninth, Tenth, PoleD, PoleT, TeamDriver, DriverDay, BestFirst, MostPG, FastestLap, Pit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [userVariable, first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, poleD, poleT, TDD, DotD, BFL, MPG, FL, pit]);
+              res.send({success : true, message : "Prediction Updated!"});
+            })
+          };
+        });
+      });
+    } else if (req.body.Race === "The Monaco Grand Prix, Monte Carlo") {
+      db.serialize(function() {
+        db.run('CREATE TABLE IF NOT EXISTS Monaco (Name TEXT, First TEXT, Second TEXT, Third TEXT, Fourth TEXT, Fifth TEXT, Sixth TEXT, Seventh TEXT, Eighth TEXT, Ninth TEXT, Tenth TEXT, PoleD TEXT, PoleT TEXT, TeamDriver TEXT, DriverDay TEXT, BestFirst TEXT, MostPG TEXT, FastestLap TEXT, Pit TEXT)');
+        db.get('SELECT Name FROM Monaco WHERE Name = ?', (userVariable), function(err, row) {
+          if(err) {
+            console.log(err)
+            res.send({success : false, message : "An error occured, please try again."})
+          } else if (!row) {
+            res.send({success : true, message : "First Submission Saved!"})
+            db.run('INSERT INTO Monaco (Name, First, Second, Third, Fourth, Fifth, Sixth, Seventh, Eighth, Ninth, Tenth, PoleD, PoleT, TeamDriver, DriverDay, BestFirst, MostPG, FastestLap, Pit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [userVariable, first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, poleD, poleT, TDD, DotD, BFL, MPG, FL, pit]);
+          } else if (row) {
+            db.serialize(function() {
+              db.run('DELETE FROM Monaco WHERE Name = ?', (userVariable));
+              db.run('INSERT INTO Monaco (Name, First, Second, Third, Fourth, Fifth, Sixth, Seventh, Eighth, Ninth, Tenth, PoleD, PoleT, TeamDriver, DriverDay, BestFirst, MostPG, FastestLap, Pit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [userVariable, first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, poleD, poleT, TDD, DotD, BFL, MPG, FL, pit]);
+              res.send({success : true, message : "Prediction Updated!"});
+            })
+          };
+        });
+      });
+    }
+    /* else if () {
 
     } else if () {
 
@@ -372,4 +427,93 @@ app.post('/logout', function(req, res){
   res.send({ success : true, message : "Logged Out!"})
 });
 ////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
+function saveData(objectInput, saveToObject) {
+  let i;
+  for (let i = 0; i < 5; i++) {
+    if (!saveToObject[i]) {
+      saveToObject[i] = objectInput;
+    }
+  }
+  return saveToObject
+}
+app.get('/getOldPrediction', function(req, res, next) {
+  if (!req.user) {
+    res.send({success : false, message : "Please login before loading profile details!"});
+  } else if (req.user) {
+    res.send({success : true, message : "Not YET MATEEEE!"})
+    /*
+    let userIdentify = req.user
+    let responseObjectOfAllPredictions = {};
+    db.serialize(function() {
+      db.get("SELECT * FROM Australia WHERE Name = ?", (userIdentify), function(err, row) {
+        if(row) {
+          console.log(row)
+          responseObjectOfAllPredictions["0"] = row;
+          saveData(row, responseObjectOfAllPredictions)
+        }
+      })
+      db.get("SELECT * FROM Bahrain WHERE Name = ?", (userIdentify), function(err, row) {
+        if(row) {
+          console.log(row)
+          saveData(row, responseObjectOfAllPredictions)
+        }
+      })
+      db.get("SELECT * FROM China WHERE Name = ?", (userIdentify), function(err, row) {
+        if(row) {
+          console.log(row)
+          saveData(row, responseObjectOfAllPredictions)
+        }
+      })
+      db.get("SELECT * FROM Baku WHERE Name = ?", (userIdentify), function(err, row) {
+        if(row) {
+          console.log(row)
+          saveData(row, responseObjectOfAllPredictions)
+        }
+      })
+
+    })
+    //console.log(responseObjectOfAllPredictions)
+    res.send(responseObjectOfAllPredictions)
+    /*
+    let userIdentify = req.user;
+    if (req.body.Race === "AUS") {
+      db.get("SELECT * FROM Australia WHERE Name = ?", (userIdentify), function(err, row) {
+        if (!row) {
+          res.send({success : false, message : "No predictions found for selected event!"})
+        } else if (row) {
+          res.send({success : true, row})
+        }
+      });
+    } else if (req.body.Race === "BAH") {
+      db.get("SELECT * FROM Bahrain WHERE Name = ?", (userIdentify), function(err, row) {
+        if (!row) {
+          res.send({success : false, message : "No predictions found for selected event!"})
+        } else if (row) {
+          res.send({success : true, row})
+        }
+      })
+    } else if (req.body.Race === "CHI") {
+      db.get("SELECT * FROM China WHERE Name = ?", (userIdentify), function(err, row) {
+        if (!row) {
+          res.send({success : false, message : "No predictions found for selected event!"})
+        } else if (row) {
+          res.send({success : true, row})
+        }
+      })
+    } else if (req.body.Race === "AZB") {
+      db.get("SELECT * FROM Baku WHERE Name = ?", (userIdentify), function(err, row) {
+        if (!row) {
+          res.send({success : false, message : "No predictions found for selected event!"})
+        } else if (row) {
+          res.send({success : true, row})
+        }
+      })
+    }*/
+  }
+})
