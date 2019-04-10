@@ -7,20 +7,20 @@ let primary_position_list = ["Winner", "Second", "Third", "Fourth", "Fifth", "Si
 let secondary_list = ["Team Delta", "First Lap","MPG","DotD","Fastest"];
 let qually_list = ["Pole"];
 let poleInputList = ["poleTime", "poleTime1", "poleTime2", "special"]
-//let topTenList = [];
+let seamusExtraList = ["ExtraP13", "ExtraP12", "ExtraP11"]
+/////////////////////
 let allListElements = ["P1","P2","P3","P4","P5","P6","P7","P8","P9","P10","Team Delta", "First Lap","MPG","DotD","Fastest","Pole", "PSSInput","raceBtn"];
 let allListElementforBooleanCheck = ["P1","P2","P3","P4","P5","P6","P7","P8","P9","P10","Team Delta", "First Lap","MPG","DotD","Fastest","Pole","raceBtn"];
-//let defaultPoleTime;
-//let newTimeData;
-//let timeNotSet = " - time not set"
+/////////////////////
 let y = (names) => names.filter((v,i) => names.indexOf(v) === i) // gets rid of extra ones
 let selection; // selection sel, and se are used for opening the same modal and controlling the content of that modal
 let sel;
 let se;
-//let driver_variable;
-let fieldsMissed = [];
+/////////////////////
 let raceList = ["AUS","BAH", "CHI", "AZB","ESP", "MON", "CAN", "FRA", "RBR", "BRI", "GER", "HUN", "SPA", "MNZ", "MBS", "RUS","SUZ", "MEX", "USA", "BRA", "ABU"];
 let headerRaceList = ["mel", "bhr", "sha", "bak","cat","mnt", "vil", "ric","spe","sil","hnh", "hgr","spf", "itl", "sing", "soch","suzu", "rodi","tex","palo","yas"];
+let elementArray = ["", "P1", "P2", "P3", "P4", "P5", "P6",  "P7","P8", "P9", "P10", "P11", "P12", "P13", "Pole Driver", "Pole Time", "Team Driver", "DotD", "First Lap", "MPG", "Fastest Lap", "Strategy"]
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////// Define all the modals ///////////////////////////////////////////////////
@@ -36,7 +36,7 @@ let theProfileModal = document.getElementById("myProfileModal");
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////// Timer function for opening the page init /////////////////////////////////////////////
 /////////////////// It sets timers for the races, and detects Authentication /////////////////////////////
-async function onOpeningThePage() {
+function specialTimerThing() {
   raceList.forEach(function(element) {
     let race = document.getElementById(element);
     let raceDateTime = race.getAttribute("data-dateTime");
@@ -48,6 +48,8 @@ async function onOpeningThePage() {
       countdownTimer(headerListId, raceIdentify, raceDateTime);
     }
   })
+}
+async function onOpeningThePage() {
   try {
     let responseObject = await fetch('/isAuthenticated', {
       method : 'POST',
@@ -60,7 +62,21 @@ async function onOpeningThePage() {
       if(ourResponse.success === true) {
         document.getElementById("navLogin").innerHTML = "Logout";
         document.getElementById("navLogin").setAttribute( "onClick", "Boo()" );
+        if (ourResponse.isSeamus === true) {
+          document.getElementById("SeamusSpecial").style.display = "block";
+          document.getElementById("ExtraP11").style.display = "block";
+          document.getElementById("ExtraP12").style.display = "block";
+          document.getElementById("ExtraP13").style.display = "block";
+
+        } else if (ourResponse.isSeamus === false) {
+          specialTimerThing();
+          document.getElementById("SeamusSpecial").style.display = "none"
+          document.getElementById("ExtraP11").style.display = "none";
+          document.getElementById("ExtraP12").style.display = "none";
+          document.getElementById("ExtraP13").style.display = "none";
+        }
       } else if (ourResponse.success === false) {
+        specialTimerThing();
         document.getElementById("navLogin").setAttribute( "onClick", "openReg()");
         document.getElementById("navLogin").innerHTML = "Login";
       }
@@ -109,9 +125,29 @@ function openRules() {
 
 function openReg() {
   regModal.style.display = "grid"
+  document.getElementById("loginUsername").focus();
 }
 function openProfile() {
   theProfileModal.style.display = "grid"
+}
+async function profileStats() {
+  try {
+    let responseObject = await fetch('/isAuthenticated', {
+      method : 'POST',
+      headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'},
+      credentials: "include"
+      });
+      const ourResponse = await responseObject.json();
+      if(ourResponse.success === true) {
+        theProfileModal.style.display = "grid"
+      } else if (ourResponse.success === false) {
+        messageModal("Log on in to check this lot")
+      }
+    }
+    catch(error) {
+  }
 }
 function showAllDrivers() {
   driverList.forEach(function(element) {
@@ -133,9 +169,29 @@ function checkedPrimaryList(select) {  // This fires after success = true for pr
     }
   })
 }
+function checkSeamusList(select) {
+  document.getElementById("positionTitle").innerHTML = select;
+  showAllDrivers()
+  primary_list.forEach(function(element) {
+    var twat =  document.getElementById(element).name;
+    if (checkInList(driverList, twat) === true) {
+      document.getElementById(twat).hidden = true;
+    }
+  })
+  seamusExtraList.forEach(function(element) {
+    var twaty =  document.getElementById(element).name;
+    if (checkInList(driverList, twaty) === true) {
+      document.getElementById(twaty).hidden = true;
+    }
+  })
+}
 function closePrimaryList() { // for closing modals of the primary (top ten) list
   document.getElementById("positionTitle").innerHTML = "";
   document.getElementById("Top Ten Points").style.display = "none"
+  document.getElementById("clearDriver").style.display = "none"
+}
+function closeSeamusList() {
+  document.getElementById("positionTitle").innerHTML = "";
   document.getElementById("clearDriver").style.display = "none"
 }
 function checkedSecondList(select) { //unhide all drivers, hide descriptions and show alternative descriptions/headers(n)
@@ -198,6 +254,8 @@ function openFunction(x) {
     checkedSecondList(x)
   } else if (checkInList(qually_list, x)) {
     checkQually(x)
+  } else if (checkInList(seamusExtraList, x)) {
+    checkSeamusList(x)
   }
 }
 
@@ -246,6 +304,8 @@ function closeFunction(y) {
       //SAVE
     }
 
+  } else if (checkInList(seamusExtraList, selection)) {
+    closeSeamusList()
   }
   checkNameEmptyBtnClicked(selection);
 }
@@ -260,6 +320,8 @@ window.onclick = function(event) {
     } else if (checkInList(secondary_list, selection)) {
       closeSecondList();
       checkNameEmptyBtnClicked(selection);
+    } else if (checkInList(seamusExtraList, selection)) {
+      closeSeamusList()
     } else if (checkInList(qually_list, selection)) {
       closeQuallyList();
       if (document.getElementById("poleTime").checkValidity() && document.getElementById("poleTime1").checkValidity() && document.getElementById("poleTime2").checkValidity()) {
@@ -310,16 +372,18 @@ function specialPoleFunction() {
     document.getElementById("Pole").setAttribute("data-random", newTimeData);
     document.getElementById("Pole").setAttribute("value","Pole : " + defaultVal + " - " + newTimeData)
     closeQuallyList()
-  } else {
-    //message modal function "Please enter a time", also change the opacity / colour
-    //document.getElementById("Pole").setAttribute("value","Pole : " + defaultVal + " - no time set")
+  } else if (document.getElementById("poleTime1").value > 59) {
+    messageModal("Please enter a valid value for seconds (ss)")
+  } else if (document.getElementById("poleTime1").value > 999) {
+    messageModal("Please enter a valid value for milliseconds (SSS)")
   }
+
   checkNameEmptyBtnClicked(selection)
 }
 function specialPoleFunctionEvent(identify) {
   setTimeout(function(){
     if (identify === "poleTime") {
-      if (document.getElementById(identify).value.length > 1) {
+      if (document.getElementById(identify).value.length > 0) {
         document.getElementById("poleTime1").focus();
       };
     } else if (identify === "poleTime1") {
@@ -344,10 +408,17 @@ function myFunction(driver,clicked_id) {
     closeSecondList()
   } else if (checkInList(qually_list, selection)) {
     document.getElementById("poleTimeDiv").scrollIntoView({ behavior: 'smooth' });
+    document.getElementById("poleTime").focus();
     document.getElementById(selection).setAttribute("value", selection +": " + clicked_id + " - no time set!");
     document.getElementById(selection).setAttribute("name", clicked_id);
     specialPoleFunction()
-    }
+  } else if (checkInList(seamusExtraList, selection)) {
+    document.getElementById(selection).setAttribute("value", selection +": " + clicked_id);
+    modal.style.display = "none";
+    document.getElementById(selection).setAttribute("name", clicked_id);
+    closeSeamusList();
+  }
+
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -459,11 +530,11 @@ function resetAll() {
   identifier.setAttribute("name", "");
   identifier.setAttribute("value", "Driver of the Day");
   document.getElementById("DotD").setAttribute("class","Btn");
-  identifier = document.getElementById("PSSInput");
+  /*identifier = document.getElementById("PSSInput");
   identifier.setAttribute("value", "");
   identifier.setAttribute("name", "");
   document.getElementById("idForPSSGet").innerHTML = "Winning Strategy";
-  document.getElementById("PSSInput").setAttribute("class","selectBtn");
+  document.getElementById("PSSInput").setAttribute("class","selectBtn");*/
   identifier = document.getElementById("Fastest");
   identifier.setAttribute("name", "");
   identifier.setAttribute("value", "Fastest Lap");
@@ -471,6 +542,7 @@ function resetAll() {
   document.getElementById("raceBtn").setAttribute("class", "finals")
   document.getElementById("raceBtn").setAttribute("value", "Select Race Event")
   document.getElementById("raceBtn").setAttribute("name", "")
+  messageModal("All fields reset!")
 }
 //////// TIMER /////////////////////////// TIMER ////////////////////////////////// TIMER ///////////////////////////////////////////////////
 //id of some empty element underneath the race, should have class/value/name equal to the id of the fuckin timer ////////////////////////////
@@ -493,7 +565,12 @@ function countdownTimer(idOfDestination, raceId, deadline) { // "Jan 5, 2021 15:
       clearInterval(timeDelta);
       document.getElementById(idOfDestination).innerHTML = "Time to Papaya";
       document.getElementById(raceId).disabled = true;
-
+      if (document.getElementById(raceId).name === document.getElementById("raceBtn").name) {
+        messageModal("Deadline Missed!")
+        document.getElementById("raceBtn").style.backgroundColor = "rgba(0, 0, 0, 0.08)"
+        document.getElementById("raceBtn").setAttribute("name", "");
+        document.getElementById("raceBtn").setAttribute("value", "Select Race Event")
+      }
     }
   }, 1000);
 }
@@ -531,10 +608,23 @@ function messageModal(theMessageIs) {
 }
 
 function checkAllBoolean() {
-  if (document.getElementById("P1").name != "" && document.getElementById("P2").name != "" && document.getElementById("P3").name != "" && document.getElementById("P4").name != "" && document.getElementById("P5").name != "" && document.getElementById("P6").name != "" && document.getElementById("P7").name != "" && document.getElementById("P8").name != "" && document.getElementById("P9").name != "" && document.getElementById("P10").name != "" && document.getElementById("Team Delta").name != "" && document.getElementById("First Lap").name != "" && document.getElementById("MPG").name != "" && document.getElementById("DotD").name != "" && document.getElementById("Fastest").name != "" && document.getElementById("PSSInput").hasAttribute("value") && document.getElementById("poleTime").checkValidity() && document.getElementById("poleTime1").checkValidity() && document.getElementById("poleTime2").checkValidity() && document.getElementById("raceBtn").name !="") {
+  if (document.getElementById("P1").name != "" && document.getElementById("P2").name != "" && document.getElementById("P3").name != "" && document.getElementById("P4").name != "" && document.getElementById("P5").name != "" && document.getElementById("P6").name != "" && document.getElementById("P7").name != "" && document.getElementById("P8").name != "" && document.getElementById("P9").name != "" && document.getElementById("P10").name != "" && document.getElementById("Team Delta").name != "" && document.getElementById("First Lap").name != "" && document.getElementById("MPG").name != "" && document.getElementById("DotD").name != "" && document.getElementById("Fastest").name != "" && document.getElementById("poleTime").checkValidity() && document.getElementById("poleTime1").checkValidity() && document.getElementById("poleTime2").checkValidity() && document.getElementById("raceBtn").name !="") {
     return true
   } else {
-    return false
+    if (!(document.getElementById("P1").name != "" && document.getElementById("P2").name != "" && document.getElementById("P3").name != "" && document.getElementById("P4").name != "" && document.getElementById("P5").name != "" && document.getElementById("P6").name != "" && document.getElementById("P7").name != "" && document.getElementById("P8").name != "" && document.getElementById("P9").name != "" && document.getElementById("P10").name != "")) {
+      messageModal("Check top ten inputs!")
+      return false
+    } else if (!(document.getElementById("Team Delta").name != "" && document.getElementById("First Lap").name != "" && document.getElementById("MPG").name != "" && document.getElementById("DotD").name != "" && document.getElementById("Fastest").name != "")) {
+      messageModal("Check race event inputs!")
+      return false
+    }
+    else if (!(document.getElementById("poleTime").checkValidity() && document.getElementById("poleTime1").checkValidity() && document.getElementById("poleTime2").checkValidity())) {
+      messageModal("Check validity for pole position inputs!")
+      return false
+    } else if (!(document.getElementById("raceBtn").name !="")) {
+      messageModal("Please select a race event!")
+      return false
+    }
   }
 }
 
@@ -542,14 +632,14 @@ async function submitTheForm() {
   let newDriverString = splitPoleTimeAndDriverPartDriver();
   let newTimeString = splitPoleTimeAndDriverPartTime();
   let listDataToSendInForm = [document.getElementById("raceBtn").name, document.getElementById("P1").name, document.getElementById("P2").name, document.getElementById("P3").name, document.getElementById("P4").name, document.getElementById("P5").name, document.getElementById("P6").name, document.getElementById("P7").name, document.getElementById("P8").name, document.getElementById("P9").name, document.getElementById("P10").name, newDriverString, newTimeString,
-  document.getElementById("Team Delta").name, document.getElementById("DotD").name, document.getElementById("First Lap").name, document.getElementById("MPG").name, document.getElementById("Fastest").name, document.getElementById("PSSInput").value]
+  document.getElementById("Team Delta").name, document.getElementById("DotD").name, document.getElementById("First Lap").name, document.getElementById("MPG").name, document.getElementById("Fastest").name, "N/A"]
   // Sending and receiving data in JSON format using POST method https://stackoverflow.com/questions/24468459/sending-a-json-to-server-and-retrieving-a-json-in-return-without-jquery
   let objectDataToSendInForm = predictionArrayIntoObject(listDataToSendInForm)
   const data = JSON.stringify(objectDataToSendInForm);
   //ORDER Race, (P1 -- P10), pole driver, pole time, delta, DotD, first lap, mpg, fastest, PSS.
   let points = 0;
   if (checkAllBoolean() === false) {
-    messageModal("Please fill in all input fields!")
+    //messageModal("Please fill in all input fields!")
   } else if (checkAllBoolean() === true) {
     try {
       //alert("2")
@@ -562,14 +652,7 @@ async function submitTheForm() {
         body : JSON.stringify(objectDataToSendInForm)});
         const ourResponse = await responseObject.json();
         if(ourResponse.success === false) {
-          document.getElementById("messageModalMessage").innerHTML = "Please login before submitting predictions!";
-          document.getElementById("myMessageModal").style.display = "block";
-          setTimeout(function(){theMessageModal.classList.add('show');}, 300)
-          setTimeout(function(){
-            theMessageModal.classList.remove('show');
-            document.getElementById("messageModalMessage").innerHTML = "";
-            setTimeout(function() {document.getElementById("myMessageModal").style.display = "none"}, 220);
-          }, 1800);
+          messageModal("Please login!")
         } else if (ourResponse.success === true) {
           myResultModal.style.display = "grid"
           setTimeout(function(){
@@ -582,7 +665,32 @@ async function submitTheForm() {
   }
 }
 
+
 function predictionArrayIntoObject(chosenArray) {
+  let predictionObject = {
+      "Race" : chosenArray[0],
+      "P1" : chosenArray[1],
+      "P2" : chosenArray[2],
+      "P3" : chosenArray[3],
+      "P4" : chosenArray[4],
+      "P5" : chosenArray[5],
+      "P6" : chosenArray[6],
+      "P7" : chosenArray[7],
+      "P8" : chosenArray[8],
+      "P9" : chosenArray[9],
+      "P10" : chosenArray[10],
+      "Pole Driver" : chosenArray[11],
+      "Pole Time" : chosenArray[12],
+      "Team Driver Delta" : chosenArray[13],
+      "Driver of the Day" : chosenArray[14],
+      "Best First Lap" : chosenArray[15],
+      "Most Positions Gained" : chosenArray[16],
+      "Fastest Lap of the Race" : chosenArray[17],
+      "Winning Pit Stop Strategy" : chosenArray[18]
+    }
+    return predictionObject
+}
+function seamusResultIntoJSON(chosenArray) {
   let predictionObject = {
     "Race" : chosenArray[0],
     "P1" : chosenArray[1],
@@ -595,21 +703,47 @@ function predictionArrayIntoObject(chosenArray) {
     "P8" : chosenArray[8],
     "P9" : chosenArray[9],
     "P10" : chosenArray[10],
-    "Pole Driver" : chosenArray[11],
-    "Pole Time" : chosenArray[12],
-    "Team Driver Delta" : chosenArray[13],
-    "Driver of the Day" : chosenArray[14],
-    "Best First Lap" : chosenArray[15],
-    "Most Positions Gained" : chosenArray[16],
-    "Fastest Lap of the Race" : chosenArray[17],
-    "Winning Pit Stop Strategy" : chosenArray[18],
+    "P11" : chosenArray[11],
+    "P12" :  chosenArray[12],
+    "P13" : chosenArray[13],
+    "Pole Driver" : chosenArray[14],
+    "Pole Time" : chosenArray[15],
+    "Team Driver Delta" : chosenArray[16],
+    "Driver of the Day" : chosenArray[17],
+    "Best First Lap" : chosenArray[18],
+    "Most Positions Gained" : chosenArray[19],
+    "Fastest Lap of the Race" : chosenArray[20],
+    "Winning Pit Stop Strategy" : chosenArray[21]
   }
   return predictionObject
 }
 
 
 
-/*    REG MODAL FUNCTIONS AND FRIENDS     */  /*    REG MODAL FUNCTIONS AND FRIENDS     */
+/*    REG MODAL FUNCTIONS AND FRIENDS   let predictionObject = {
+  "Race" : chosenArray[0],
+  "P1" : chosenArray[1],
+  "P2" : chosenArray[2],
+  "P3" : chosenArray[3],
+  "P4" : chosenArray[4],
+  "P5" : chosenArray[5],
+  "P6" : chosenArray[6],
+  "P7" : chosenArray[7],
+  "P8" : chosenArray[8],
+  "P9" : chosenArray[9],
+  "P10" : chosenArray[10],
+  "P11" : chosenArray[11],
+  "P12" :  chosenArray[12],
+  "P13" : chosenArray[13],
+  "Pole Driver" : chosenArray[14],
+  "Pole Time" : chosenArray[15],
+  "Team Driver Delta" : chosenArray[16],
+  "Driver of the Day" : chosenArray[17],
+  "Best First Lap" : chosenArray[18],
+  "Most Positions Gained" : chosenArray[19],
+  "Fastest Lap of the Race" : chosenArray[17],
+  "Winning Pit Stop Strategy" : chosenArray[18]
+}  */  /*    REG MODAL FUNCTIONS AND FRIENDS     */
 /*    REG MODAL FUNCTIONS AND FRIENDS     */  /*    REG MODAL FUNCTIONS AND FRIENDS     */
 /*    REG MODAL FUNCTIONS AND FRIENDS     */  /*    REG MODAL FUNCTIONS AND FRIENDS     */
 
@@ -669,6 +803,9 @@ function registerScrollFunction(identity) {// need to make it smaller again mayb
   document.getElementById("Hole").scrollIntoView({ behavior: 'smooth' });
   document.getElementById("changableHeader").innerHTML = "Register";
   document.getElementById("regModalId").style.height = "80vh";
+  setTimeout(function() {
+    document.getElementById("username").focus();
+  }, 250)
 
 }
 //           LOGIN FUNCTION       //  //           LOGIN FUNCTION       //
@@ -700,18 +837,14 @@ async function submitTheLoginForm() {
           regModal.style.display = "none";
           document.getElementById("navLogin").innerHTML = "Logout";
           document.getElementById("navLogin").setAttribute( "onClick", "Boo()" );
-          document.getElementById("messageModalMessage").innerHTML = theMessage;
-          document.getElementById("myMessageModal").style.display = "block";
-          setTimeout(function(){theMessageModal.classList.add('show');}, 300)
-          setTimeout(function(){
-            theMessageModal.classList.remove('show');
-            document.getElementById("messageModalMessage").innerHTML = "";
-            setTimeout(function() {
-              document.getElementById("myMessageModal").style.display = "none";
-            }, 220);
-          }, 1800);
-
-        } else if(ourResponse.success === false) {
+          messageModal(theMessage);
+          if (ourResponse.isSeamus === true) {
+            document.getElementById("SeamusSpecial").style.display = "block";
+            document.getElementById("ExtraP11").style.display = "block";
+            document.getElementById("ExtraP12").style.display = "block";
+            document.getElementById("ExtraP13").style.display = "block";
+          }
+        } else if (ourResponse.success === false) {
           document.getElementById("check3").innerHTML = theMessage;
           //document.getElementById("loginUsername").scrollIntoView({ behavior: 'smooth' })
           setTimeout(function() {document.getElementById("check3").innerHTML = "";}, 2000)
@@ -719,7 +852,6 @@ async function submitTheLoginForm() {
       }
   }
   catch(error) {
-
   }
 }
 
@@ -777,16 +909,27 @@ async function registrationSendFunction() {
             document.getElementById("messageModalMessage").innerHTML = theMessage;
             messageModal(theMessage)
           } else if (ourResponse.success === false) {
-            //document.getElementById("check2").innerHTML = theMessage;
+            messageModal(theMessage)
             document.getElementById("Hole").scrollIntoView({ behavior: 'smooth' })
-            //setTimeout(function() {document.getElementById("check2").innerHTML = "";}, 1800)
+            //document.getElementById("username").focus()
+            setTimeout(function() {document.getElementById("username").focus();}, 5)
           }
         }
       }
       catch(error) {
     }
-  } else {
+  } else if (!document.getElementById("username").checkValidity()) {
     document.getElementById("Hole").scrollIntoView({ behavior: 'smooth' })
+    setTimeout(function() {
+      document.getElementById("username").focus();
+      messageModal("Username Invalid!");
+  }, 180)
+  } else if (document.getElementById("psw").value != document.getElementById("psw2").value) {
+    document.getElementById("Hole").scrollIntoView({ behavior: 'smooth' })
+    setTimeout(function() {
+      document.getElementById("psw").focus();
+      messageModal("Passwords do not match!");
+    }, 180)
   }
 }
 
@@ -810,8 +953,12 @@ async function logoutFunction() {
         if (ourResponse.success === true) {
           //regModal.style.display = "none"
           //new modal animation
+          document.getElementById("SeamusSpecial").style.display = "none"
           document.getElementById("navLogin").innerHTML = "Login";
           document.getElementById("navLogin").setAttribute( "onClick", "openReg()");
+          document.getElementById("ExtraP11").style.display = "none";
+          document.getElementById("ExtraP12").style.display = "none";
+          document.getElementById("ExtraP13").style.display = "none";
         } else if (ourResponse.success === false) {
           //modal to display the ERROR Message;
 
@@ -896,11 +1043,11 @@ async function getItMate(race) {
             let FL  = getPredictionObject.row.FastestLap
             document.getElementById("Fastest").setAttribute("name", FL);
             document.getElementById("Fastest").setAttribute("value","Fastest: "+  FL);
-            let pit = getPredictionObject.row.Pit
+            /*let pit = getPredictionObject.row.Pit
             document.getElementById("PSSInput").setAttribute("name", pit);
             document.getElementById("PSSInput").setAttribute("value", pit);
             document.getElementById("idForPSSGet").innerHTML = "Strategy: "+pit;
-            //////////////////////////////////////
+            //////////////////////////////////////*/
             messageModal("Predictions loaded!")
             //////////////////////////////////////
           } else if (getPredictionObject.success === false) {
@@ -924,11 +1071,19 @@ async function getOldPredictions() {
         if (responseObject.ok) {
           const getOldPredictionObject = await responseObject.json();
           if (getOldPredictionObject.success === true) {
-            messageModal("Not working just yet init")
+            if (!getOldPredictionObject.prediction && !getOldPredictionObject.result) {
+              theMessage = getOldPredictionObject.message;
+              messageModal(theMessage)
+            } else if (getOldPredictionObject.prediction && getOldPredictionObject.result) {
+              let predictionObject = getOldPredictionObject.prediction
+              let resultObject = getOldPredictionObject.result
+              createTable(predictionObject, resultObject)
+              document.getElementById("clickForTable").setAttribute("onClick", "deleteTable()")
+            }
             //////////////////////////////////////
             //////////////////////////////////////
-          } else if (getPredictionObject.success === false) {
-            theMessage = getPredictionObject.message
+          } else if (getOldPredictionObject.success === false) {
+            theMessage = getOldPredictionObject.message
             messageModal(theMessage);
           }
         }
@@ -964,4 +1119,142 @@ function getScore() {
 
 
   */
+}
+async function submitTheSeamus() {
+  let newDriverString = splitPoleTimeAndDriverPartDriver();
+  let newTimeString = splitPoleTimeAndDriverPartTime();
+  let listDataToSendInForm = [document.getElementById("raceBtn").name, document.getElementById("P1").name, document.getElementById("P2").name, document.getElementById("P3").name, document.getElementById("P4").name, document.getElementById("P5").name, document.getElementById("P6").name, document.getElementById("P7").name, document.getElementById("P8").name, document.getElementById("P9").name, document.getElementById("P10").name,
+  document.getElementById("ExtraP11").name, document.getElementById("ExtraP12").name, document.getElementById("ExtraP13").name, newDriverString, newTimeString,
+  document.getElementById("Team Delta").name, document.getElementById("DotD").name, document.getElementById("First Lap").name, document.getElementById("MPG").name, document.getElementById("Fastest").name, "N/A"]
+  let objectDataToSendInForm = seamusResultIntoJSON(listDataToSendInForm)
+  const data = JSON.stringify(objectDataToSendInForm);
+  if ((checkAllBoolean() === false) || (document.getElementById("ExtraP11").hasAttribute("name") === false)|| (document.getElementById("ExtraP12").hasAttribute("name") === false)|| (document.getElementById("ExtraP13").hasAttribute("name") === false)) {
+    messageModal("Please fill in all input fields!")
+  } else if ((checkAllBoolean() === true) && (document.getElementById("ExtraP11").name != "") && (document.getElementById("ExtraP12").name != "") && (document.getElementById("ExtraP13").name !="")) {
+    try {
+      //alert("2")
+      let responseObject = await fetch('/SeamusSend', {
+        method : 'POST',
+        headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'},
+        credentials: "include",
+        body : JSON.stringify(objectDataToSendInForm)});
+        const ourResponse = await responseObject.json();
+        if (ourResponse.success === false) {
+          let theMessage = ourResponse.message
+          messageModal(theMessage)
+        } else if (ourResponse.success === true) {
+          let theMessage = ourResponse.message
+          messageModal(theMessage);
+        }
+      }
+      catch(error) {
+    }
+  }
+}
+function createTable(pred, res) {
+  // table headings
+  let columnHeadingResults = Object.keys(res)
+  // Get the count of columns.
+  let columnCount = columnHeadingResults.length;
+  // The count of rows.
+  let rowCount = Object.keys(res[columnHeadingResults[0]]).length;
+  // the strings of the rows
+  let rowStrings = Object.keys(res[columnHeadingResults[0]])
+  //////////////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////
+  let table = document.createElement('table');
+  table.setAttribute("id", "myTable")
+  document.getElementById("data-list").appendChild(table);
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  let header = table.createTHead();
+  let row = header.insertRow(-1);
+  //////////////////////////////////////////////////////////////////////////////////////////////////////
+  let tBody = document.createElement('tbody');
+  table.appendChild(tBody);
+ //////////////////////////////////////////////////////////////////////////////////////////////////////
+ for (var i = 0; i < (2*(columnCount)+1); i++) {
+   var headerCell = document.createElement('th');
+   if (i === 0) {
+     headerCell.innerText = "";
+     row.appendChild(headerCell);
+     headerCell.style.boxShadow =  "0 rgba(0,0,0,0),0 rgba(0,0,0,0)";
+     headerCell.style.zIndex = "0"
+     headerCell.setAttribute("id", "descriptionHeader")
+   } else if (i === 1) {
+     headerCell.innerText = columnHeadingResults[(i-1)/2]
+     row.appendChild(headerCell);
+     headerCell.setAttribute("id", "raceHeader")
+     document.getElementById("raceHeader").colSpan = "2"
+     headerCell.style.paddingLeft = "10px"
+   } else if ((i%2 === 1) && (i!= 0) && (i!=1)){
+     headerCell.innerText = columnHeadingResults[(i-1)/2];
+     row.appendChild(headerCell);
+     let headerString = "header" + i;
+     headerCell.setAttribute("id", headerString)
+     document.getElementById(headerString).colSpan = "2"
+   }
+ }
+ ////////////////////////////////////////////////////////////////////////////////////////////////////
+ for (var i = 0; i < rowCount - 1; i++) { // each row
+   row = tBody.insertRow(-1);
+   ///////////////////////////////////////////////////////////////////////////////////////////////////
+   for (var j = 0; j < columnCount + 1; j++) { // each column
+     let cell = row.insertCell(-1);
+     let cell2 = row.insertCell(-1);
+     if (j === 0 && i===0) {
+       cell.style.backgroundColor = ""
+     } else if (j === 0 && i!=0) {
+       cell.setAttribute('data-label', columnHeadingResults[j].toUpperCase());
+       cell2.setAttribute('data-label', columnHeadingResults[j].toUpperCase());
+       cell.innerText = elementArray[i]
+       cell.setAttribute("id", "firstRowOfTable")
+       cell.style.paddingLeft = "5px"
+       cell.style.paddingRight = "5px"
+       cell.style.zIndex = "1"
+       cell.style.fontStyle = "italic"
+       cell.style.boxShadow =  "0.5px 3px 3px rgba(0,0,0,0.1)";
+       //cell2.innerText = ""
+     } else if (i===0) {
+       cell.innerText = "Result"
+       cell2.innerText = "Prediction"
+       cell.style.fontStyle = "italic"
+       cell2.style.fontStyle = "italic"
+       cell2.style.paddingRight = "5px"
+     } else if (i === 15) {
+       cell.setAttribute('data-label', columnHeadingResults[j-1].toUpperCase());
+       cell2.setAttribute('data-label', columnHeadingResults[j-1].toUpperCase());
+       driverString = res[columnHeadingResults[j-1]][rowStrings[i]];
+       driverSubString = driverString.substring(1,9)
+       cell.innerText = driverSubString.toUpperCase()
+       ////////////////////////////////////////////////////////////////////////////////////
+       driverString1 = pred[columnHeadingResults[j-1]][rowStrings[i]];
+       driverSubString1 = driverString1.substring(1,9)
+       cell2.innerText = driverSubString1.toUpperCase()
+     } else if ((i!=11) && (i!=12) && (i!= 13)) {
+       cell.setAttribute('data-label', columnHeadingResults[j-1].toUpperCase());
+       cell2.setAttribute('data-label', columnHeadingResults[j-1].toUpperCase());
+       driverString = res[columnHeadingResults[j-1]][rowStrings[i]];
+       driverSubString = driverString.substring(0,3)
+       cell.innerText = driverSubString.toUpperCase()
+       driverString1 = pred[columnHeadingResults[j-1]][rowStrings[i]];
+       driverSubString1 = driverString1.substring(0,3)+ "         "
+       cell2.innerText = driverSubString1.toUpperCase()
+     } else if ((i===11) || (i===12) || (i===13)) {
+       cell.setAttribute('data-label', columnHeadingResults[j-1].toUpperCase());
+       cell2.setAttribute('data-label', columnHeadingResults[j-1].toUpperCase());
+       driverString = res[columnHeadingResults[j-1]][rowStrings[i]];
+       driverSubString = driverString.substring(0,3)
+       cell.innerText = driverSubString.toUpperCase()
+       cell2.innerText = "  - - "
+     }
+   }
+ }
+}
+function deleteTable() {
+  let removeTab = document.getElementById('myTable');
+  var parentEl = removeTab.parentElement;
+  parentEl.removeChild(removeTab);
+  document.getElementById("clickForTable").setAttribute("onClick", "getOldPredictions()")
 }

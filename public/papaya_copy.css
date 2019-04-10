@@ -65,6 +65,7 @@ body {
   height:100%;
   overflow-y:scroll;
   -webkit-overflow-scrolling: touch;
+  margin:0px;
 }
 /*   MEDIA QUERY    */  /*   MEDIA QUERY    *//*   MEDIA QUERY    */  /*   MEDIA QUERY    */
 /*   MEDIA QUERY    */  /*   MEDIA QUERY    *//*   MEDIA QUERY    */  /*   MEDIA QUERY    */
@@ -82,7 +83,7 @@ body {
     font-size:103.5%;
   }
 
-  div#myModalContent.modal-content, div#regModalId.regModal-content, div.raceModal-content, div.ruleModal-content  {
+  div#myModalContent.modal-content, div#regModalId.regModal-content, div.raceModal-content, div.ruleModal-content {
     width: 95vw;
     height: 95vh;
     position:relative;
@@ -112,12 +113,22 @@ body {
     position:relative;
     top:-19.5vh;
   }
+  div#profileModalId.profileModal-content {
+    width : 95vw;
+    height: 85vh;
+    top:-23.5vh;
+  }
   h3.ruleHeader {
     top: 68px;
     line-height:30px;
   }
 }
 @media only screen and (min-height : 420px) and (max-height : 499px) {
+  div#profileModalId.profileModal-content {
+    width : 93vw;
+    height: 90vh;
+    top:-20vh;
+  }
   div.gridButtons .Btn, div.gridButtons .selectBtn {
     background-color:rgba(0,0,0,0.5);
   }
@@ -135,8 +146,8 @@ body {
     top:-18vh;
   }
   h3.ruleHeader {
-    top: 64px;
-    line-height:35px;
+    top: 68px;
+    line-height:30px;
   }
 }
 @media only screen and (min-height : 500px) {
@@ -144,6 +155,11 @@ body {
     padding-left:15px;
     padding-right:20px;
     border-radius:10px;
+  }
+  div#profileModalId.profileModal-content {
+    width : 91vw;
+    height: 91vh;
+    top:-17vh;
   }
   div.nav ul li {
     line-height : 58px;
@@ -166,14 +182,25 @@ body {
     height:100%;
     overflow-y:scroll;
     -webkit-overflow-scrolling: touch;
+    margin:0px;
   }
   div#regModalId.regModal-content, div#myModalContent.modal-content, div.raceModal-content, div.ruleModal-content {
     width : 90vw;
     height:85vh;
   }
+  div.resultModal-content {
+    width:350vw;
+  }
   div.nav ul li {
     line-height : 36px;
     font-size : 18.5px
+  }
+  div#messageModal-content {
+    width:90vw;
+    height:40vh;
+  }
+  div.profileModal-body div#data-list {
+    font-size:90%;
   }
 }
 @media only screen and (min-width: 550px) {
@@ -298,7 +325,7 @@ body {
     font-size : 24px;
     font-weight:300;
   }
-  div.gridButtons .finals:hover, div.gridButtons .finals:active{
+  div.gridButtons .finals:hover, div.gridButtons .finals:active {
     background-color:rgba(255, 177, 10, 0.3);
   }
   div.gridButtons .raceBtnClicked {
@@ -308,13 +335,18 @@ body {
     max-width:450vw;
     font-size : 24px;
     font-weight:300;
-    background-color:rgba(255, 177, 10, 0.3)
+    background-color:rgba(255, 177, 10, 0.3);
   }
-}
-div.ruleModal-header h2 {
+  div#profileModalId.profileModal-content {
+    height : 70vh;
+    width : 80vw;
+    top : -9vh;
+  }
+  div.ruleModal-header h2 {
   padding-left:10px;
   border-radius:10px;
   padding-right:20px;
+}
 }
 /* The Modal (background) AND RACES Modal*/  /* The Modal (background) AND RACES Modal*/
 /* The Modal (background) AND RACES Modal*/  /* The Modal (background) AND RACES Modal*/
@@ -379,6 +411,7 @@ div.ruleModal-header h2 {
 .modal .modal-header, .raceModal .raceModal-header, .regModal-header, .ruleModal-header, .profileModal-header {
   position: -webkit-sticky; /* Safari */
   position: sticky;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.19),0 6px 20px 0 rgba(0,0,0,0.19);
   position: -moz-sticky;
   position: -ms-sticky;
   position: -o-sticky;
@@ -410,7 +443,7 @@ div.ruleModal-header h2 {
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
   padding-top:100px; /* Location of box */
-  left: 0;
+  right:0;
   top: 0;
   width: 100%; /* Full width */
   height: 100%; /* Full height *//* Enable scroll if needed */
@@ -428,15 +461,15 @@ div.ruleModal-header h2 {
   height:70vh;    /* Could be more or less, depending on screen size */
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.19),0 6px 20px 0 rgba(0,0,0,0.19);
   -webkit-animation-name: animateAcross;
-  -webkit-animation-duration:2.5s;
+  -webkit-animation-duration:2.25s;
   -moz-animation-name: animateAcross;
-  -moz-animation-duration: 2.5s;
+  -moz-animation-duration: 2.25s;
   -ms-animation-name: animateAcross;
-  -ms-animation-duration: 2.5s;
+  -ms-animation-duration: 2.25s;
   -o-animation-name: animateAcross;
-  -o-animation-duration: 2.5s;
+  -o-animation-duration: 2.25s;
   animation-name: animateAcross;
-  animation-duration: 2.5s;
+  animation-duration: 2.25s;
   -webkit-animation-timing-function: linear;
   animation-timing-function: linear;
   bottom : 20vh;
@@ -793,10 +826,21 @@ poleTimeDiv {
   grid-row:10/11;
   grid-column: 2;
 }
+.end11 {
+  grid-row:10/11;
+  grid-column: 1;
+}
+.end12 {
+  grid-row:11/12;
+  grid-column: 2;
+}
+.end13 {
+  grid-row:12/13;
+  grid-column: 1;
+}
 .eleven{
   grid-row:11/12;
   grid-column: 1;
-
 }
 .twelve{
   grid-row:12/13;
@@ -818,46 +862,50 @@ poleTimeDiv {
   grid-row:16/17;
   grid-column: 2;
 }
-.seventeen{
-  grid-row:17/18;
-  grid-column: 1;
-}
 .eighteen{
-  grid-row:18/19;
+  grid-row:17/18;
   column-span: 1/2;
 }
 .end4{
-  grid-row:19/20;
+  grid-row:18/19;
   grid-column:1/-1;
 }
 .end1 {
-  grid-row:20/21;
+  grid-row:19/20;
   grid-column: 1/-1;
   max-width:360px;
   min-width:120px;
   display : flex;
 }
 .end5 {
-  grid-row:21/22;
+  grid-row:20/21;
   grid-column:1/-1;
   max-width:360px;
   min-width:120px;
   display : flex;
 }
 .end2 {
-  grid-row:22/23;
+  grid-row:21/22;
   grid-column: 1/-1;
   max-width:360px;
   min-width:120px;
   display : flex;
 }
 .end3 {
+  grid-row:22/23;
+  grid-column: 1/-1;
+  max-width:220px;
+  min-width:120px;
+  display : flex;
+}
+.end10 {
   grid-row:23/24;
   grid-column: 1/-1;
   max-width:220px;
   min-width:120px;
   display : flex;
 }
+
 .finals {
   -moz-appearance: none;
   appearance: none;
@@ -977,11 +1025,13 @@ poleTimeDiv {
   position: -moz-sticky;
   position: -ms-sticky;
   position: -o-sticky;
-  top: 45px;
+  top: 65px;
   line-height:40px;
   background-color:#fefefe;
   width :100%;
   padding-right :100px;
+  box-shadow: 0 2px 4px -4px rgba(0,0,0,0.19);
+  padding-left:10px;
 }
 .equation {
   line-height:2.1em;
@@ -1115,8 +1165,8 @@ table, th, td {
   padding: 0; /* ZERO PADDING - default value*/
   border: 1px solid black;
   margin:auto;
-  width:80vw;
-  height:25vh;
+  width:55vw;
+  height:35vh;
   border-radius:14px;
   font-size:4.25vh;
   /*min-width: 45vw;
@@ -1151,4 +1201,52 @@ table, th, td {
   appearance: none;
   -moz-appearance: none;
   -webkit-appearance: none;
+}
+/*             TABLE               */  /*                                     */  /*                                     */
+/*             OF RESULTS                  */  /*                             */  /*                                     */
+
+div#data-list table {
+  font-family:Arial;
+  font-size:80%;
+  margin-left: 60px; /* Keep this bit, it spoaces the first ROW */
+  padding: 5px;
+  border:1px solid black;
+  border-radius: 15px 5px 5px 5px;
+  border-spacing:0px; /*IMPORTANT */
+  overflow-x: scroll;
+}
+div#data-list {
+  margin-left: 10px;
+  margin-right:10px;
+  overflow-x:scroll;
+  max-width : 400px;
+}
+
+#firstRowOfTable {
+  text-align:left;
+  position: absolute;
+  left: 10px;
+  top: auto;
+  overflow-x: hidden;
+  height:min-content;
+  /*only relevant for first row*/
+  width:50px;
+  background-color: rgb(255,255,255);
+}
+
+/*th#descriptionHeader {
+  text-align:left;
+  font-size:107%;
+
+}*/
+th {
+  text-align:right;
+  border:none;
+  z-index:0;
+}
+td {
+  border:none;
+  text-align:center;
+  width:max-content;
+  z-index:0;
 }

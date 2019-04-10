@@ -45,8 +45,8 @@
     </div>
     <div class = "sixteen">  <input type="button" value = "Fastest Lap" id = "Fastest" onclick = "openFunction(this.id)" class = "Btn">
     </div>
-    <div class = "seventeen"> <select id = "PSSInput" onchange="changeFunction(this.id, this.value)" class = "selectBtn"><option id = "idForPSSGet" disabled selected value>Winning Pit Strategy</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5+">5+</option></select>
-    </div>
+    <!--<div class = "seventeen"> <select id = "PSSInput" onchange="changeFunction(this.id, this.value)" class = "selectBtn"><option id = "idForPSSGet" disabled selected value>Winning Pit Strategy</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5+">5+</option></select>
+    </div>-->
     <div class = "end1"> <input type="button" value = "Select Race Event" onclick = "openRaceModal(this.id)" id = "raceBtn" class = "finals">
   </div>
   <div class = "end5"> <input type="button" value = "Get Race Event" onclick = "openRaceModal(this.id)" id = "getBtn" class = "finals">
@@ -56,6 +56,14 @@
     <div class = "end2"> <input type="reset" value="Reset All" onclick = "resetAll()" class = "finals">
     </div>
     <div class = "end3"> <input type="button" value="Submit" class = "finals" onclick = "submitTheForm()">
+    </div>
+    <div class = "end11"> <input value = "P11" id = "ExtraP11" type="button" placeholder="eleventh" class = "Btn" style = "display:none"onclick = "openFunction(this.id)" >
+    </div>
+    <div class = "end12"> <input value = "P12"id = "ExtraP12" type="button" placeholder="twelth" class = "Btn" style = "display:none"onclick = "openFunction(this.id)" >
+    </div>
+    <div class = "end13"> <input value = "P13" id = "ExtraP13" type="button" placeholder="Thirteenth" class = "Btn" style = "display:none"onclick = "openFunction(this.id)" >
+    </div>
+    <div class = "end10"> <input id = "SeamusSpecial" type="button" value="Seamus Special" class = "finals" onclick = "submitTheSeamus()" style = "display:none">
     </div>
 
 </div>
@@ -157,10 +165,10 @@
 <h2>Race</h2>
     </div>
     <div class = "raceModal-body">
-      <button id = "AUS" class = "raceBtn" name = "The Australian Grand Prix, Albert Park" onclick = "raceSelectFunction(this.id)"  data-dateTime = "Sat Mar 16 2019 23:30:00 GMT+0000 (Greenwich Mean Time)">Melbourne, Australia</button>
+      <button id = "AUS" class = "raceBtn" name = "The Australian Grand Prix, Albert Park" onclick = "raceSelectFunction(this.id)"  data-dateTime = "Sat Apr 10 2019 15:10:45 GMT+0000 (Greenwich Mean Time)">Melbourne, Australia</button>
       <h3 class = "timer" id = "mel">Melbourne, Australia</h3>
        <!--    OF THE FORM function countdownTimer(deadlineDate, idOfDestination, raceId) { // "Jan 5, 2021 15:37:25"    March 10, 2019 01:00:25      LIKE THIS - Thu Jan 31 2019 02:14:17 GMT+0000 (Greenwich Mean Time) -->
-      <button id = "BAH" class = "raceBtn" name = "The Bahrain Grand Prix, Bahrain International Circuit" onclick = "raceSelectFunction(this.id)" data-dateTime = "Sat Mar 30 2019 15:23:00 GMT+0000 (Greenwich Mean Time)">Sakhir, Bahrain</button>
+      <button id = "BAH" class = "raceBtn" name = "The Bahrain Grand Prix, Bahrain International Circuit" onclick = "raceSelectFunction(this.id)" data-dateTime = "Sat Apr 10 2019 15:10:45 GMT+0000 (Greenwich Mean Time)">Sakhir, Bahrain</button>
       <h3 class = "timer" id = "bhr">Sakhir, Bahrain</h3>
       <button id = "CHI" class = "raceBtn" name = "The Chinese Grand Prix, Shanghai International Circuit" onclick = "raceSelectFunction(this.id)" data-dateTime = "Sat Apr 13 2019 07:23:00 GMT+0000 (Greenwich Mean Time)">Shanghai, China</button>
       <h3 class = "timer" id = "sha">Shanghai, China</h3>
@@ -751,10 +759,11 @@
     <div class = "profileModal-body">
       <ul>
       <li onclick = "getScore()" class = "profileButton"><button>View Score</button></li>
-      <li class = "profileButton" onclick = "getOldPredictions()"><button>View Past Predictions</button></li>
+      <li class = "profileButton" onclick = "getOldPredictions()" id = "clickForTable"><button>View Past Predictions</button></li>
       <li class = "profileButton"><button disabled>View all scores</button></li>
       <li class = "profileButton"><button disabled>View Championship Variance</button></li>
     </ul>
+    <div id="data-list"></div>
 
     </div>
 
@@ -772,7 +781,7 @@
            <li onclick = "openProfile()"><a>Profile</li></a>
            <li onclick = "openRules()"><a>Rules</a></li>
            <li onclick = "predictorModal()"><a>About</li></a>
-           <li onclick = "openReg()"><a id = "navLogin">Login</a></li>
+           <li  id = "navLogin1"><a id = "navLogin"onclick = "openReg()">Login</a></li>
        </div></ul>
 </div>
 </body>
