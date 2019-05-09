@@ -84,10 +84,10 @@ body {
   }
 
   div#myModalContent.modal-content, div#regModalId.regModal-content, div.raceModal-content, div.ruleModal-content {
-    width: 95vw;
-    height: 95vh;
+    width: 92vw;
+    height: 87vh;
     position:relative;
-    top:-30.5vh;
+    top:-27.5vh;
   }
   h3.ruleHeader {
     position:static;
@@ -114,7 +114,7 @@ body {
     top:-19.5vh;
   }
   div#profileModalId.profileModal-content {
-    width : 95vw;
+    width : 91vw;
     height: 85vh;
     top:-23.5vh;
   }
@@ -125,15 +125,15 @@ body {
 }
 @media only screen and (min-height : 420px) and (max-height : 499px) {
   div#profileModalId.profileModal-content {
-    width : 93vw;
-    height: 90vh;
-    top:-20vh;
+    width : 90vw;
+    height: 88vh;
+    top:-18vh;
   }
   div.gridButtons .Btn, div.gridButtons .selectBtn {
     background-color:rgba(0,0,0,0.5);
   }
   div.gridButtons .Btn, div.gridButtons .BtnClicked, div.gridButtons .selectBtn, div.gridButtons .finals {
-    font-size:103%;
+    font-size:104.5%;
   }
   div.nav ul li {
     line-height : 35px;
@@ -157,8 +157,8 @@ body {
     border-radius:10px;
   }
   div#profileModalId.profileModal-content {
-    width : 91vw;
-    height: 91vh;
+    width : 90vw;
+    height: 88vh;
     top:-17vh;
   }
   div.nav ul li {
@@ -185,18 +185,15 @@ body {
     margin:0px;
   }
   div#regModalId.regModal-content, div#myModalContent.modal-content, div.raceModal-content, div.ruleModal-content {
-    width : 90vw;
-    height:85vh;
-  }
-  div.resultModal-content {
-    width:350vw;
+    width : 88vw;
+    height:83vh;
   }
   div.nav ul li {
     line-height : 36px;
     font-size : 18.5px
   }
   div#messageModal-content {
-    width:90vw;
+    width:92vw;
     height:40vh;
   }
   div.profileModal-body div#data-list {
@@ -339,7 +336,7 @@ body {
   }
   div#profileModalId.profileModal-content {
     height : 70vh;
-    width : 80vw;
+    width : 70vw;
     top : -9vh;
   }
   div.ruleModal-header h2 {
@@ -406,7 +403,7 @@ body {
 }
 .raceModal-body {
   grid-template-columns: minmax(20vw, 65vw);
-  grid-row-gap:10vh;
+  grid-row-gap:3.2vh;
 }
 .modal .modal-header, .raceModal .raceModal-header, .regModal-header, .ruleModal-header, .profileModal-header {
   position: -webkit-sticky; /* Safari */
@@ -436,53 +433,7 @@ body {
   color:rgba(0,0,0, 0.1);
   margin:10px;
 }
-/*    The PREDICTION SAVED FLASH ANIMATION   */   /*    The PREDICTION SAVED FLASH ANIMATION   */
-/*    The PREDICTION SAVED FLASH ANIMATION   */   /*    The PREDICTION SAVED FLASH ANIMATION   */
-.ResultModal {
-  display: none; /* Hidden by default - its hidden YEAH then we change its property */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top:100px; /* Location of box */
-  right:0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height *//* Enable scroll if needed */
-  /*background-color: rgb(255, 255, 255);  Fallback color */
-  /*background-color: rgba(0, 0, 0, 0.35); Black w/ opacity */
-}
-.resultModal-content {
-  position:relative; /* Allows us to specify position using bop, bottom etc.*/
-  background-color: rgba(255, 177, 10, 0.9);
-  margin: auto; /* auto means left/right centered */
-  padding: 0; /* ZERO PADDING - default value*/
-  border: 2px solid rgb(255, 177, 10);
-  border-radius:14px;
-  width : 210vw;
-  height:70vh;    /* Could be more or less, depending on screen size */
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.19),0 6px 20px 0 rgba(0,0,0,0.19);
-  -webkit-animation-name: animateAcross;
-  -webkit-animation-duration:2.25s;
-  -moz-animation-name: animateAcross;
-  -moz-animation-duration: 2.25s;
-  -ms-animation-name: animateAcross;
-  -ms-animation-duration: 2.25s;
-  -o-animation-name: animateAcross;
-  -o-animation-duration: 2.25s;
-  animation-name: animateAcross;
-  animation-duration: 2.25s;
-  -webkit-animation-timing-function: linear;
-  animation-timing-function: linear;
-  bottom : 20vh;
-}
-.resultModal-content h2 {
-  position:fixed;
-  bottom:-25px;
-  color:rgba(0,0,0, 0.4);
-  font-family:roboto;
-  font-size:70px;
-  width:max-content;
-  padding-left : 60px;
-}
+
 /*    WHEEEEEEEEL    */  /*    WHEEEEEEEEL    */  /*    WHEEEEEEEEL    */
 /*    WHEEEEEEEEL    */  /*    WHEEEEEEEEL    */  /*    WHEEEEEEEEL    */
 .lds-ring {
@@ -779,7 +730,7 @@ poleTimeDiv {
   max-height:55px;
   min-width:60px;
   max-width:380px;
-  margin : auto;
+  margin : 0px auto 20px auto;
   white-space: normal
 }
 /*    */     /*    Main screen Grid location controls   *//*    */     /*    Main screen Grid location controls   */
@@ -1151,7 +1102,7 @@ table, th, td {
   left: 0;
   top: -100%;
   opacity: 0;
-  transition: top 0.3s, opacity 0.22s;
+  transition: top 0.45s, opacity 0.22s;
   width: 100%; /* Full width */
   height: 100%; /* Full height *//* Enable scroll if needed */
   background-color: rgba(255, 255, 255,0.4); /* Fallback color */
@@ -1165,7 +1116,7 @@ table, th, td {
   padding: 0; /* ZERO PADDING - default value*/
   border: 1px solid black;
   margin:auto;
-  width:55vw;
+  width:50vw;
   height:35vh;
   border-radius:14px;
   font-size:4.25vh;
@@ -1195,19 +1146,29 @@ table, th, td {
   padding:13px 0px;
 }
 .profileButton {
-  list-style: none;
+  border-radius: 5px;
+  margin:4px 20px 2px 20px;
+  padding:1px;
+  background-color:rgba(255, 177, 10, 0.65);
+  color:rgba(0,0,0, 0.3);
 }
-.profileButton button {
-  appearance: none;
-  -moz-appearance: none;
-  -webkit-appearance: none;
+.profileButton h3 {
+  margin:5px 0px 5px 10px;
+}
+.profileList {
+    list-style: none;
+    padding-left: 0;
+}
+#profileSelection, #profileSelection2 {
+  margin:4px 20px 2px 20px;
+  display:none;
 }
 /*             TABLE               */  /*                                     */  /*                                     */
 /*             OF RESULTS                  */  /*                             */  /*                                     */
 
 div#data-list table {
   font-family:Arial;
-  font-size:80%;
+  font-size:86%;
   margin-left: 60px; /* Keep this bit, it spoaces the first ROW */
   padding: 5px;
   border:1px solid black;

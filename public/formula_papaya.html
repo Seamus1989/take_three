@@ -1,19 +1,15 @@
 <!DOCTYPE html>
 <html>
-<!--    HEADER     -->  <!--    HEADER     -->  <!--    HEADER     -->
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link href="./papaya_copy.css" type="text/css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,100' rel='stylesheet' type='text/css'>
   </head>
-<!--    Onload the timer for current date/time     -->  <!--    Onload the timer for current date/time     -->
 <body id = "body" onload = "onOpeningThePage()">
-<!-- FORM BUTTONS AND ALL FORM FIELDS  -->  <!-- FORM BUTTONS AND ALL FORM FIELDS  -->
-<!-- FORM BUTTONS AND ALL FORM FIELDS  -->  <!-- FORM BUTTONS AND ALL FORM FIELDS  -->
 <form name = "myForm"  id="myForm">
   <div class = "gridButtons">
-    <div class = "one"> <input type="button" value = "Winnrrrrrrrer" id = "P1" onclick = "openFunction(this.id)" class = "Btn" required/>
+    <div class = "one"> <input type="button" value = "Winner" id = "P1" onclick = "openFunction(this.id)" class = "Btn" required/>
     </div>
     <div class = "two"> <input type="button" value = "Second" id = "P2" onclick = "openFunction(this.id)" class = "Btn">
     </div>
@@ -45,8 +41,6 @@
     </div>
     <div class = "sixteen">  <input type="button" value = "Fastest Lap" id = "Fastest" onclick = "openFunction(this.id)" class = "Btn">
     </div>
-    <!--<div class = "seventeen"> <select id = "PSSInput" onchange="changeFunction(this.id, this.value)" class = "selectBtn"><option id = "idForPSSGet" disabled selected value>Winning Pit Strategy</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5+">5+</option></select>
-    </div>-->
     <div class = "end1"> <input type="button" value = "Select Race Event" onclick = "openRaceModal(this.id)" id = "raceBtn" class = "finals">
   </div>
   <div class = "end5"> <input type="button" value = "Get Race Event" onclick = "openRaceModal(this.id)" id = "getBtn" class = "finals">
@@ -69,14 +63,9 @@
 </div>
   <br><br><br>
 </form>
-
 <!--                =============              Main Modal               =============                -->
 <!--                =============              Main Modal               =============                -->
-<!--                =============              Main Modal               =============                -->
-<!--                =============              Main Modal               =============                -->
-<!-- The Modal -->
 <div id="myModal" class="modal">
-  <!-- Modal content -->
   <div class="modal-content" id = "myModalContent">
     <span class="close" onclick = "closeFunction(this.id)">&times;</span>
     <div class = "modal-header">
@@ -86,35 +75,34 @@
       <h2 id = "First LapB" style = "display : none" class = "titles">Best First Lap</h2>
       <h2 id = "MPGB" style = "display : none" class = "titles">Most Positions Gained</h2>
       <h2 id = "DotDB" style = "display : none" class = "titles">Driver of the Day</h2>
-      <h2 id = "PSSB" style = "display : none" class = "titles">Winning Pit Strategy</h2>
       <h2 id = "FastestB" style = "display : none" class = "titles">Fastest Lap of the Race</h2>
 
     </div>
     <div class = "modal-body">
-         <button id = "Vettel" onclick = "myFunction(Vettel, this.id)" class = "driverBtn">Sebastien Vettel #5</button>
-         <button id = "Leclerc" onclick = "myFunction(Leclerc, this.id)" class = "driverBtn">Charles Leclerc #16</button>
-         <button id = "Grosjean" onclick = "myFunction(Grosjean, this.id)" class = "driverBtn">Romain Grosjean #8</button>
-         <button id = "Magnussen" onclick = "myFunction(Magnussen, this.id)" class = "driverBtn">Kevin Magnussen #20</button>
-         <button id = "Norris" onclick = "myFunction(Norris, this.id)" class = "driverBtn">Lando Norris #4</button>
-         <button id = "Sainz" onclick = "myFunction(Sainz, this.id)" class = "driverBtn">Carlos Sainz #55</button>
-         <button id = "Hamilton" onclick = "myFunction(Hamilton, this.id)" class = "driverBtn">Lewis Hamilton #44</button>
-         <button id = "Bottas" onclick = "myFunction(Bottas, this.id)" class = "driverBtn">Valtteri Bottas #77</button>
-         <button id = "Perez" onclick = "myFunction(Perez, this.id)" class = "driverBtn">Sergio Perez #11</button>
-         <button id = "Stroll" onclick = "myFunction(Stroll, this.id)" class = "driverBtn">Lance Stroll #18</button>
-         <button id = "Gasly" onclick = "myFunction(Gasly, this.id)" class = "driverBtn">Pierre Gasly #10</button>
-         <button id = "Verstappen" onclick = "myFunction(Verstappen, this.id)" class = "driverBtn">Max Verstappen #33</button>
-         <button id = "Ricciardo" onclick = "myFunction(Ricciardo, this.id)" class = "driverBtn">Daniel Ricciardo #3</button>
-         <button id = "Hulkenberg" onclick = "myFunction(Hulkenberg, this.id)" class = "driverBtn">Nico Hulkenberg #27</button>
-         <button id = "Raikkonen" onclick = "myFunction(Raikkonen, this.id)" class = "driverBtn">Kimi Raikkonen #7</button>
-         <button id = "Giovinazzi" onclick = "myFunction(Giovinazzi, this.id)" class = "driverBtn">Antonio Giovinazzi #99</button>
-         <button id = "Albon" onclick= "myFunction(Albon, this.id)" class = "driverBtn">Alexander Albon #23</button>
-         <button id = "Kyvat" onclick= "myFunction(Kyvat, this.id)" class = "driverBtn">Daniel Kyvat #26</button>
-         <button id = "Russell" onclick= "myFunction(Russell, this.id)" class = "driverBtn">George Russell #63</button>
-         <button id = "Kubica" onclick= "myFunction(Kubica, this.id)" class = "driverBtn">Robert Kubica #88</button>
-         <button id = "Res1" onclick= "myFunction(Res1, this.id)" class = "driverBtn" style = "display:none">Reserve Driver 1</button></button>
-         <button id = "Res2" onclick= "myFunction(Res2, this.id)" class = "driverBtn" style = "display:none">Reserve Driver 2</button>
-         <button id = "Res3" onclick= "myFunction(Res3, this.id)" class = "driverBtn" style = "display:none">Reserve Driver 3</button>
-         <button id = "Res4" onclick= "myFunction(Res4, this.id)" class = "driverBtn" style = "display:none">Reserve Driver 4</button>
+         <button id = "Vettel" onclick = "driverSelectFunction(this.id)" class = "driverBtn">Sebastien Vettel #5</button>
+         <button id = "Leclerc" onclick = "driverSelectFunction(this.id)" class = "driverBtn">Charles Leclerc #16</button>
+         <button id = "Grosjean" onclick = "driverSelectFunction(this.id)" class = "driverBtn">Romain Grosjean #8</button>
+         <button id = "Magnussen" onclick = "driverSelectFunction(this.id)" class = "driverBtn">Kevin Magnussen #20</button>
+         <button id = "Norris" onclick = "driverSelectFunction(this.id)" class = "driverBtn">Lando Norris #4</button>
+         <button id = "Sainz" onclick = "driverSelectFunction(this.id)" class = "driverBtn">Carlos Sainz #55</button>
+         <button id = "Hamilton" onclick = "driverSelectFunction(this.id)" class = "driverBtn">Lewis Hamilton #44</button>
+         <button id = "Bottas" onclick = "driverSelectFunction(this.id)" class = "driverBtn">Valtteri Bottas #77</button>
+         <button id = "Perez" onclick = "driverSelectFunction(this.id)" class = "driverBtn">Sergio Perez #11</button>
+         <button id = "Stroll" onclick = "driverSelectFunction(this.id)" class = "driverBtn">Lance Stroll #18</button>
+         <button id = "Gasly" onclick = "driverSelectFunction(this.id)" class = "driverBtn">Pierre Gasly #10</button>
+         <button id = "Verstappen" onclick = "driverSelectFunction(this.id)" class = "driverBtn">Max Verstappen #33</button>
+         <button id = "Ricciardo" onclick = "driverSelectFunction(this.id)" class = "driverBtn">Daniel Ricciardo #3</button>
+         <button id = "Hulkenberg" onclick = "driverSelectFunction(this.id)" class = "driverBtn">Nico Hulkenberg #27</button>
+         <button id = "Raikkonen" onclick = "driverSelectFunction(this.id)" class = "driverBtn">Kimi Raikkonen #7</button>
+         <button id = "Giovinazzi" onclick = "driverSelectFunction(this.id)" class = "driverBtn">Antonio Giovinazzi #99</button>
+         <button id = "Albon" onclick= "driverSelectFunction(this.id)" class = "driverBtn">Alexander Albon #23</button>
+         <button id = "Kyvat" onclick= "driverSelectFunction(this.id)" class = "driverBtn">Daniel Kyvat #26</button>
+         <button id = "Russell" onclick= "driverSelectFunction(this.id)" class = "driverBtn">George Russell #63</button>
+         <button id = "Kubica" onclick= "driverSelectFunction(this.id)" class = "driverBtn">Robert Kubica #88</button>
+         <button id = "Res1" onclick= "driverSelectFunction(this.id)" class = "driverBtn" style = "display:none">Reserve Driver 1</button></button>
+         <button id = "Res2" onclick= "driverSelectFunction(this.id)" class = "driverBtn" style = "display:none">Reserve Driver 2</button>
+         <button id = "Res3" onclick= "driverSelectFunction(this.id)" class = "driverBtn" style = "display:none">Reserve Driver 3</button>
+         <button id = "Res4" onclick= "driverSelectFunction(this.id)" class = "driverBtn" style = "display:none">Reserve Driver 4</button>
       </div>
       <div id = "poleTimeDiv"><center>
         <div><button id = "clearDriver" class = "clearDriverBtn" style = "display : none" onclick = "clearButtonFunction()">Clear Entry</button></div>
@@ -129,36 +117,28 @@
      <h2 id = "points">Driver Selection <br></h2>
      <p id = "PoleD" style = "display : none" class = "description"> Enter the time estimate in the form [mm:ss.SSS] for pole position (note the colon and decimal point), and the driver.
          Points are awarded as follows:<br>
-          &nbsp;&nbsp;&nbsp;&nbsp; <b>Exact time</b> <span class = "tilde">&#8764;</span> <i>25 Points</i><br>
-        &nbsp;&nbsp;&nbsp;&nbsp; <b> ±0.100</b> <span class = "tilde">&#8764;</span> <i>15 Points</i><br>
-        &nbsp;&nbsp;&nbsp;&nbsp;  <b>±0.225</b> <span class = "tilde">&#8764;</span> <i>10 Points</i><br>
+          &nbsp;&nbsp;&nbsp;&nbsp; <b>Exact time</b> <span class = "tilde">&#8764;</span> <i>30 Points</i><br>
+        &nbsp;&nbsp;&nbsp;&nbsp; <b> ±0.200</b> <span class = "tilde">&#8764;</span> <i>20 Points</i><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;  <b>±0.500</b> <span class = "tilde">&#8764;</span> <i>10 Points</i><br>
         &nbsp;&nbsp;&nbsp;&nbsp;  <b>Driver</b> <span class = "tilde">&#8764;</span> <i>10 Points</i><br>
-
      </p>
      <p class = "description" id = "Top Ten Points" style =  "display : none "><b>Top Ten Points</b><br><br>
        &nbsp;&nbsp;&nbsp;&nbsp;Correct <span class = "tilde">&#8764;</span> <i>8 Points</i><br>
        &nbsp;&nbsp;&nbsp;&nbsp;One-off <span class = "tilde">&#8764;</span> <i>5 Points</i><br>
        &nbsp;&nbsp;&nbsp;&nbsp;Two-off <span class = "tilde">&#8764;</span> <i>3 Points</i><br>
        &nbsp;&nbsp;&nbsp;&nbsp;Three-off <span class = "tilde">&#8764;</span> <i>1 Point</i></p>
-
-
-
      <p class = "description" id = "Team DeltaD" style = "display : none"><b>Team Mate Delta </b><i><span class = "tilde">&#8764;</span> 10 points</i> <br><br><small><i>The driver with the largest time delta over his team mate at the chequered flag. Result only includes classified drivers. If second driver does not see the chequered flag, take the last recorded race time delta.</small></i></p>
      <p class = "description" id = "First LapD" style = "display : none"><b>Best First Lap </b><i><span class = "tilde">&#8764;</span> 8 Points</i><br><br><small><i>The driver with the best position gains after one full lap (at racing speed).</small></i></p>
      <p class = "description" id = "MPGD" style = "display : none"><b>Most Positions Gained </b><i><span class = "tilde">&#8764;</span> 7 Points</i><br><br> <small><i>Driver with the highest position delta between the starting grid and the race result. For two or more drivers of equal position delta, award will go to the highest race position.</small></i></p>
      <p class = "description" id = "DotDD" style = "display : none"><b>Driver of the Day </b><i><span class = "tilde">&#8764;</span> 9 Points</i><br><br> <small><i>The driver outperforming himself, the car, and all others in the field - the best race day performance. As voted for by the viewers.</small></i></p>
-     <p class = "description" id = "PSSD" style = "display : none"><b>Pit Stop Strategy </b><i><span class = "tilde">&#8764;</span> 5 Points</i> <br><br> <small><i>Guess the correct pit stop number of the winning driver <i>(i.e</i> the winning race strategy).</small></i></p>
      <p class = "description" id = "FastestD" style = "display : none"><b>Fastest Lap </b><i><span class = "tilde">&#8764;</span> 5 points</i> <br><br> <small><i>Fastest lap of the race goes to...</small></i></p>
     </div>
   </div>
 </div>
 <!--                =============              RACES Modal               =============                -->
 <!--                =============              RACES Modal               =============                -->
-<!--                =============              RACES Modal               =============                -->
-<!--                =============              RACES Modal               =============                -->
 
 <div id="myraceModal" class="raceModal">
-  <!-- Modal content -->
   <div class="raceModal-content">
     <span class="close" onclick = "closeRaceFunction(this.id)">&times;</span>
     <div class = "raceModal-header">
@@ -167,8 +147,7 @@
     <div class = "raceModal-body">
       <button id = "AUS" class = "raceBtn" name = "The Australian Grand Prix, Albert Park" onclick = "raceSelectFunction(this.id)"  data-dateTime = "Sat Apr 10 2019 15:10:45 GMT+0000 (Greenwich Mean Time)">Melbourne, Australia</button>
       <h3 class = "timer" id = "mel">Melbourne, Australia</h3>
-       <!--    OF THE FORM function countdownTimer(deadlineDate, idOfDestination, raceId) { // "Jan 5, 2021 15:37:25"    March 10, 2019 01:00:25      LIKE THIS - Thu Jan 31 2019 02:14:17 GMT+0000 (Greenwich Mean Time) -->
-      <button id = "BAH" class = "raceBtn" name = "The Bahrain Grand Prix, Bahrain International Circuit" onclick = "raceSelectFunction(this.id)" data-dateTime = "Sat Apr 10 2019 15:10:45 GMT+0000 (Greenwich Mean Time)">Sakhir, Bahrain</button>
+       <button id = "BAH" class = "raceBtn" name = "The Bahrain Grand Prix, Bahrain International Circuit" onclick = "raceSelectFunction(this.id)" data-dateTime = "Sat Apr 10 2019 15:10:45 GMT+0000 (Greenwich Mean Time)">Sakhir, Bahrain</button>
       <h3 class = "timer" id = "bhr">Sakhir, Bahrain</h3>
       <button id = "CHI" class = "raceBtn" name = "The Chinese Grand Prix, Shanghai International Circuit" onclick = "raceSelectFunction(this.id)" data-dateTime = "Sat Apr 13 2019 07:23:00 GMT+0000 (Greenwich Mean Time)">Shanghai, China</button>
       <h3 class = "timer" id = "sha">Shanghai, China</h3>
@@ -178,11 +157,11 @@
       <h3 class = "timer" id = "cat">Barcelona, Spain</h3>
       <button id = "MON" class = "raceBtn" name = "The Monaco Grand Prix, Monte Carlo" onclick = "raceSelectFunction(this.id)" data-dateTime = "Sat May 25 2019 14:23:00 GMT+0000 (Greenwich Mean Time)">Monte Carlo, Monaco</button>
       <h3 class = "timer" id = "mnt">Monte Carlo, Monaco</h3>
-      <button id = "CAN" class = "raceBtn" name = "The Canadian Grand Prix, Circuit Gilles Villneuve" onclick = "raceSelectFunction(this.id)" data-dateTime = "" style="display: none;">Montreal, Canada</button>
+      <button id = "CAN" class = "raceBtn" name = "The Canadian Grand Prix, Circuit Gilles Villneuve" onclick = "raceSelectFunction(this.id)" data-dateTime = "Sat Jun 8 2019 19:23:00 GMT+0000 (Greenwich Mean Time)">Montreal, Canada</button>
       <h3 class = "timer" id = "vil">Montreal, Canada</h3>
-      <button id = "FRA" class = "raceBtn" name = "The French Grand Prix, Circuit Paul Ricard" onclick = "raceSelectFunction(this.id)" data-dateTime = "" style="display: none;">Le Castellet, France</button>
+      <button id = "FRA" class = "raceBtn" name = "The French Grand Prix, Circuit Paul Ricard" onclick = "raceSelectFunction(this.id)" data-dateTime = "Sat Jun 22 2019 14:23:00 GMT+0000 (Greenwich Mean Time)">Le Castellet, France</button>
       <h3 class = "timer" id = "ric">Le Castellet, France</h3>
-      <button id = "RBR" class = "raceBtn" name = "The Austrian Grand Prix, Red Bull Ring" onclick = "raceSelectFunction(this.id)" data-dateTime = "" style="display: none;">Speilberg, Austria</button>
+      <button id = "RBR" class = "raceBtn" name = "The Austrian Grand Prix, Red Bull Ring" onclick = "raceSelectFunction(this.id)" data-dateTime = "Sat Jun 29 2019 14:23:00 GMT+0000 (Greenwich Mean Time)">Speilberg, Austria</button>
       <h3 class = "timer" id = "spe">Speilberg, Austria</h3>
       <button id = "BRI" class = "raceBtn" name = "The British Grand Prix, Silverstone Circuit" onclick = "raceSelectFunction(this.id)" data-dateTime = "" style="display: none;">Silvertsone, Britain</button>
       <h3 class = "timer" id = "sil">Silvertsone, Britain</h3>
@@ -214,21 +193,8 @@
     </div>
   </div>
 </div>
-<!--                =============            Modal animation on receiving results from SERVER               =============                -->
-<!--                =============            Modal animation on receiving results from SERVER               =============                -->
-<!--                =============            Modal animation on receiving results from SERVER               =============                -->
-<!--                =============            Modal animation on receiving results from SERVER               =============                -->
-  <div id="myResultModal" class="ResultModal">
-    <!-- Modal content -->
-    <div class="resultModal-content">
-      <h2>PREDICTION SAVED</h2>
-    </div>
-</div>
 <!--                =============            Register MODAL               =============                -->
 <!--                =============            Register MODAL               =============                -->
-<!--                =============            Register MODAL               =============                -->
-<!--                =============            Register MODAL               =============                -->
-
 <div id="myRegModal" class="regModal">
   <!-- Modal content -->
   <div id = "regModalId" class="regModal-content">
@@ -241,273 +207,17 @@
 
           <input id = "loginUsername" class = "loginFields" type = "text" placeholder =  "Username" name = "uname" required>
           <input id = "loginPassword" class = "loginFields" type="password" placeholder="Password" name="psw" required><p id = "check3"></p>
-          <button  type = "button" class = "registerOne" onclick = "submitTheLoginForm()" >Login</button><button id = "registerButton" type = "button" class = "registerThree" onclick = "registerScrollFunction(this.id)">Register</button>
-          <!--&nbsp;<span class="psw"><a href="#" text-decoration = "none" style = "font-family : roboto" style "font-size:15px"><small>Help</small></a></span><br><br>-->
-
+          <button type = "button" class = "registerOne" onclick = "submitTheLoginForm()" >Login</button><button id = "registerButton" type = "button" class = "registerThree" onclick = "registerScrollFunction(this.id)">Register</button>
       </div>
-
       <div id = "registerForm">
         <br><br>
         <div id = "Hole"></div>
-         <!-- action = "forms/form.txt" method = "POST" enctype="application/json" --><!--   Username (password retype password) name DOB email nationality home-city #1 driver senna/prost   -->
-      <input id = "username" class = "inputField" type = "text" placeholder = "Username:" name = "username" minlength = "2" required pattern="^\S+$"><!--<p id = "check2"></p><p id = "usernameAlreadyTaken"></p>onchange = "if(this.value != '') callAjaxFunction('username', this.value, this.id)"--><!-- oninput = "inputUserFunction(this.id)"-->
-      <input id = "psw" type  = "password" class = "inputField" placeholder = "Password:" name = "psw"> <!--- JAVASCRIPT NEEDED FOR VALIDATION OF PASSWORD --><!--oninput = "inputFirstPassword(this.id)"  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required-->
-      <input id = "psw2" type  = "password" class = "inputField" placeholder = "Retype Password:" name = "psw"><p id = "check"></p><!-- oninput = "inputSecondPassword(this.id)"-->
+      <input id = "username" class = "inputField" type = "text" placeholder = "Username:" name = "username" minlength = "2" required pattern="^\S+$">
+      <input id = "psw" type  = "password" class = "inputField" placeholder = "Password:" name = "psw">
+      <input id = "psw2" type  = "password" class = "inputField" placeholder = "Retype Password:" name = "psw"><p id = "check"></p>
       <input id = "email" oninput = "inputFunction(this.id)" type class = "inputField" = "email" placeholder = "Email Address:" name = "email" required>
 
-
-      <input class = "inputField" oninput = "inputFunction(this.id)" type = "text" placeholder = "Nationality" list = "countries" id = "nationality" name = "nationality" required>
-      <datalist id = "countries">
-      	<option value="AF">Afghanistan</option>
-      	<option value="AX">Åland Islands</option>
-      	<option value="AL">Albania</option>
-      	<option value="DZ">Algeria</option>
-      	<option value="AS">American Samoa</option>
-      	<option value="AD">Andorra</option>
-      	<option value="AO">Angola</option>
-      	<option value="AI">Anguilla</option>
-      	<option value="AQ">Antarctica</option>
-      	<option value="AG">Antigua and Barbuda</option>
-      	<option value="AR">Argentina</option>
-      	<option value="AM">Armenia</option>
-      	<option value="AW">Aruba</option>
-      	<option value="AU">Australia</option>
-      	<option value="AT">Austria</option>
-      	<option value="AZ">Azerbaijan</option>
-      	<option value="BS">Bahamas</option>
-      	<option value="BH">Bahrain</option>
-      	<option value="BD">Bangladesh</option>
-      	<option value="BB">Barbados</option>
-      	<option value="BY">Belarus</option>
-      	<option value="BE">Belgium</option>
-      	<option value="BZ">Belize</option>
-      	<option value="BJ">Benin</option>
-      	<option value="BM">Bermuda</option>
-      	<option value="BT">Bhutan</option>
-      	<option value="BO">Bolivia, Plurinational State of</option>
-      	<option value="BQ">Bonaire, Sint Eustatius and Saba</option>
-      	<option value="BA">Bosnia and Herzegovina</option>
-      	<option value="BW">Botswana</option>
-      	<option value="BV">Bouvet Island</option>
-      	<option value="BR">Brazil</option>
-      	<option value="IO">British Indian Ocean Territory</option>
-      	<option value="BN">Brunei Darussalam</option>
-      	<option value="BG">Bulgaria</option>
-      	<option value="BF">Burkina Faso</option>
-      	<option value="BI">Burundi</option>
-      	<option value="KH">Cambodia</option>
-      	<option value="CM">Cameroon</option>
-      	<option value="CA">Canada</option>
-      	<option value="CV">Cape Verde</option>
-      	<option value="KY">Cayman Islands</option>
-      	<option value="CF">Central African Republic</option>
-      	<option value="TD">Chad</option>
-      	<option value="CL">Chile</option>
-      	<option value="CN">China</option>
-      	<option value="CX">Christmas Island</option>
-      	<option value="CC">Cocos (Keeling) Islands</option>
-      	<option value="CO">Colombia</option>
-      	<option value="KM">Comoros</option>
-      	<option value="CG">Congo</option>
-      	<option value="CD">Congo, the Democratic Republic of the</option>
-      	<option value="CK">Cook Islands</option>
-      	<option value="CR">Costa Rica</option>
-      	<option value="CI">Côte d'Ivoire</option>
-      	<option value="HR">Croatia</option>
-      	<option value="CU">Cuba</option>
-      	<option value="CW">Curaçao</option>
-      	<option value="CY">Cyprus</option>
-      	<option value="CZ">Czech Republic</option>
-      	<option value="DK">Denmark</option>
-      	<option value="DJ">Djibouti</option>
-      	<option value="DM">Dominica</option>
-      	<option value="DO">Dominican Republic</option>
-      	<option value="EC">Ecuador</option>
-      	<option value="EG">Egypt</option>
-      	<option value="SV">El Salvador</option>
-      	<option value="GQ">Equatorial Guinea</option>
-      	<option value="ER">Eritrea</option>
-      	<option value="EE">Estonia</option>
-      	<option value="ET">Ethiopia</option>
-      	<option value="FK">Falkland Islands (Malvinas)</option>
-      	<option value="FO">Faroe Islands</option>
-      	<option value="FJ">Fiji</option>
-      	<option value="FI">Finland</option>
-      	<option value="FR">France</option>
-      	<option value="GF">French Guiana</option>
-      	<option value="PF">French Polynesia</option>
-      	<option value="TF">French Southern Territories</option>
-      	<option value="GA">Gabon</option>
-      	<option value="GM">Gambia</option>
-      	<option value="GE">Georgia</option>
-      	<option value="DE">Germany</option>
-      	<option value="GH">Ghana</option>
-      	<option value="GI">Gibraltar</option>
-      	<option value="GR">Greece</option>
-      	<option value="GL">Greenland</option>
-      	<option value="GD">Grenada</option>
-      	<option value="GP">Guadeloupe</option>
-      	<option value="GU">Guam</option>
-      	<option value="GT">Guatemala</option>
-      	<option value="GG">Guernsey</option>
-      	<option value="GN">Guinea</option>
-      	<option value="GW">Guinea-Bissau</option>
-      	<option value="GY">Guyana</option>
-      	<option value="HT">Haiti</option>
-      	<option value="HM">Heard Island and McDonald Islands</option>
-      	<option value="VA">Holy See (Vatican City State)</option>
-      	<option value="HN">Honduras</option>
-      	<option value="HK">Hong Kong</option>
-      	<option value="HU">Hungary</option>
-      	<option value="IS">Iceland</option>
-      	<option value="IN">India</option>
-      	<option value="ID">Indonesia</option>
-      	<option value="IR">Iran, Islamic Republic of</option>
-      	<option value="IQ">Iraq</option>
-      	<option value="IE">Ireland</option>
-      	<option value="IM">Isle of Man</option>
-      	<option value="IL">Israel</option>
-      	<option value="IT">Italy</option>
-      	<option value="JM">Jamaica</option>
-      	<option value="JP">Japan</option>
-      	<option value="JE">Jersey</option>
-      	<option value="JO">Jordan</option>
-      	<option value="KZ">Kazakhstan</option>
-      	<option value="KE">Kenya</option>
-      	<option value="KI">Kiribati</option>
-      	<option value="KP">Korea, Democratic People's Republic of</option>
-      	<option value="KR">Korea, Republic of</option>
-      	<option value="KW">Kuwait</option>
-      	<option value="KG">Kyrgyzstan</option>
-      	<option value="LA">Lao People's Democratic Republic</option>
-      	<option value="LV">Latvia</option>
-      	<option value="LB">Lebanon</option>
-      	<option value="LS">Lesotho</option>
-      	<option value="LR">Liberia</option>
-      	<option value="LY">Libya</option>
-      	<option value="LI">Liechtenstein</option>
-      	<option value="LT">Lithuania</option>
-      	<option value="LU">Luxembourg</option>
-      	<option value="MO">Macao</option>
-      	<option value="MK">Macedonia, the former Yugoslav Republic of</option>
-      	<option value="MG">Madagascar</option>
-      	<option value="MW">Malawi</option>
-      	<option value="MY">Malaysia</option>
-      	<option value="MV">Maldives</option>
-      	<option value="ML">Mali</option>
-      	<option value="MT">Malta</option>
-      	<option value="MH">Marshall Islands</option>
-      	<option value="MQ">Martinique</option>
-      	<option value="MR">Mauritania</option>
-      	<option value="MU">Mauritius</option>
-      	<option value="YT">Mayotte</option>
-      	<option value="MX">Mexico</option>
-      	<option value="FM">Micronesia, Federated States of</option>
-      	<option value="MD">Moldova, Republic of</option>
-      	<option value="MC">Monaco</option>
-      	<option value="MN">Mongolia</option>
-      	<option value="ME">Montenegro</option>
-      	<option value="MS">Montserrat</option>
-      	<option value="MA">Morocco</option>
-      	<option value="MZ">Mozambique</option>
-      	<option value="MM">Myanmar</option>
-      	<option value="NA">Namibia</option>
-      	<option value="NR">Nauru</option>
-      	<option value="NP">Nepal</option>
-      	<option value="NL">Netherlands</option>
-      	<option value="NC">New Caledonia</option>
-      	<option value="NZ">New Zealand</option>
-      	<option value="NI">Nicaragua</option>
-      	<option value="NE">Niger</option>
-      	<option value="NG">Nigeria</option>
-      	<option value="NU">Niue</option>
-      	<option value="NF">Norfolk Island</option>
-      	<option value="MP">Northern Mariana Islands</option>
-      	<option value="NO">Norway</option>
-      	<option value="OM">Oman</option>
-      	<option value="PK">Pakistan</option>
-      	<option value="PW">Palau</option>
-      	<option value="PS">Palestinian Territory, Occupied</option>
-      	<option value="PA">Panama</option>
-      	<option value="PG">Papua New Guinea</option>
-      	<option value="PY">Paraguay</option>
-      	<option value="PE">Peru</option>
-      	<option value="PH">Philippines</option>
-      	<option value="PN">Pitcairn</option>
-      	<option value="PL">Poland</option>
-      	<option value="PT">Portugal</option>
-      	<option value="PR">Puerto Rico</option>
-      	<option value="QA">Qatar</option>
-      	<option value="RE">Réunion</option>
-      	<option value="RO">Romania</option>
-      	<option value="RU">Russian Federation</option>
-      	<option value="RW">Rwanda</option>
-      	<option value="BL">Saint Barthélemy</option>
-      	<option value="SH">Saint Helena, Ascension and Tristan da Cunha</option>
-      	<option value="KN">Saint Kitts and Nevis</option>
-      	<option value="LC">Saint Lucia</option>
-      	<option value="MF">Saint Martin (French part)</option>
-      	<option value="PM">Saint Pierre and Miquelon</option>
-      	<option value="VC">Saint Vincent and the Grenadines</option>
-      	<option value="WS">Samoa</option>
-      	<option value="SM">San Marino</option>
-      	<option value="ST">Sao Tome and Principe</option>
-      	<option value="SA">Saudi Arabia</option>
-      	<option value="SN">Senegal</option>
-      	<option value="RS">Serbia</option>
-      	<option value="SC">Seychelles</option>
-      	<option value="SL">Sierra Leone</option>
-      	<option value="SG">Singapore</option>
-      	<option value="SX">Sint Maarten (Dutch part)</option>
-      	<option value="SK">Slovakia</option>
-      	<option value="SI">Slovenia</option>
-      	<option value="SB">Solomon Islands</option>
-      	<option value="SO">Somalia</option>
-      	<option value="ZA">South Africa</option>
-      	<option value="GS">South Georgia and the South Sandwich Islands</option>
-      	<option value="SS">South Sudan</option>
-      	<option value="ES">Spain</option>
-      	<option value="LK">Sri Lanka</option>
-      	<option value="SD">Sudan</option>
-      	<option value="SR">Suriname</option>
-      	<option value="SJ">Svalbard and Jan Mayen</option>
-      	<option value="SZ">Swaziland</option>
-      	<option value="SE">Sweden</option>
-      	<option value="CH">Switzerland</option>
-      	<option value="SY">Syrian Arab Republic</option>
-      	<option value="TW">Taiwan, Province of China</option>
-      	<option value="TJ">Tajikistan</option>
-      	<option value="TZ">Tanzania, United Republic of</option>
-      	<option value="TH">Thailand</option>
-      	<option value="TL">Timor-Leste</option>
-      	<option value="TG">Togo</option>
-      	<option value="TK">Tokelau</option>
-      	<option value="TO">Tonga</option>
-      	<option value="TT">Trinidad and Tobago</option>
-      	<option value="TN">Tunisia</option>
-      	<option value="TR">Turkey</option>
-      	<option value="TM">Turkmenistan</option>
-      	<option value="TC">Turks and Caicos Islands</option>
-      	<option value="TV">Tuvalu</option>
-      	<option value="UG">Uganda</option>
-      	<option value="UA">Ukraine</option>
-      	<option value="AE">United Arab Emirates</option>
-      	<option value="GB">United Kingdom</option>
-      	<option value="US">United States</option>
-      	<option value="UM">United States Minor Outlying Islands</option>
-      	<option value="UY">Uruguay</option>
-      	<option value="UZ">Uzbekistan</option>
-      	<option value="VU">Vanuatu</option>
-      	<option value="VE">Venezuela, Bolivarian Republic of</option>
-      	<option value="VN">Viet Nam</option>
-      	<option value="VG">Virgin Islands, British</option>
-      	<option value="VI">Virgin Islands, U.S.</option>
-      	<option value="WF">Wallis and Futuna</option>
-      	<option value="EH">Western Sahara</option>
-      	<option value="YE">Yemen</option>
-      	<option value="ZM">Zambia</option>
-      	<option value="ZW">Zimbabwe</option>
-    </datalist>
+      <input class = "inputField" oninput = "inputFunction(this.id)" type = "text" placeholder = "Nationality" id = "nationality" name = "nationality" required>
 
       <input id = "city" oninput = "inputFunction(this.id)" class = "inputField" type = "text" placeholder = "Location : City" name = "city" required>
       <input id = "favourite"  oninput = "inputFunction(this.id)"class = "inputField" type = "text" placeholder = "Favourite Driver" name = "favourite" required>
@@ -517,9 +227,7 @@
       </select>
       <br>
       <input onclick = "registrationSendFunction()" id = "formRegisterSubmit" type = "submit" value = "Create Account"  class = "registerSendButton"><br><br>
-
     </div>
-
     </div>
     <div class = "regModal-footer">
 
@@ -527,8 +235,6 @@
   </div>
 </div>
 <!--                =============            RULES MODAL               =============                -->
-<!--                =============            Rules MODAL               =============                -->
-<!--                =============            Rules MODAL             =============                -->
 <!--                =============            Rules MODAL               =============                -->
 
 <div id="myRuleModal" class="ruleModal">
@@ -553,7 +259,7 @@
         <ul class = "smallerIndentSpecial">
           <li><b>Correct</b> position - <i>8 points</i></li>
           <li><b>One-off </b>the position - <i>5 points</i></li>
-          <li><b>Two-off</b> the position - <i>2 points</i></li>
+          <li><b>Two-off</b> the position - <i>3 points</i></li>
           <li><b>Three-off</b> the position - <i>1 point.</i></li>
         </ul>
 
@@ -569,9 +275,9 @@
       <p class = "paragraphDescription">Enter the time estimate in the form [mm:ss.SSS] for pole position, and the driver. <b>Note input time format (with colon and decimal point) please do enter times in the correct format. Times entered in the wrong format will not work and will blow up.</b> I will fix this, its just decided to piss me off. Lots of love!
             Points are awarded as follows:
             <div class = "smallerIndentSpecial">
-       <b>Exact time</b> - <i>25 Points</i><br>
-       <b> ±0.100</b> - <i>15 Points</i><br>
-       <b>±0.225</b> - <i>10 Points</i><br>
+       <b>Exact time</b> - <i>30 Points</i><br>
+       <b> ±0.200</b> - <i>20 Points</i><br>
+       <b>±0.5</b> - <i>10 Points</i><br>
        <b>Driver</b> - <i>10 Points</i></div></p>
 
    </li>
@@ -617,10 +323,7 @@
       This then encorporates a new aspect into the Formula 1 predictor never seen, you must account for a drivers various misfortunes during the season, and not have Verstappen win every race (Josh!).
       The points that relate to a players championship prediction, is taken away from their overall score. So a closer estimation of the championship, means you score more effectively.
       That is <div class = "specialequation"><br><br><b>Overall points&nbsp;&nbsp; =<div class = "equation"> &nbsp;&nbsp;Top Ten Points<br>&nbsp;&nbsp; + &nbsp;&nbsp;Race Event Points <br>&nbsp;&nbsp;- &nbsp;&nbsp;Championship Variance.</div></div></b></p>
-
    <h4 class = "ruleHeader1">Example</h4>
-
-
       <div>
       <div class = "tableGrid">
       <table class = "table">
@@ -662,7 +365,6 @@
         <td>&nbsp;441</td>
       </tr>
       </tbody>
-
       <tfoot>
         <tr style = "border:none;">
           <td colspan = "4" style = "align-items:center;">Sum over all drivers</td>
@@ -678,7 +380,6 @@
           </tr>
       </tfoot>
       </small>
-
       <br>
       </table>
       </div>
@@ -702,9 +403,6 @@
               <li><h4 class = "ruleHeader1">Copying previous race results</h4>
                 <p class = "paragraphDescription">Users wishing to copy prior race event results to get a good championship prediction may do so, but at their own peril. The points system has been vigorously tested and contructed in a manner in which such users will not benefit overall. At best they will be bang in the middle of the pack.
                 </p></li>
-                <!--<li><h4 class = "ruleHeader1">Joining dates and leagues</h4>
-            <p class = "paragraphDescription">You may join at any time during the season, and will be placed in a 'global' league of users that registered at the same time. This enables users to compare fairly. You may also join or create leagues between friends. This feature will arrive shortly after the season starts at Melbourne.
-            </p></li>-->
           <li><h4 class = "ruleHeader1">Non-submission of prediction</h4>
             <p class = "paragraphDescription">If a user fails to submit any prediction prior to the Q2 deadline, that person is a dickhead and I havent put anything else in place, in fact it will probably fuck with my program and I will have to debug it. So please just submit predictions for a while, thanks.
             </p></li>
@@ -714,39 +412,26 @@
               <li><h4 class = "ruleHeader1">Disqualified drivers/teams</h4>
                 <p class = "paragraphDescription">In the event that a driver or team have there points completely deducted, they will still contribute towards the championship variance point system. That is, if a particular driver is excluded from the championship but is still allowed to compete, the championship variance calculator will use a figure based on what that driver would have scored had he not been eliminated from the whole championship. If on a single race event a driver is excluded for a race-particular infringement, then that driver will of course be excluded from scoring points in the championship variance calculations, as would be in the official championship standings.
                 </p>
-
               </li>
-
         </ul>
-
       </div>
      </div>
-
     </div>
     <div class = "ruleModal-footer">
     </div>
-
   </div>
-
-  <!--                =============               MODAL               ===========                -->
-  <!--                =============            MESSAGE MODAL               =============                -->
-  <!--                =============               MODAL             =============                -->
+<!--                =============               MODAL             =============                -->
   <!--                =============            MESSAGE MODAL               =============                -->
 
   <div id="myMessageModal" class = "messageModal">
-    <!-- Modal content -->
     <div id="messageModal-content">
       <div id = "messageModal-header">
       </div>
       <div class = "messageModal-body">
         <div id = "messageModalMessageDiv"><p id = "messageModalMessage"></p></div>
-
-
       </div>
     </div>
 </div>
-<!--                ============            Profile Modal               ================                 -->
-<!--                ============            Profile Modal               ================                 -->
 <!--                ============            Profile Modal               ================                 -->
 <!--                ============            Profile Modal               ================                 -->
 <div id="myProfileModal" class="profileModal">
@@ -757,22 +442,56 @@
 <h2>Profile</h2>
     </div>
     <div class = "profileModal-body">
-      <ul>
-      <li onclick = "getScore()" class = "profileButton"><button>View Score</button></li>
-      <li class = "profileButton" onclick = "getOldPredictions()" id = "clickForTable"><button>View Past Predictions</button></li>
-      <li class = "profileButton"><button disabled>View all scores</button></li>
-      <li class = "profileButton"><button disabled>View Championship Variance</button></li>
+      <ul class = "profileList">
+      <li class = "profileButton" onclick = "getOldPredictions()" id = "clickForTable"><h3>Past Predictions</h3></li>
+      <div id="data-list"></div>
+      <li onclick = "getScores()" class = "profileButton" id = "clickForLeague"><h3>League Scores</h3></li>
+      <div id="league-data-list"></div>
+      <li id = "changeFuncProHeader" class = "profileButton" onclick = showSelectMenu(this.id)><h3>Individual Race Scores</h3></li>
+      <div id = "profileSelection">
+        <select id="mySelect"  onchange = "raceRequest(this.value)">
+          <option disabled selected value>Select Race:</option>
+          <option value="Australia">Australia</option>
+          <option value="Bahrain">Bahrain</option>
+          <option value="China">China</option>
+          <option value="Baku">Baku</option>
+          <option value="Spain">Spain</option>
+          <option value="Monaco">Monaco</option>
+          <option value="Canada">Canada</option>
+          <option value="France">France</option>
+          <option value="Austria">Austria</option>
+        </select>
+      </div>
+      <div id = "indiv-data-list"></div>
+
+
+      <li id = "changeFuncProHeader2" class = "profileButton" onclick = showSelectMenu2(this.id)><h3>Individual Race League Scores</h3></li>
+      <div id = "profileSelection2">
+        <select id="mySelect2"  onchange = "raceRequestLeague(this.value)">
+          <option disabled selected value>Select Race:</option>
+          <option value="Australia">Australia</option>
+          <option value="Bahrain">Bahrain</option>
+          <option value="China">China</option>
+          <option value="Baku">Baku</option>
+          <option value="Spain">Spain</option>
+          <option value="Monaco">Monaco</option>
+          <option value="Canada">Canada</option>
+          <option value="France">France</option>
+          <option value="Austria">Austria</option>
+        </select>
+      </div>
+      <div id = "indiv-league-data-list"></div>
+
+
+
+      <li class = "profileButton" onclick = "messageModal('coming soon', 2000)"><h3>Championship Variance</h3></li>
     </ul>
-    <div id="data-list"></div>
 
     </div>
 
 
   </div>
 </div>
-
-<!--                =============            NAV NAV NAV NAV               =============                -->
-<!--                =============            NAV NAV NAV NAV               =============                -->
 <!--                =============            NAV NAV NAV NAV               =============                -->
 <!--                =============            NAV NAV NAV NAV               =============                -->
 <div class = "nav">
@@ -788,7 +507,6 @@
 <script type="text/javascript" src="./wholeScript.js" defer>
 
 </script>
-
 
 
 </html>
