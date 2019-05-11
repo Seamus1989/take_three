@@ -153,15 +153,15 @@
       <h3 class = "timer" id = "sha">Shanghai, China</h3>
       <button id = "AZB" class = "raceBtn" name = "The Azerbaijan Grand Prix, Baku City Circuit" onclick = "raceSelectFunction(this.id)" data-dateTime = "Sat Apr 27 2019 14:23:00 GMT+0000 (Greenwich Mean Time)">Baku, Azerbaijan</button>
       <h3 class = "timer" id = "bak">Baku, Azerbaijan</h3>
-      <button id = "ESP" class = "raceBtn" name = "The Spanish Grand Prix, Circuit de Barcelona-Catalyuna" onclick = "raceSelectFunction(this.id)" data-dateTime = "Sat May 11 2019 14:23:00 GMT+0000 (Greenwich Mean Time)">Barcelona, Spain</button><!--DELETE STYLE and use this https://www.f1calendar.com/-->
+      <button id = "ESP" class = "raceBtn" name = "The Spanish Grand Prix, Circuit de Barcelona-Catalyuna" onclick = "raceSelectFunction(this.id)" data-dateTime = "Sat May 11 2019 15:23:00 GMT+0000 (Greenwich Mean Time)">Barcelona, Spain</button><!--DELETE STYLE and use this https://www.f1calendar.com/-->
       <h3 class = "timer" id = "cat">Barcelona, Spain</h3>
-      <button id = "MON" class = "raceBtn" name = "The Monaco Grand Prix, Monte Carlo" onclick = "raceSelectFunction(this.id)" data-dateTime = "Sat May 25 2019 14:23:00 GMT+0000 (Greenwich Mean Time)">Monte Carlo, Monaco</button>
+      <button id = "MON" class = "raceBtn" name = "The Monaco Grand Prix, Monte Carlo" onclick = "raceSelectFunction(this.id)" data-dateTime = "Sat May 25 2019 15:23:00 GMT+0000 (Greenwich Mean Time)">Monte Carlo, Monaco</button>
       <h3 class = "timer" id = "mnt">Monte Carlo, Monaco</h3>
-      <button id = "CAN" class = "raceBtn" name = "The Canadian Grand Prix, Circuit Gilles Villneuve" onclick = "raceSelectFunction(this.id)" data-dateTime = "Sat Jun 8 2019 19:23:00 GMT+0000 (Greenwich Mean Time)">Montreal, Canada</button>
+      <button id = "CAN" class = "raceBtn" name = "The Canadian Grand Prix, Circuit Gilles Villneuve" onclick = "raceSelectFunction(this.id)" data-dateTime = "Sat Jun 8 2019 20:23:00 GMT+0000 (Greenwich Mean Time)">Montreal, Canada</button>
       <h3 class = "timer" id = "vil">Montreal, Canada</h3>
-      <button id = "FRA" class = "raceBtn" name = "The French Grand Prix, Circuit Paul Ricard" onclick = "raceSelectFunction(this.id)" data-dateTime = "Sat Jun 22 2019 14:23:00 GMT+0000 (Greenwich Mean Time)">Le Castellet, France</button>
+      <button id = "FRA" class = "raceBtn" name = "The French Grand Prix, Circuit Paul Ricard" onclick = "raceSelectFunction(this.id)" data-dateTime = "Sat Jun 22 2019 15:23:00 GMT+0000 (Greenwich Mean Time)">Le Castellet, France</button>
       <h3 class = "timer" id = "ric">Le Castellet, France</h3>
-      <button id = "RBR" class = "raceBtn" name = "The Austrian Grand Prix, Red Bull Ring" onclick = "raceSelectFunction(this.id)" data-dateTime = "Sat Jun 29 2019 14:23:00 GMT+0000 (Greenwich Mean Time)">Speilberg, Austria</button>
+      <button id = "RBR" class = "raceBtn" name = "The Austrian Grand Prix, Red Bull Ring" onclick = "raceSelectFunction(this.id)" data-dateTime = "Sat Jun 29 2019 15:23:00 GMT+0000 (Greenwich Mean Time)">Speilberg, Austria</button>
       <h3 class = "timer" id = "spe">Speilberg, Austria</h3>
       <button id = "BRI" class = "raceBtn" name = "The British Grand Prix, Silverstone Circuit" onclick = "raceSelectFunction(this.id)" data-dateTime = "" style="display: none;">Silvertsone, Britain</button>
       <h3 class = "timer" id = "sil">Silvertsone, Britain</h3>
@@ -324,9 +324,8 @@
       The points that relate to a players championship prediction, is taken away from their overall score. So a closer estimation of the championship, means you score more effectively.
       That is <div class = "specialequation"><br><br><b>Overall points&nbsp;&nbsp; =<div class = "equation"> &nbsp;&nbsp;Top Ten Points<br>&nbsp;&nbsp; + &nbsp;&nbsp;Race Event Points <br>&nbsp;&nbsp;- &nbsp;&nbsp;Championship Variance.</div></div></b></p>
    <h4 class = "ruleHeader1">Example</h4>
-      <div>
-      <div class = "tableGrid">
-      <table class = "table">
+
+      <table style = "border:1px solid black" style = "border-radius:5px">
       <small>
       <tr>
         <th>Driver</th>
@@ -381,9 +380,8 @@
       </tfoot>
       </small>
       <br>
-      </table>
-      </div>
-      </div>
+  </table>
+
       <p class = "tableDescription">Here, the player will then have their rounded championship variance (29), taken away from their results from top ten predictions and race events. This calculation occurs each week, over all twenty drivers, and will iron out as the season progresses - which addresses
       ongoing unpredicticalities of the sport. Something other fantasy predictors do not take into consideration.
       Players will now have a score representative of their Formula 1 know how. <br><br>
@@ -484,7 +482,8 @@
 
 
 
-      <li class = "profileButton" onclick = "messageModal('coming soon', 2000)"><h3>Championship Variance</h3></li>
+      <li id = "champVarListElement" class = "profileButton" onclick = "champVarRequest()"><h3>Championship Variance</h3></li>
+      <div id="data-champ-var"></div>
     </ul>
 
     </div>

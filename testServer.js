@@ -51,7 +51,7 @@ app.use(expressSession({
   saveUninitialized: false,
   cookie: {
     httpOnly:false,
-    maxAge: 2678400000 // 31 days
+    maxAge: 26784000000 // 310 days
   }
 }));
 
@@ -494,11 +494,11 @@ passport.use('login', new LocalStrategy({
         return done(err)
       }
       if (!row) {
-        return done(null, false)
+        return done(null, false, {message : "Username not found! Please check your credentials!"})
       }
       if (!bcrypt.compareSync(password, row.superSecret)) {  // THIS BIT AINT WORKKKKKEN PROPERLY
         //console.log("Invalid password")
-        return done(null, false);
+        return done(null, false, {message : "Incorrect password for "+username+"!"});
       }
       //console.log(req.sessionID)
       return done(null, username);
@@ -599,7 +599,7 @@ app.post('/login', function(req, res, next) {
       return next(err);
     }
     if (!user) {
-      return res.send({ success : false, message : 'Please check your credentials' })
+      return res.send({ success : false, message : info.message })
     };
     req.logIn(user, function(err) {
       if (err) {
@@ -798,7 +798,9 @@ app.get('/getScore', function(req, res, next) {
           console.log(err)
         } else if (row) {
           let individualUser = row.UserID
-          scoreObjectToSend[individualUser] = row
+          if ((individualUser!= "Orbogink") && (individualUser!= "luciereev13") && (individualUser!= "Joshgt87") && (individualUser!= "Kayossf1Team") && (individualUser!= "Jamantmill") && (individualUser!= "SeamoReevus")) {
+            scoreObjectToSend[individualUser] = row
+          }
         }
       }, function() {
         res.send({success:true, message:"Success!",scores:scoreObjectToSend})
@@ -869,6 +871,9 @@ async function testing(res, pred, firedEvent) {
       let theLatestRace = outputScoreObject["RACE"]
       ///////////////////////////////////////////////////////
       let champVarStringJSON = outputScoreObject["ChampVar"]
+      let champVarObjectsJSON = JSON.parse(outputScoreObject["champVarObjects"]);
+      let champVarObjectUser = champVarObjectsJSON[usernameIdentifier]
+      let champVarObjectActual = champVarObjectsJSON["actual"]
       let champVarObject = JSON.parse(champVarStringJSON)
       let latestChampVar = champVarObject[theLatestRace]
       ///////////////////////////////////////////////////////
@@ -950,6 +955,47 @@ async function testing(res, pred, firedEvent) {
               db.serialize(function() {
                 db.run('DELETE FROM wholeScoresTable WHERE UserID = ?', (usernameIdentifier));
                 db.run('INSERT INTO wholeScoresTable (UserID, TTRESum, latestCV, sum) VALUES (?, ?, ?, ?)', [usernameIdentifier, tTRESum, latestChampVar, wholeScore], function(err, rowE) {
+                  if (err) {
+                    console.log(err)
+                  }
+                })
+              })
+            }
+          })
+          db.run('CREATE TABLE IF NOT EXISTS champVarTable (User TEXT, Hamilton TEXT,  Bottas TEXT,  Vettel TEXT,  Leclerc TEXT,  Kubica TEXT,  Russell TEXT,  Perez TEXT,  Stroll TEXT,  Verstappen TEXT,  Gasly TEXT,  Kyvat TEXT,  Albon TEXT,  Giovinazzi TEXT,  Raikkonen TEXT,  Sainz TEXT,  Norris TEXT,  Hulkenberg TEXT,  Ricciardo TEXT,  Magnussen TEXT,  Grosjean TEXT)')
+          db.get('SELECT * FROM champVarTable WHERE User = ?', (usernameIdentifier) , function(err, row) {
+            if (err) {
+              console.log(err)
+            } else if (!row) {
+              db.run('INSERT INTO champVarTable (User, Hamilton, Bottas, Vettel, Leclerc, Kubica, Russell, Perez, Stroll, Verstappen, Gasly, Kyvat, Albon, Giovinazzi, Raikkonen, Sainz, Norris, Hulkenberg, Ricciardo, Magnussen, Grosjean) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',[usernameIdentifier, champVarObjectUser["Hamilton"], champVarObjectUser["Bottas"], champVarObjectUser["Vettel"], champVarObjectUser["Leclerc"], champVarObjectUser["Kubica"], champVarObjectUser["Russell"], champVarObjectUser["Perez"], champVarObjectUser["Stroll"], champVarObjectUser["Verstappen"], champVarObjectUser["Gasly"], champVarObjectUser["Kyvat"], champVarObjectUser["Albon"], champVarObjectUser["Giovinazzi"], champVarObjectUser["Raikkonen"], champVarObjectUser["Sainz"], champVarObjectUser["Norris"], champVarObjectUser["Hulkenberg"], champVarObjectUser["Ricciardo"], champVarObjectUser["Magnussen"], champVarObjectUser["Grosjean"]] , function(err) {
+                if (err) {
+                  console.log(err)
+                }
+              })
+            } else if (row) {
+              db.serialize(function() {
+                db.run('DELETE FROM champVarTable Where User = ?', (usernameIdentifier));
+                db.run('INSERT INTO champVarTable (User, Hamilton, Bottas, Vettel, Leclerc, Kubica, Russell, Perez, Stroll, Verstappen, Gasly, Kyvat, Albon, Giovinazzi, Raikkonen, Sainz, Norris, Hulkenberg, Ricciardo, Magnussen, Grosjean) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',[usernameIdentifier, champVarObjectUser["Hamilton"], champVarObjectUser["Bottas"], champVarObjectUser["Vettel"], champVarObjectUser["Leclerc"], champVarObjectUser["Kubica"], champVarObjectUser["Russell"], champVarObjectUser["Perez"], champVarObjectUser["Stroll"], champVarObjectUser["Verstappen"], champVarObjectUser["Gasly"], champVarObjectUser["Kyvat"], champVarObjectUser["Albon"], champVarObjectUser["Giovinazzi"], champVarObjectUser["Raikkonen"], champVarObjectUser["Sainz"], champVarObjectUser["Norris"], champVarObjectUser["Hulkenberg"], champVarObjectUser["Ricciardo"], champVarObjectUser["Magnussen"], champVarObjectUser["Grosjean"]], function(err) {
+                  if (err) {
+                    console.log(err)
+                  }
+                })
+              })
+            }
+          })
+          db.get('SELECT * FROM champVarTable WHERE User = ?', ("actualChampionshipResults6089") , function(err, row) {
+            if (err) {
+              console.log(err)
+            } else if (!row) {
+              db.run('INSERT INTO champVarTable (User, Hamilton, Bottas, Vettel, Leclerc, Kubica, Russell, Perez, Stroll, Verstappen, Gasly, Kyvat, Albon, Giovinazzi, Raikkonen, Sainz, Norris, Hulkenberg, Ricciardo, Magnussen, Grosjean) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',["actualChampionshipResults6089", champVarObjectActual["Hamilton"], champVarObjectActual["Bottas"], champVarObjectActual["Vettel"], champVarObjectActual["Leclerc"], champVarObjectActual["Kubica"], champVarObjectActual["Russell"], champVarObjectActual["Perez"], champVarObjectActual["Stroll"], champVarObjectActual["Verstappen"], champVarObjectActual["Gasly"], champVarObjectActual["Kyvat"], champVarObjectActual["Albon"], champVarObjectActual["Giovinazzi"], champVarObjectActual["Raikkonen"], champVarObjectActual["Sainz"], champVarObjectActual["Norris"], champVarObjectActual["Hulkenberg"], champVarObjectActual["Ricciardo"], champVarObjectActual["Magnussen"], champVarObjectActual["Grosjean"]] , function(err) {
+                if (err) {
+                  console.log(err)
+                }
+              })
+            } else if (row) {
+              db.serialize(function() {
+                db.run('DELETE FROM champVarTable Where User = ?', ("actualChampionshipResults6089"));
+                db.run('INSERT INTO champVarTable (User, Hamilton, Bottas, Vettel, Leclerc, Kubica, Russell, Perez, Stroll, Verstappen, Gasly, Kyvat, Albon, Giovinazzi, Raikkonen, Sainz, Norris, Hulkenberg, Ricciardo, Magnussen, Grosjean) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',["actualChampionshipResults6089", champVarObjectActual["Hamilton"], champVarObjectActual["Bottas"], champVarObjectActual["Vettel"], champVarObjectActual["Leclerc"], champVarObjectActual["Kubica"], champVarObjectActual["Russell"], champVarObjectActual["Perez"], champVarObjectActual["Stroll"], champVarObjectActual["Verstappen"], champVarObjectActual["Gasly"], champVarObjectActual["Kyvat"], champVarObjectActual["Albon"], champVarObjectActual["Giovinazzi"], champVarObjectActual["Raikkonen"], champVarObjectActual["Sainz"], champVarObjectActual["Norris"], champVarObjectActual["Hulkenberg"], champVarObjectActual["Ricciardo"], champVarObjectActual["Magnussen"], champVarObjectActual["Grosjean"]] , function(err) {
                   if (err) {
                     console.log(err)
                   }
@@ -1047,16 +1093,46 @@ app.get('/league_results', function(req, res, next) {
         console.log("BOPE")
       } else if (row) {
         let individualUser = row.Username;
-        let intermediateObject = {
-          "RE" : row.REvent,
-          "TT" : row.TTen,
-          "Total" :row.Total,
-          "race" : race
-        };
-        returnObject[individualUser] = intermediateObject
+        if ((individualUser!= "Orbogink") && (individualUser!= "luciereev13") && (individualUser!= "Joshgt87") && (individualUser!= "Kayossf1Team") && (individualUser!= "Jamantmill") && (individualUser!= "SeamoReevus")) {
+          let intermediateObject = {
+            "RE" : row.REvent,
+            "TT" : row.TTen,
+            "Total" :row.Total,
+            "race" : race
+          };
+          returnObject[individualUser] = intermediateObject
+        }
       }
     }, function() {
       res.send({success:true, message:"Success!",scores:returnObject})
+    })
+  }
+})
+
+app.get("/getChampVar", function(req, res, next) {
+  if (!req.user) {
+    res.send({success:false, message : "Please Log In"})
+  } else if (req.user) {
+    let returnData = {}
+    db.serialize(function() {
+      db.get('SELECT * FROM champVarTable WHERE User = ?' ,(req.user), function(err, row) {
+        if (err) {
+          console.log(err)
+        } else if (row) {
+          returnData[req.user] = row;
+        }
+      })
+      db.get('SELECT * FROM champVarTable WHERE User = ?',("actualChampionshipResults6089"), function(err, row) {
+        if (err) {
+          console.log(err)
+        } else if (!row) {
+          res.send({success:false})
+        } else if (row) {
+          returnData["actual"] = row;
+          res.send({success:true, data : returnData})
+        }
+      })
+
     })
   }
 })

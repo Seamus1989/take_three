@@ -1048,8 +1048,9 @@ function createAllUserTable(allResults) {
 }
 
 async function submitTheSeamus() {
-  messageModal("Offline only!", 3000)
-  /*let newDriverString = splitPoleTimeAndDriverPartDriver();
+  messageModal("Offline only!", 3000);
+  /*
+  let newDriverString = splitPoleTimeAndDriverPartDriver();
   let newTimeString = splitPoleTimeAndDriverPartTime();
   let listDataToSendInForm = [document.getElementById("raceBtn").name, document.getElementById("P1").name, document.getElementById("P2").name, document.getElementById("P3").name, document.getElementById("P4").name, document.getElementById("P5").name, document.getElementById("P6").name, document.getElementById("P7").name, document.getElementById("P8").name, document.getElementById("P9").name, document.getElementById("P10").name,
   document.getElementById("ExtraP11").name, document.getElementById("ExtraP12").name, document.getElementById("ExtraP13").name, newDriverString, newTimeString,
@@ -1060,7 +1061,6 @@ async function submitTheSeamus() {
     messageModal("Please fill in all input fields!", 1300)
   } else if ((checkAllBoolean() === true) && (document.getElementById("ExtraP11").name != "") && (document.getElementById("ExtraP12").name != "") && (document.getElementById("ExtraP13").name !="")) {
     try {
-      //alert("2")
       let responseObject = await fetch('/SeamusResultsSend', {
         method : 'POST',
         headers: {
@@ -1299,6 +1299,7 @@ function createIndividualRaceTable(tableData) {
         if (j===3) {
           cell.style.fontWeight = "bold"
           cell.style.fontStyle = "normal"
+          cell.style.borderTop = "1px solid black"
           cell.style.borderBottom = "1px solid black"
         }
       } else if (k===1  && j<3) {
@@ -1308,15 +1309,18 @@ function createIndividualRaceTable(tableData) {
       } else if (k===1  && j!=3) {
         cell.innerText = " - - "
       } else if(k===1  && j===3) {
-        cell.style.borderBottom = "1px solid black"
+        cell.style.borderTop = "1px solid black";
+        cell.style.borderBottom = "1px solid black";
       } else if(k===2 && j!=3) {
         cell.innerText = " - - "
       } else if(k===2  && j===3) {
-        cell.style.borderBottom = "1px solid black"
+        cell.style.borderTop = "1px solid black";
+        cell.style.borderBottom = "1px solid black";
       } else if(k===3 && j===3) {
-        cell.style.fontWeight = "bold"
-        cell.innerText = tableData.scores["TTen"]
-        cell.style.borderBottom = "1px solid black"
+        cell.style.fontWeight = "bold";
+        cell.innerText = tableData.scores["TTen"];
+        cell.style.borderTop = "1px solid black";
+        cell.style.borderBottom = "1px solid black";
       } else if(k===3 && j===4) {
         if (tableData.scores["Winner"]==="1") {
           cell.innerText = "8"
@@ -1364,11 +1368,14 @@ function createIndividualRaceTable(tableData) {
     if (l===0) {
       cell.style.fontWeight = "bold"
       cell.innerText ="Race Events"
+      cell.style.borderTop = "1px solid black"
       cell.style.borderRight = "1px solid black"
     } else if (l===3) {
+      cell.style.borderTop = "1px solid black"
       cell.style.fontWeight = "bold"
       cell.innerText = tableData.scores["REvent"]
     } else {
+      cell.style.borderTop = "1px solid black"
       cell.innerText =""
     }
   }
@@ -1505,3 +1512,173 @@ function createLeagueRaceTable(data) {
     }
   }
 }
+async function champVarRequest() {
+  try {
+    let responseObject = await fetch('/getChampVar', {
+      method : 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'},
+        credentials: "include"
+      });
+        if (responseObject.ok) {
+          const champVarObject = await responseObject.json();
+          if (champVarObject.success === true) {
+            createChampVarTable(champVarObject.data)
+            document.getElementById("champVarListElement").setAttribute("onclick", "deleteTable('champVarianceTable','champVarListElement','champVarRequest()')")
+
+          }
+        }
+      }
+      catch(e) {
+        alert(e)
+      }
+}
+function createChampVarTable(info) {
+  let listToSum = []
+  let realChamp = info.actual;
+  let username = Object.keys(info)[0]
+  let driverList = Object.keys(info[username])
+  let columnNumbers = 5;
+  let rowNumbers = (driverList.length)-1;
+  ////////////////////////////////////////////////////////
+  let champVarTable = document.createElement('table');
+  champVarTable.setAttribute("id", "champVarianceTable");
+  document.getElementById("data-champ-var").appendChild(champVarTable);
+  let theHeaders = champVarTable.createTHead();
+  let rows = theHeaders.insertRow(-1);
+  let theBody = document.createElement('tbody')
+  champVarTable.appendChild(theBody);
+  document.getElementById("data-champ-var").style.overflowX = "scroll"
+  champVarTable.style.borderSpacing = "0px"
+  champVarTable.style.margin = "20px 10px 20px 20px"
+  champVarTable.style.borderRadius = "10px"
+  champVarTable.style.border = "1px solid black"
+  champVarTable.style.fontSize = "70%"
+  for (var i = 0; i < columnNumbers; i++) {
+    let headerCell = document.createElement('th');
+    headerCell.style.borderBottom = "1px solid black"
+    headerCell.style.textAlign = "center"
+    headerCell.style.fontSize = "80%"
+    if (i===0) {
+      headerCell.style.width = "60px";
+      headerCell.innerText = "Driver"
+      rows.appendChild(headerCell);
+    } else if (i===1) {
+      headerCell.style.width = "60px";
+      headerCell.innerText = "Actual Championship Points"
+      rows.appendChild(headerCell);
+    } else if (i===2){
+      headerCell.style.width = "60px";
+      headerCell.innerText = "User Championship Points"
+      rows.appendChild(headerCell);
+    } else if (i===3){
+      headerCell.innerText = "Point Delta"
+      headerCell.style.width = "40px";
+      rows.appendChild(headerCell);
+    } else if (i===4){
+      headerCell.innerText = "Delta Value Squared"
+      rows.appendChild(headerCell);
+      headerCell.style.width = "40px";
+    }
+  }
+  for (let j=0 ; j<rowNumbers ; j++) {
+    rows = theBody.insertRow(-1);
+    for (let k = 0; k<columnNumbers; k++) {
+      let cell = rows.insertCell(-1);
+      if (k===0) {
+        cell.style.textAlign = "left"
+        cell.style.paddingLeft = "6px"
+        cell.style.paddingRight = "4px"
+        cell.style.borderRight = "1px solid black";
+        cell.innerText = driverList[j+1]
+      } else if (k===1) {
+        cell.innerText = realChamp[driverList[j+1]];
+        cell.style.borderRight = "1px solid black";
+        if (j!=rowNumbers-1) {
+          cell.style.borderBottom = "1px solid black";
+        }
+      } else if (k===2) {
+        cell.innerText = info[username][driverList[j+1]];
+        cell.style.borderRight = "1px solid black";
+        if (j!=rowNumbers-1) {
+          cell.style.borderBottom = "1px solid black";
+        }
+      } else if (k===3) {
+        cell.style.borderRight = "1px solid black";
+        if ((info[username][driverList[j+1]]-realChamp[driverList[j+1]])>0) {
+          cell.innerText = "+"+(info[username][driverList[j+1]]-realChamp[driverList[j+1]]);
+        } else {
+          cell.innerText = (info[username][driverList[j+1]]-realChamp[driverList[j+1]]);
+        }
+      } else if (k===4) {
+        let varSq = (realChamp[driverList[j+1]]-info[username][driverList[j+1]]);
+        cell.innerText = Math.pow(varSq, 2);
+        let varSqq = Math.pow(varSq, 2);
+        listToSum.push(varSqq)
+      }
+    }
+  }
+  for (let a=0 ; a<3 ; a++) {
+    rows = theBody.insertRow(-1);
+    for (let b = 0; b<columnNumbers; b++) {
+      let cell = rows.insertCell(-1);
+      if (b===0) {
+        cell.innerText = ""
+        if (a===0) {
+          cell.style.borderTop = "1px solid black";
+        }
+      } else if (b===1) {
+        cell.innerText = ""
+        if (a===0) {
+          cell.style.borderTop = "1px solid black";
+        }
+      } else if (b===2) {
+        cell.style.borderRight = "1px solid black";
+        cell.innerText = ""
+        if (a===0) {
+          cell.style.borderTop = "1px solid black";
+        }
+      } else if (b===3) {
+        cell.style.fontWeight = "bold";
+        cell.style.borderTop = "1px solid black";
+        cell.style.borderRight = "1px solid black";
+        if (a===0) {
+          cell.style.textAlign = "left"
+          cell.style.paddingLeft = "5px"
+          cell.style.fontSize = "75%"
+          cell.innerText = "Value Summed"
+        } else if (a===1) {
+          cell.style.textAlign = "left"
+          cell.style.paddingLeft = "5px"
+          cell.style.fontSize = "75%"
+          cell.innerText = "Square Root"
+        } else if (a===2) {
+          cell.style.textAlign = "left"
+          cell.style.paddingLeft = "5px"
+          cell.style.fontSize = "75%"
+          cell.innerText = "Rounded"
+        }
+      } else if (b===4) {
+        cell.style.borderTop = "1px solid black";
+        let total = listToSum.reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+        let sqRoot = Math.sqrt(total);
+        var decimal = sqRoot.toFixed(2);
+        var rounded = sqRoot.toFixed(0);
+        if (a===0) {
+          cell.innerText = total
+        } else if (a===1) {
+          cell.innerText = decimal;
+        } else if (a===2) {
+          cell.style.fontSize = "110%";
+          cell.style.fontWeight = "bold"
+          cell.innerText = rounded;
+        }
+      }
+    }
+  }
+}
+
+/*
+document.getElementById("mySelect2").setAttribute("onClick", "deleteTable('indivLeagueTable', 'mySelect2','raceRequestLeague(raceforURL)')"
+*/

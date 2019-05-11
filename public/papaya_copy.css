@@ -108,15 +108,15 @@ body {
     border-radius:10px;
   }
   div#regModalId.regModal-content, div#myModalContent.modal-content, div.raceModal-content, div.ruleModal-content {
-    width : 82vw;
-    height: 80vh;
+    width : 80vw;
+    height: 77vh;
     position:relative;
     top:-19.5vh;
   }
   div#profileModalId.profileModal-content {
     width : 91vw;
-    height: 85vh;
-    top:-23.5vh;
+    height: 80vh;
+    top:-18.5vh;
   }
   h3.ruleHeader {
     top: 68px;
@@ -126,8 +126,8 @@ body {
 @media only screen and (min-height : 420px) and (max-height : 499px) {
   div#profileModalId.profileModal-content {
     width : 90vw;
-    height: 88vh;
-    top:-18vh;
+    height: 82vh;
+    top:-17vh;
   }
   div.gridButtons .Btn, div.gridButtons .selectBtn {
     background-color:rgba(0,0,0,0.5);
@@ -143,7 +143,7 @@ body {
     width : 85vw;
     height: 78vh;
     position:relative;
-    top:-18vh;
+    top:-15vh;
   }
   h3.ruleHeader {
     top: 68px;
@@ -157,9 +157,9 @@ body {
     border-radius:10px;
   }
   div#profileModalId.profileModal-content {
-    width : 90vw;
-    height: 88vh;
-    top:-17vh;
+    width : 85vw;
+    height: 85vh;
+    top:-10vh;
   }
   div.nav ul li {
     line-height : 58px;
@@ -724,14 +724,13 @@ poleTimeDiv {
   font-family:roboto;
   color:rgba(0,0,0,0.95);
   font-weight:900;
-  border-radius:15px;
   font-size:17px;
   min-height:25px;
   max-height:55px;
   min-width:60px;
   max-width:380px;
-  margin : 0px auto 20px auto;
-  white-space: normal
+  margin : 0px auto 30px auto;
+  white-space: normal;
 }
 /*    */     /*    Main screen Grid location controls   *//*    */     /*    Main screen Grid location controls   */
 /*    */     /*    Main screen Grid location controls   *//*    */     /*    Main screen Grid location controls   */
@@ -991,10 +990,11 @@ poleTimeDiv {
 .notBold{
   font-weight:normal;
   padding-left : 8px;
-}​
-table, th, td {
+}
+span#champRuleTable {
   border: 1px solid black;
-  font-size:85%;
+  font-size:90%;
+  color:blue;
 }
 
 /*          Login / Register Modal Layout  */     /*          Login / Register Modal Layout  */
@@ -1147,10 +1147,11 @@ table, th, td {
 }
 .profileButton {
   border-radius: 5px;
-  margin:4px 20px 2px 20px;
+  margin:8px 20px 5px 20px;
   padding:1px;
   background-color:rgba(255, 177, 10, 0.65);
   color:rgba(0,0,0, 0.3);
+  max-width:300px;
 }
 .profileButton h3 {
   margin:5px 0px 5px 10px;
@@ -1162,6 +1163,17 @@ table, th, td {
 #profileSelection, #profileSelection2 {
   margin:4px 20px 2px 20px;
   display:none;
+  font-family: roboto;
+}
+#mySelect:after {
+  position: absolute;
+  content: "";
+  top: 14px;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-color: #fff transparent transparent transparent;
 }
 /*             TABLE               */  /*                                     */  /*                                     */
 /*             OF RESULTS                  */  /*                             */  /*                                     */
@@ -1202,11 +1214,9 @@ div#data-list {
 }*/
 th {
   text-align:right;
-  border:none;
   z-index:0;
 }
 td {
-  border:none;
   text-align:center;
   width:max-content;
   z-index:0;
