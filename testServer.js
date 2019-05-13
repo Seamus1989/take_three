@@ -631,158 +631,22 @@ app.post('/logout', function(req, res){
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.get('/getOldPredictionForTable', function(req, res, next) {
+  let theRaceStringRequest = req.query.race
   if (!req.user) {
     res.send({success : false, message : "Please login before loading profile details!"});
   } else if (req.user) {
     let userIdentify = req.user
     let predictionObjectToSend = {};
     let resultObjectToSend = {};
-    db.serialize(function() {
-      ///////////////////////////////////////////////////////////////////////////////////////////////
-      db.get("SELECT * FROM Australia Where Name = ?", (userIdentify), function(err, row) {
-        if(!row) {
-          predictionObjectToSend["Australia"] = {"Name":"N/A","First":" - - ","Second":" - - ","Third":" - - ","Fourth":" - - ","Fifth":" - - ","Sixth":" - - ","Seventh":" - - ","Eighth":" - - ","Ninth":" - - ","Tenth":" - - ","PoleD":" - - ","PoleT":"00:00.000","TeamDriver":" - - ","DriverDay":" - - ","BestFirst":" - - ","MostPG":" - - ","FastestLap":" - - ","Pit":" - - "}
-        } else if (row) {
-          predictionObjectToSend["Australia"] = row;
-        }
-      })
-      db.get("SELECT * FROM Results WHERE Race = ?", ("Australia"), function(err, row) {
-        if(!row) {
-          //res.send({success : true, message : "Results currently unavailable"})
-        } else if (row) {
-          resultObjectToSend["Australia"] = row;
-        }
-      })
-      ///////////////////////////////////////////////////////////////////////////////////////////////
-      db.get("SELECT * FROM Bahrain Where Name = ?", (userIdentify), function(err, row) {
-        if(!row) {
-          predictionObjectToSend["Bahrain"] = predictionObjectToSend["Australia"];
-        } else if (row) {
-          predictionObjectToSend["Bahrain"] = row;
-        }
-      })
-      db.get("SELECT * FROM Results WHERE Race = ?", ("Bahrain"), function(err, row) {
-        if(!row) {
-          //res.send({success : true, message : "Yeah Buddy", prediction : predictionObjectToSend, result : resultObjectToSend})
-        } else if (row) {
-          resultObjectToSend["Bahrain"] = row;
-        }
-      })
-      ///////////////////////////////////////////////////////////////////////////////////////////////
-      db.get("SELECT * FROM China Where Name = ?", (userIdentify), function(err, row) {
-        if(!row) {
-          predictionObjectToSend["China"] = predictionObjectToSend["Bahrain"]
-        } else if (row) {
-          predictionObjectToSend["China"] = row;
-        }
-      })
-      db.get("SELECT * FROM Results WHERE Race = ?", ("China"), function(err, row) {
-        if(!row) {
-          //res.send({success : true, message : "Yeah Buddy", prediction : predictionObjectToSend, result : resultObjectToSend})
-        } else if (row) {
-          resultObjectToSend["China"] = row;
-        }
-      })
-      ///////////////////////////////////////////////////////////////////////////////////////////////
-    db.get("SELECT * FROM Baku Where Name = ?", (userIdentify), function(err, row) {
+    db.get("SELECT * FROM "+theRaceStringRequest+" Where Name = ?", (userIdentify), function(err, row) {
       if(!row) {
-        predictionObjectToSend["Baku"] = predictionObjectToSend["China"];
+        res.send({success : false, message : "Predictions not saved, load previous race!"});
       } else if (row) {
-        predictionObjectToSend["Baku"] = row;
+        predictionObjectToSend[theRaceStringRequest] = row;
+        res.send({success : true, message : "Success", data :predictionObjectToSend });
       }
     })
-    db.get("SELECT * FROM Results WHERE Race = ?", ("Baku"), function(err, row) {
-      if(!row) {
-        //res.send({success : true, message : "Yeah Buddy", prediction : predictionObjectToSend, result : resultObjectToSend})
-      } else if (row) {
-        resultObjectToSend["Baku"] = row;
-      }
-    })
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    db.get("SELECT * FROM Spain Where Name = ?", (userIdentify), function(err, row) {
-      if(!row) {
-        predictionObjectToSend["Spain"] = predictionObjectToSend["Baku"];
-      } else if (row) {
-        predictionObjectToSend["Spain"] = row;
-      }
-    })
-    db.get("SELECT * FROM Results WHERE Race = ?", ("Spain"), function(err, row) {
-      if(!row) {
-        //res.send({success : true, message : "Yeah Buddy", prediction : predictionObjectToSend, result : resultObjectToSend})
-      } else if (row) {
-        resultObjectToSend["Spain"] = row;
-      }
-    })
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    db.get("SELECT * FROM Monaco Where Name = ?", (userIdentify), function(err, row) {
-      if(!row) {
-        predictionObjectToSend["Monaco"] = predictionObjectToSend["Spain"];
-      } else if (row) {
-        predictionObjectToSend["Monaco"] = row;
-      }
-    })
-    db.get("SELECT * FROM Results WHERE Race = ?", ("Monaco"), function(err, row) {
-      if(!row) {
-        //res.send({success : true, message : "Yeah Buddy", prediction : predictionObjectToSend, result : resultObjectToSend})
-      } else if (row) {
-        resultObjectToSend["Monaco"] = row;
-      }
-    })
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    db.get("SELECT * FROM Canada Where Name = ?", (userIdentify), function(err, row) {
-      if(!row) {
-        predictionObjectToSend["Canada"] = predictionObjectToSend["Monaco"];
-      } else if (row) {
-        predictionObjectToSend["Canada"] = row;
-      }
-    })
-    db.get("SELECT * FROM Results WHERE Race = ?", ("Canada"), function(err, row) {
-      if(!row) {
-        //res.send({success : true, message : "Yeah Buddy", prediction : predictionObjectToSend, result : resultObjectToSend})
-      } else if (row) {
-        resultObjectToSend["Canada"] = row;
-      }
-    })
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    db.get("SELECT * FROM France Where Name = ?", (userIdentify), function(err, row) {
-      if(!row) {
-        predictionObjectToSend["France"] = predictionObjectToSend["Canada"];
-      } else if (row) {
-        predictionObjectToSend["France"] = row;
-      }
-    })
-    db.get("SELECT * FROM Results WHERE Race = ?", ("France"), function(err, row) {
-      if(!row) {
-        //res.send({success : true, message : "Yeah Buddy", prediction : predictionObjectToSend, result : resultObjectToSend})
-      } else if (row) {
-        resultObjectToSend["France"] = row;
-      }
-    })
-    /////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////
-    db.get("SELECT * FROM Austria Where Name = ?", (userIdentify), function(err, row) {
-      if(!row) {
-        predictionObjectToSend["Austria"] = predictionObjectToSend["France"]
-      } else if (row) {
-        predictionObjectToSend["Austria"] = row;
-      }
-    })
-    db.get("SELECT * FROM Results WHERE Race = ?", ("Austria"), function(err, row) {
-      if(!row) {
-        res.send({success : true, message : "Yeah Buddy", prediction : predictionObjectToSend, result : resultObjectToSend})
-      } else if (row) {
-        resultObjectToSend["Austria"] = row;
-        res.send({success : true, message : "Yeah Buddy", prediction : predictionObjectToSend, result : resultObjectToSend})
-      } else if (err) {
-        console.log(err)
-      }
-    })
-  })
-}
+  }
 })
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////

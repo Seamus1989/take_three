@@ -441,7 +441,21 @@
     </div>
     <div class = "profileModal-body">
       <ul class = "profileList">
-      <li class = "profileButton" onclick = "getOldPredictions()" id = "clickForTable"><h3>Past Predictions</h3></li>
+      <li class = "profileButton" onclick = "showSelectMenu3()" id = "clickForTable"><h3>View My Predictions</h3></li>
+      <div id = "profileSelection3">
+        <select id="myPredictionSelect"  onchange = "getOldPredictions(this.value)">
+          <option disabled selected value>Select Race:</option>
+          <option value="Australia">Australia</option>
+          <option value="Bahrain">Bahrain</option>
+          <option value="China">China</option>
+          <option value="Baku">Baku</option>
+          <option value="Spain">Spain</option>
+          <option value="Monaco">Monaco</option>
+          <option value="Canada">Canada</option>
+          <option value="France">France</option>
+          <option value="Austria">Austria</option>
+        </select>
+      </div>
       <div id="data-list"></div>
       <li onclick = "getScores()" class = "profileButton" id = "clickForLeague"><h3>League Scores</h3></li>
       <div id="league-data-list"></div>

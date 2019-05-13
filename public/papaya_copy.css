@@ -1160,11 +1160,11 @@ span#champRuleTable {
     list-style: none;
     padding-left: 0;
 }
-#profileSelection, #profileSelection2 {
+#profileSelection, #profileSelection2, #profileSelection3 {
   margin:4px 20px 2px 20px;
   display:none;
   font-family: roboto;
-}
+}/*
 #mySelect:after {
   position: absolute;
   content: "";
@@ -1174,44 +1174,11 @@ span#champRuleTable {
   height: 0;
   border: 6px solid transparent;
   border-color: #fff transparent transparent transparent;
-}
+}*/
 /*             TABLE               */  /*                                     */  /*                                     */
 /*             OF RESULTS                  */  /*                             */  /*                                     */
 
-div#data-list table {
-  font-family:Arial;
-  font-size:86%;
-  margin-left: 60px; /* Keep this bit, it spoaces the first ROW */
-  padding: 5px;
-  border:1px solid black;
-  border-radius: 15px 5px 5px 5px;
-  border-spacing:0px; /*IMPORTANT */
-  overflow-x: scroll;
-}
-div#data-list {
-  margin-left: 10px;
-  margin-right:10px;
-  overflow-x:scroll;
-  max-width : 400px;
-}
-
-#firstRowOfTable {
-  text-align:left;
-  position: absolute;
-  left: 10px;
-  top: auto;
-  overflow-x: hidden;
-  height:min-content;
-  /*only relevant for first row*/
-  width:50px;
-  background-color: rgb(255,255,255);
-}
-
-/*th#descriptionHeader {
-  text-align:left;
-  font-size:107%;
-
-}*/
+/*
 th {
   text-align:right;
   z-index:0;
@@ -1220,4 +1187,4 @@ td {
   text-align:center;
   width:max-content;
   z-index:0;
-}
+}*/

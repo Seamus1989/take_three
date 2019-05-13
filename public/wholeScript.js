@@ -19,7 +19,7 @@ let se;
 /////////////////////
 let raceList = ["AUS","BAH", "CHI", "AZB","ESP", "MON", "CAN", "FRA", "RBR", "BRI", "GER", "HUN", "SPA", "MNZ", "MBS", "RUS","SUZ", "MEX", "USA", "BRA", "ABU"];
 let headerRaceList = ["mel", "bhr", "sha", "bak","cat","mnt", "vil", "ric","spe","sil","hnh", "hgr","spf", "itl", "sing", "soch","suzu", "rodi","tex","palo","yas"];
-let elementArray = ["", "P1", "P2", "P3", "P4", "P5", "P6",  "P7","P8", "P9", "P10", "P11", "P12", "P13", "Pole Driver", "Pole Time", "Team Driver", "DotD", "First Lap", "MPG", "Fastest Lap", "Strategy"]
+let elementArray = ["P1", "P2", "P3", "P4", "P5", "P6",  "P7","P8", "P9", "P10", "Pole Driver", "Pole Time", "Team Driver", "DotD", "First Lap", "MPG", "Fastest Lap", "Strategy"]
 
 let tableIndivElementArray = ["P1", "P2", "P3", "P4", "P5", "P6",  "P7","P8", "P9", "P10", "P11", "P12", "P13","Top Ten Score", "Winner", "Podium", "Pole Driver", "Pole Time", "Team Driver", "DotD", "First Lap", "MPG", "Fastest Lap", "Race Events", "Total"]
 
@@ -929,9 +929,11 @@ async function getItMate(race) {
     catch(error) {
     }
 }
-async function getOldPredictions() {
+
+async function getOldPredictions(raceString) {
+  let url = createRaceTableURLResults("getOldPredictionForTable/?", raceString)
   try {
-    let responseObject = await fetch('/getOldPredictionForTable', {
+    let responseObject = await fetch(url, {
       method : 'GET',
       headers: {
         'Accept': 'application/json',
@@ -941,17 +943,12 @@ async function getOldPredictions() {
         if (responseObject.ok) {
           const getOldPredictionObject = await responseObject.json();
           if (getOldPredictionObject.success === true) {
-            if (!getOldPredictionObject.prediction && !getOldPredictionObject.result) {
-              theMessage = getOldPredictionObject.message;
-              messageModal(theMessage, 1400)
-            } else if (getOldPredictionObject.prediction && getOldPredictionObject.result) {
-              let predictionObject = getOldPredictionObject.prediction
-              let resultObject = getOldPredictionObject.result
-              createTable(predictionObject, resultObject)
-              document.getElementById("clickForTable").setAttribute("onClick", "deleteTable('myTable', 'clickForTable','getOldPredictions()')")
-            }
-            //////////////////////////////////////
-            //////////////////////////////////////
+            let tableData = getOldPredictionObject.data;
+            createTable(tableData)
+            document.getElementById("clickForTable").setAttribute("onClick", "deleteTable('myTable', 'clickForTable','getOldPredictions()')")
+            //
+
+            ////////////////////////////////////////////////////////////////////////////
           } else if (getOldPredictionObject.success === false) {
             theMessage = getOldPredictionObject.message
             messageModal(theMessage, 1400);
@@ -1049,8 +1046,7 @@ function createAllUserTable(allResults) {
 
 async function submitTheSeamus() {
   messageModal("Offline only!", 3000);
-  /*
-  let newDriverString = splitPoleTimeAndDriverPartDriver();
+  /*let newDriverString = splitPoleTimeAndDriverPartDriver();
   let newTimeString = splitPoleTimeAndDriverPartTime();
   let listDataToSendInForm = [document.getElementById("raceBtn").name, document.getElementById("P1").name, document.getElementById("P2").name, document.getElementById("P3").name, document.getElementById("P4").name, document.getElementById("P5").name, document.getElementById("P6").name, document.getElementById("P7").name, document.getElementById("P8").name, document.getElementById("P9").name, document.getElementById("P10").name,
   document.getElementById("ExtraP11").name, document.getElementById("ExtraP12").name, document.getElementById("ExtraP13").name, newDriverString, newTimeString,
@@ -1081,103 +1077,70 @@ async function submitTheSeamus() {
     }
   }*/
 }
-function createTable(pred, res) {
-  // table headings
-  let columnHeadingResults = Object.keys(res)
-  // Get the count of columns.
-  let columnCount = columnHeadingResults.length;
-  // The count of rows.
-  let rowCount = Object.keys(res[columnHeadingResults[0]]).length;
-  // the strings of the rows
-  let rowStrings = Object.keys(res[columnHeadingResults[0]])
-  //////////////////////////////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////////////////////////////
+//,"data":{"Bahrain":{"Name":"SeamoMotherfuckinReevo","First":"Leclerc","Seco
+function createTable(info) {
+  let raceSelected = Object.keys(info)[0]
+  let innerInfo = info[raceSelected]
+  let username = innerInfo[Object.keys(innerInfo)[0]]
+  let columnNumber = 2;
+  let actualDataKeys = Object.keys(innerInfo)
+  let actualDataValues = Object.values(innerInfo)
+  let rowNumber = actualDataKeys.length
   let table = document.createElement('table');
   table.setAttribute("id", "myTable")
+  table.style.borderSpacing = "0px"
   document.getElementById("data-list").appendChild(table);
   ////////////////////////////////////////////////////////////////////////////////////////////////////
   let header = table.createTHead();
   let row = header.insertRow(-1);
   //////////////////////////////////////////////////////////////////////////////////////////////////////
   let tBody = document.createElement('tbody');
+  table.style.padding = "10px 10px 10px 20px"
   table.appendChild(tBody);
- //////////////////////////////////////////////////////////////////////////////////////////////////////
- for (var i = 0; i < (2*(columnCount)+1); i++) {
-   var headerCell = document.createElement('th');
-   if (i === 0) {
-     headerCell.innerText = "";
-     row.appendChild(headerCell);
-     headerCell.style.boxShadow =  "0 rgba(0,0,0,0),0 rgba(0,0,0,0)";
-     headerCell.style.zIndex = "0"
-     headerCell.setAttribute("id", "descriptionHeader")
-   } else if (i === 1) {
-     headerCell.innerText = columnHeadingResults[(i-1)/2]
-     row.appendChild(headerCell);
-     headerCell.setAttribute("id", "raceHeader")
-     document.getElementById("raceHeader").colSpan = "2"
-     headerCell.style.paddingLeft = "10px"
-   } else if ((i%2 === 1) && (i!= 0) && (i!=1)){
-     headerCell.innerText = columnHeadingResults[(i-1)/2];
-     row.appendChild(headerCell);
-     let headerString = "header" + i;
-     headerCell.setAttribute("id", headerString)
-     document.getElementById(headerString).colSpan = "2"
-   }
- }
- ////////////////////////////////////////////////////////////////////////////////////////////////////
- for (var i = 0; i < rowCount - 1; i++) { // each row
-   row = tBody.insertRow(-1);
-   ///////////////////////////////////////////////////////////////////////////////////////////////////
-   for (var j = 0; j < columnCount + 1; j++) { // each column
-     let cell = row.insertCell(-1);
-     let cell2 = row.insertCell(-1);
-     if (j === 0 && i===0) {
-       cell.style.backgroundColor = ""
-     } else if (j === 0 && i!=0) {
-       cell.setAttribute('data-label', columnHeadingResults[j].toUpperCase());
-       cell2.setAttribute('data-label', columnHeadingResults[j].toUpperCase());
-       cell.innerText = elementArray[i]
-       cell.setAttribute("id", "firstRowOfTable")
-       cell.style.paddingLeft = "5px"
-       cell.style.paddingRight = "5px"
-       cell.style.zIndex = "1"
-       cell.style.fontStyle = "italic"
-       cell.style.boxShadow =  "0.5px 3px 3px rgba(0,0,0,0.1)";
-       //cell2.innerText = ""
-     } else if (i===0) {
-       cell.innerText = "Result"
-       cell2.innerText = "Prediction"
-       cell.style.fontStyle = "italic"
-       cell2.style.fontStyle = "italic"
-       cell2.style.paddingRight = "5px"
-     } else if (i === 15) {
-       cell.setAttribute('data-label', columnHeadingResults[j-1].toUpperCase());
-       cell2.setAttribute('data-label', columnHeadingResults[j-1].toUpperCase());
-       driverString = res[columnHeadingResults[j-1]][rowStrings[i]];
-       driverSubString = driverString.substring(1,9)
-       cell.innerText = driverSubString.toUpperCase()
-       driverString1 = pred[columnHeadingResults[j-1]][rowStrings[i]];
-       driverSubString1 = driverString1.substring(1,9)
-       cell2.innerText = driverSubString1.toUpperCase()
-     } else if ((i!=11) && (i!=12) && (i!= 13)) {
-       cell.setAttribute('data-label', columnHeadingResults[j-1].toUpperCase());
-       cell2.setAttribute('data-label', columnHeadingResults[j-1].toUpperCase());
-       driverString = res[columnHeadingResults[j-1]][rowStrings[i]];
-       driverSubString = driverString.substring(0,3)
-       cell.innerText = driverSubString.toUpperCase()
-       driverString1 = pred[columnHeadingResults[j-1]][rowStrings[i]];
-       driverSubString1 = driverString1.substring(0,3)+ "         "
-       cell2.innerText = driverSubString1.toUpperCase()
-     } else if ((i===11) || (i===12) || (i===13)) {
-       cell.setAttribute('data-label', columnHeadingResults[j-1].toUpperCase());
-       cell2.setAttribute('data-label', columnHeadingResults[j-1].toUpperCase());
-       driverString = res[columnHeadingResults[j-1]][rowStrings[i]];
-       driverSubString = driverString.substring(0,3)
-       cell.innerText = driverSubString.toUpperCase()
-       cell2.innerText = "  - - "
-     }
-   }
- }
+  for (var i = 0; i < columnNumber; i++) {
+    var headerCell = document.createElement('th');
+    headerCell.style.border = "1px solid black"
+    headerCell.style.padding = "3px 10px 3px 10px"
+    if (i === 0) {
+      headerCell.innerText = "Selection";
+      headerCell.style.borderTopLeftRadius = "10px"
+      headerCell.style.borderRight = "none"
+      row.appendChild(headerCell);
+    } else if (i===1) {
+      headerCell.style.borderTopRightRadius = "10px"
+      headerCell.innerText = "Prediction";
+      row.appendChild(headerCell);
+    }
+  }
+  for (var i = 1; i < rowNumber-1; i++) { // each row
+    row = tBody.insertRow(-1);
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    for (var j = 0; j < columnNumber; j++) { // each column
+      let cell = row.insertCell(-1);
+      if (j===0) {
+        cell.style.fontSize = "85%"
+        cell.style.padding = "2px 10px 1px 10px"
+        cell.style.borderLeft = "1px solid black"
+        cell.style.borderBottom = "1px solid black"
+        cell.innerText = elementArray[i-1]
+        cell.style.fontStyle = "italic"
+        if (i===(rowNumber-2)) {
+          cell.style.borderBottomLeftRadius = "10px"
+        }
+      } else if (j===1) {
+        cell.style.fontSize = "92%"
+        cell.style.borderRight = "1px solid black"
+        cell.style.padding = "2px 10px 1px 4px"
+        cell.style.borderLeft = "1px solid black"
+        cell.style.borderBottom = "1px solid black"
+        cell.style.fontWeight = "bold"
+        cell.innerText = actualDataValues[i]
+        if (i===(rowNumber-2)) {
+          cell.style.borderBottomRightRadius = "10px"
+        }
+      }
+    }
+  }
 }
 function deleteTable(table, parent, exFunction) {
   let removeTab = document.getElementById(table);
@@ -1417,6 +1380,18 @@ function hideSelectMenu2() {
   document.getElementById("profileSelection2").style.display = "none"
   document.getElementById("indiv-league-data-list").style.display = "none"
   document.getElementById("changeFuncProHeader2").setAttribute("onclick", "showSelectMenu2()")
+}
+
+
+function showSelectMenu3() {
+  document.getElementById("data-list").style.display = "block"
+  document.getElementById("profileSelection3").style.display = "block"
+  document.getElementById("clickForTable").setAttribute("onclick", "hideSelectMenu3()")
+}
+function hideSelectMenu3() {
+  document.getElementById("profileSelection3").style.display = "none"
+  document.getElementById("data-list").style.display = "none"
+  document.getElementById("clickForTable").setAttribute("onclick", "showSelectMenu3()")
 }
 
 async function raceRequestLeague(raceforURL) {
