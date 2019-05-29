@@ -145,7 +145,7 @@
 <h2>Race</h2>
     </div>
     <div class = "raceModal-body">
-      <button id = "AUS" class = "raceBtn" name = "The Australian Grand Prix, Albert Park" onclick = "raceSelectFunction(this.id)"  data-dateTime = "Sat Apr 10 2019 15:10:45 GMT+0000 (Greenwich Mean Time)">Melbourne, Australia</button>
+      <button id = "AUS" class = "raceBtn" name = "The Australian Grand Prix, Albert Park" onclick = "raceSelectFunction(this.id)"  data-dateTime = "Sat Jun 8 2019 18:23:00 GMT+0000 (Greenwich Mean Time)">Melbourne, Australia</button>
       <h3 class = "timer" id = "mel">Melbourne, Australia</h3>
        <button id = "BAH" class = "raceBtn" name = "The Bahrain Grand Prix, Bahrain International Circuit" onclick = "raceSelectFunction(this.id)" data-dateTime = "Sat Apr 10 2019 15:10:45 GMT+0000 (Greenwich Mean Time)">Sakhir, Bahrain</button>
       <h3 class = "timer" id = "bhr">Sakhir, Bahrain</h3>
@@ -437,11 +437,16 @@
   <div id = "profileModalId" class="profileModal-content">
     <span class="close" onclick = "closeProfileFunction()">&times;</span>
     <div class = "profileModal-header">
-<h2>Profile</h2>
+<h2 id = "profileTitle">Profile</h2>
+<div id = "profileHeaderData">
+<div id  = "usernameHeader"></div>
+<div id  = "scoreHeader"><h4></h4></div>
+</div>
     </div>
     <div class = "profileModal-body">
       <ul class = "profileList">
-      <li class = "profileButton" onclick = "showSelectMenu3()" id = "clickForTable"><h3>View My Predictions</h3></li>
+        <div id = "profileCollection">
+      <li class = "profileButton" onclick = "showSelectMenu3(this.id)" id = "clickForTable"><h3>View Submitted Predictions</h3></li>
       <div id = "profileSelection3">
         <select id="myPredictionSelect"  onchange = "getOldPredictions(this.value)">
           <option disabled selected value>Select Race:</option>
@@ -457,9 +462,7 @@
         </select>
       </div>
       <div id="data-list"></div>
-      <li onclick = "getScores()" class = "profileButton" id = "clickForLeague"><h3>League Scores</h3></li>
-      <div id="league-data-list"></div>
-      <li id = "changeFuncProHeader" class = "profileButton" onclick = showSelectMenu(this.id)><h3>Individual Race Scores</h3></li>
+      <li id = "changeFuncProHeader" class = "profileButton" onclick = showSelectMenu(this.id)><h3>Race Results & Points</h3></li>
       <div id = "profileSelection">
         <select id="mySelect"  onchange = "raceRequest(this.value)">
           <option disabled selected value>Select Race:</option>
@@ -476,8 +479,15 @@
       </div>
       <div id = "indiv-data-list"></div>
 
+      <li id = "champVarListElement" class = "profileButton" onclick = "champVarRequest()"><h3>Championship Variance Table</h3></li>
+      <div id="data-champ-var"></div>
+    </div>
+      <div id = "leagueCollection">
 
-      <li id = "changeFuncProHeader2" class = "profileButton" onclick = showSelectMenu2(this.id)><h3>Individual Race League Scores</h3></li>
+      <li onclick = "getScores()" class = "profileButton" id = "clickForLeague"><h3>League Leaderboard</h3></li>
+      <div id="league-data-list"></div>
+
+      <li id = "changeFuncProHeader2" class = "profileButton" onclick = showSelectMenu2(this.id)><h3>League-Race Leaderboard</h3></li>
       <div id = "profileSelection2">
         <select id="mySelect2"  onchange = "raceRequestLeague(this.value)">
           <option disabled selected value>Select Race:</option>
@@ -493,11 +503,7 @@
         </select>
       </div>
       <div id = "indiv-league-data-list"></div>
-
-
-
-      <li id = "champVarListElement" class = "profileButton" onclick = "champVarRequest()"><h3>Championship Variance</h3></li>
-      <div id="data-champ-var"></div>
+    </div>
     </ul>
 
     </div>

@@ -42,7 +42,6 @@ function specialTimerThing() {
     let race = document.getElementById(element);
     let raceDateTime = race.getAttribute("data-dateTime");
     if (raceDateTime != "") { //if it has a date
-      //alert(raceDateTime)
       let indexOfRace = raceList.indexOf(element);
       let raceIdentify = raceList[indexOfRace];
       let headerListId = headerRaceList[indexOfRace];
@@ -128,28 +127,41 @@ function openReg() {
   regModal.style.display = "grid"
 }
 function openProfile() {
-  theProfileModal.style.display = "grid"
+  requestParticularUser("no user")
 }
-/*
-async function profileStats() {
+async function requestParticularUser(user) {
   try {
-    let responseObject = await fetch('/isAuthenticated', {
+    let userObject = {specifiedUser:user}
+    let responseObject = await fetch('/requestParticularUser', {
       method : 'POST',
       headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'},
-      credentials: "include"
+      credentials: "include",
+      body : JSON.stringify(userObject)
       });
-      const ourResponse = await responseObject.json();
-      if(ourResponse.success === true) {
-        theProfileModal.style.display = "grid"
-      } else if (ourResponse.success === false) {
-        messageModal("Log on in to check this lot")
+      if (responseObject.ok) {
+        const userInfo = await responseObject.json();
+        const userName = userInfo.currentUser;
+        const userScoreObject = userInfo.score;
+        const theMessage = userInfo.message;
+        if(userInfo.success === true) {
+          const userScore = userScoreObject.sum
+          theProfileModal.style.display = "grid"
+          document.getElementById("usernameHeader").innerHTML = userName
+          document.getElementById("scoreHeader").innerHTML = "Score: "+ userScore
+          if (userInfo.differentUser === true) {
+            messageModal(theMessage, 1200)
+          }
+        } else if (userInfo.success === false) {
+          messageModal(theMessage, 3000)
+        }
       }
+    } catch(error) {
+
     }
-    catch(error) {
-  }
-}*/
+}
+
 function showAllDrivers() {
   driverList.forEach(function(element) {
     document.getElementById(element).hidden = false;
@@ -563,7 +575,6 @@ function splitPoleTimeAndDriverPartTime() {
   let allText = document.getElementById("Pole").value;
   let lengthOfWholeString = allText.length;
   let justTime = allText.substring(lengthOfWholeString - 9, lengthOfWholeString);
-  //alert(justTime)
   return justTime
 }
 
@@ -945,9 +956,7 @@ async function getOldPredictions(raceString) {
           if (getOldPredictionObject.success === true) {
             let tableData = getOldPredictionObject.data;
             createTable(tableData)
-            document.getElementById("clickForTable").setAttribute("onClick", "deleteTable('myTable', 'clickForTable','getOldPredictions()')")
-            //
-
+            document.getElementById("myPredictionSelect").setAttribute("onClick", "deleteTable('myTable', 'myPredictionSelect','getOldPredictions(this.value)')")
             ////////////////////////////////////////////////////////////////////////////
           } else if (getOldPredictionObject.success === false) {
             theMessage = getOldPredictionObject.message
@@ -995,12 +1004,13 @@ function createAllUserTable(allResults) {
   leagueTable.style.borderSpacing = "0px"
   leagueTable.style.margin = "20px 10px 20px 20px"
   leagueTable.style.borderRadius = "20px"
+  leagueTable.style.borderBottomLeftRadius = "8px"
   leagueTable.style.border = "0.5px solid black"
   document.getElementById("league-data-list").style.overflowX = "scroll"
   leagueTable.appendChild(tableBody)
   for (let i = 1; i<columnDataCount +1; i++) {// add total later.
     let headerCell = document.createElement('th')
-    headerCell.style.width = "80px";
+    //headerCell.style.width = "80px";
     headerCell.style.borderBottom = "1px solid black"
     headerCell.style.padding = "1px 13px 4px 12px"
     if (i === 1) {
@@ -1010,17 +1020,17 @@ function createAllUserTable(allResults) {
     } else if (i===3) {
       headerCell.innerText = "Race Events & Top Ten"
       rows.appendChild(headerCell);
-      headerCell.style.padding = "0 5px"
+      headerCell.style.padding = "0px 10px"
       headerCell.style.textAlign = "center"
     } else if (i===4){
       headerCell.innerText = "Championship Variance"
       rows.appendChild(headerCell);
-      headerCell.style.padding = "0 5px"
+      headerCell.style.padding = "0px 10px"
       headerCell.style.textAlign = "center"
     } else if (i===2) {
       headerCell.innerText = "Total"
       rows.appendChild(headerCell);
-      headerCell.style.padding = "0 5px"
+      headerCell.style.padding = "0px 10px"
       headerCell.style.textAlign = "center"
     }
   }
@@ -1028,15 +1038,24 @@ function createAllUserTable(allResults) {
     rows = tableBody.insertRow(-1);
     for (let k = 0; k<columnDataCount;k++) {
       let cell = rows.insertCell(-1);
+      cell.style.textAlign = "center"
       if (k===0) {
+        let userString = userRowStringArray[j]
+        cell.setAttribute('class', 'usernameInTable')
         cell.style.textAlign = "left"
-        cell.style.padding = "1px 3px 4px 12px"
-        cell.innerText = userRowStringArray[j]
+        cell.style.padding = "1px 13px 4px 12px"
+        cell.innerText = userString
+        cell.setAttribute('id', userString)
+        cell.setAttribute('onclick', 'requestParticularUser(this.id)')
       } else if (k===2) {
+        cell.style.borderRight = "1px solid black"
         cell.innerText = allResults[userRowStringArray[j]]["TTRESum"]
       } else if (k===3) {
         cell.innerText = allResults[userRowStringArray[j]]["latestCV"]
       } else if (k===1) {
+        cell.style.borderLeft = "1px solid black"
+        cell.style.borderRight = "1px solid black"
+        cell.style.fontWeight = "bold"
         cell.innerText = allResults[userRowStringArray[j]]["sum"]
       }
     }
@@ -1046,7 +1065,7 @@ function createAllUserTable(allResults) {
 
 async function submitTheSeamus() {
   messageModal("Offline only!", 3000);
-  /*let newDriverString = splitPoleTimeAndDriverPartDriver();
+  let newDriverString = splitPoleTimeAndDriverPartDriver();
   let newTimeString = splitPoleTimeAndDriverPartTime();
   let listDataToSendInForm = [document.getElementById("raceBtn").name, document.getElementById("P1").name, document.getElementById("P2").name, document.getElementById("P3").name, document.getElementById("P4").name, document.getElementById("P5").name, document.getElementById("P6").name, document.getElementById("P7").name, document.getElementById("P8").name, document.getElementById("P9").name, document.getElementById("P10").name,
   document.getElementById("ExtraP11").name, document.getElementById("ExtraP12").name, document.getElementById("ExtraP13").name, newDriverString, newTimeString,
@@ -1075,7 +1094,7 @@ async function submitTheSeamus() {
       }
       catch(error) {
     }
-  }*/
+  }
 }
 //,"data":{"Bahrain":{"Name":"SeamoMotherfuckinReevo","First":"Leclerc","Seco
 function createTable(info) {
@@ -1178,7 +1197,7 @@ async function raceRequest(arg) {
         if (getScores.success === true) {
           let tableData = getScores.data
           createIndividualRaceTable(tableData)
-          document.getElementById("mySelect").setAttribute("onClick", "deleteTable('indivTable', 'mySelect','raceRequest(arg)')")
+          document.getElementById("mySelect").setAttribute("onClick", "deleteTable('indivTable', 'mySelect','raceRequest(this.value)')")
         } else if (getScores.success === false) {
           messageModal(getScores.message, 2000)
         }
@@ -1212,6 +1231,7 @@ function createIndividualRaceTable(tableData) {
     headerCell.style.borderBottom = "1px solid black"
     headerCell.style.textAlign = "center"
     if (i===0) {
+      headerCell.style.paddingLeft = "10px"
       headerCell.innerText = theRace
       rows.appendChild(headerCell);
     } else if (i===1) {
@@ -1222,6 +1242,7 @@ function createIndividualRaceTable(tableData) {
       rows.appendChild(headerCell);
     } else if (i===3) {
       headerCell.innerText = "Score"
+      headerCell.style.paddingRight = "10px"
       rows.appendChild(headerCell);
     }
   }
@@ -1235,16 +1256,18 @@ function createIndividualRaceTable(tableData) {
         cell.style.paddingLeft = "5px"
         cell.style.fontStyle = "italic"
         cell.style.textAlign = "left"
+        cell.style.paddingRight = "10px"
       } else if (k===1) {
         cell.innerText = tableData.results[firstRowArray[j]]
         cell.style.textAlign = "left"
-        cell.style.paddingLeft = "5px"
+        cell.style.paddingLeft = "10px"
       } else if (k===2) {
         cell.innerText = tableData.prediction[firstRowArray[j]]
         cell.style.textAlign = "left"
-        cell.style.paddingLeft = "5px"
+        cell.style.paddingLeft = "10px"
       } else if (k===3) {
         cell.innerText = tableData.scores[firstRowArray[j]]
+        cell.style.textAlign = "center"
       }
     }
   }
@@ -1254,6 +1277,7 @@ function createIndividualRaceTable(tableData) {
     for (let k = 0; k<columnNumber;k++) {
       let cell = rows.insertCell(-1);
       if (k===0) {
+        cell.style.paddingRight = "10px"
         cell.style.paddingLeft = "5px"
         cell.style.borderRight = "1px solid black"
         cell.style.textAlign = "left"
@@ -1267,37 +1291,42 @@ function createIndividualRaceTable(tableData) {
         }
       } else if (k===1  && j<3) {
         cell.style.textAlign = "left"
-        cell.style.paddingLeft = "5px"
+        cell.style.paddingLeft = "10px"
         cell.innerText = tableData.results[plusArray[j]]
       } else if (k===1  && j!=3) {
+        cell.style.textAlign = "center"
         cell.innerText = " - - "
       } else if(k===1  && j===3) {
         cell.style.borderTop = "1px solid black";
         cell.style.borderBottom = "1px solid black";
       } else if(k===2 && j!=3) {
         cell.innerText = " - - "
+        cell.style.textAlign = "center"
       } else if(k===2  && j===3) {
         cell.style.borderTop = "1px solid black";
         cell.style.borderBottom = "1px solid black";
       } else if(k===3 && j===3) {
+        cell.style.textAlign = "center"
         cell.style.fontWeight = "bold";
         cell.innerText = tableData.scores["TTen"];
         cell.style.borderTop = "1px solid black";
         cell.style.borderBottom = "1px solid black";
       } else if(k===3 && j===4) {
+        cell.style.textAlign = "center"
         if (tableData.scores["Winner"]==="1") {
           cell.innerText = "8"
         } else {
           cell.innerText = "0"
         }
       } else if(k===3 && j===5) {
+        cell.style.textAlign = "center"
         if (tableData.scores["Podium"]==="1") {
           cell.innerText = "8"
         } else {
           cell.innerText = "0"
         }
       } else if (k===3) {
-        cell.innerText = "0"
+        cell.innerText = ""
       }
     }
   }
@@ -1307,6 +1336,7 @@ function createIndividualRaceTable(tableData) {
     for (let k = 0; k<columnNumber;k++) {
       let cell = rows.insertCell(-1);
       if (k===0) {
+        cell.style.paddingRight = "10px"
         cell.style.textAlign = "left"
         cell.style.paddingLeft = "5px"
         cell.style.borderRight = "1px solid black"
@@ -1314,13 +1344,14 @@ function createIndividualRaceTable(tableData) {
         cell.innerText = rEArray[z]
       } else if (k===1) {
         cell.style.textAlign = "left"
-        cell.style.paddingLeft = "5px"
+        cell.style.paddingLeft = "10px"
         cell.innerText = tableData.results[rEArray[z]]
       } else if (k===2) {
         cell.style.textAlign = "left"
-        cell.style.paddingLeft = "5px"
+        cell.style.paddingLeft = "10px"
         cell.innerText = tableData.prediction[rEArray[z]]
       } else if (k===3) {
+        cell.style.textAlign = "center"
         cell.innerText = tableData.scores[rEArray[z]]
       }
     }
@@ -1331,9 +1362,11 @@ function createIndividualRaceTable(tableData) {
     if (l===0) {
       cell.style.fontWeight = "bold"
       cell.innerText ="Race Events"
+      cell.style.paddingLeft = "10px"
       cell.style.borderTop = "1px solid black"
       cell.style.borderRight = "1px solid black"
     } else if (l===3) {
+      cell.style.textAlign = "center"
       cell.style.borderTop = "1px solid black"
       cell.style.fontWeight = "bold"
       cell.innerText = tableData.scores["REvent"]
@@ -1347,9 +1380,11 @@ function createIndividualRaceTable(tableData) {
     let cell = rows.insertCell(-1);
     if (k===0) {
       cell.innerText ="Total"
+      cell.style.paddingLeft = "10px"
       cell.style.borderTop = "1px solid black"
       cell.style.fontWeight = "bold"
     } else if (k===3) {
+      cell.style.textAlign = "center"
       cell.style.borderTop = "1px solid black"
       cell.style.fontWeight = "bold"
       cell.innerText = tableData.scores["Total"]
@@ -1359,39 +1394,38 @@ function createIndividualRaceTable(tableData) {
     }
   }
 }
-function showSelectMenu() {
+function showSelectMenu(iD) {
   document.getElementById("indiv-data-list").style.display = "block"
   document.getElementById("profileSelection").style.display = "block"
-  document.getElementById("changeFuncProHeader").setAttribute("onclick", "hideSelectMenu()")
+  document.getElementById(iD).setAttribute("onclick", "hideSelectMenu()")
 }
 function hideSelectMenu() {
   document.getElementById("profileSelection").style.display = "none"
   document.getElementById("indiv-data-list").style.display = "none"
-  document.getElementById("changeFuncProHeader").setAttribute("onclick", "showSelectMenu()")
+  document.getElementById("changeFuncProHeader").setAttribute("onclick", "showSelectMenu(this.id)")
 }
 
-
-function showSelectMenu2() {
+function showSelectMenu2(iD) {
   document.getElementById("indiv-league-data-list").style.display = "block"
   document.getElementById("profileSelection2").style.display = "block"
-  document.getElementById("changeFuncProHeader2").setAttribute("onclick", "hideSelectMenu2()")
+  document.getElementById(iD).setAttribute("onclick", "hideSelectMenu2()")
 }
 function hideSelectMenu2() {
   document.getElementById("profileSelection2").style.display = "none"
   document.getElementById("indiv-league-data-list").style.display = "none"
-  document.getElementById("changeFuncProHeader2").setAttribute("onclick", "showSelectMenu2()")
+  document.getElementById("changeFuncProHeader2").setAttribute("onclick", "showSelectMenu2(this.id)")
 }
 
 
-function showSelectMenu3() {
+function showSelectMenu3(iD) {
   document.getElementById("data-list").style.display = "block"
   document.getElementById("profileSelection3").style.display = "block"
-  document.getElementById("clickForTable").setAttribute("onclick", "hideSelectMenu3()")
+  document.getElementById(iD).setAttribute("onclick", "hideSelectMenu3()")
 }
 function hideSelectMenu3() {
   document.getElementById("profileSelection3").style.display = "none"
   document.getElementById("data-list").style.display = "none"
-  document.getElementById("clickForTable").setAttribute("onclick", "showSelectMenu3()")
+  document.getElementById("clickForTable").setAttribute("onclick", "showSelectMenu3(this.id)")
 }
 
 async function raceRequestLeague(raceforURL) {
@@ -1411,7 +1445,7 @@ async function raceRequestLeague(raceforURL) {
           if ((usernameArray.length) > 0) {
             let tableData = getScores.scores
             createLeagueRaceTable(tableData)
-            document.getElementById("mySelect2").setAttribute("onClick", "deleteTable('indivLeagueTable', 'mySelect2','raceRequestLeague(raceforURL)')")
+            document.getElementById("mySelect2").setAttribute("onClick", "deleteTable('indivLeagueTable', 'mySelect2','raceRequestLeague(this.value)')")
           } else if (usernameArray.length ===0) {
             messageModal("No scores for selected event!", 2000)
           }
@@ -1444,7 +1478,8 @@ function createLeagueRaceTable(data) {
   ////////////////////////////////////////////////////////
   for (var i = 0; i < columnNumbers; i++) {
     let headerCell = document.createElement('th');
-    headerCell.style.width = "80px";
+    //headerCell.style.width = "80px";
+    headerCell.style.padding = "3px 12px"
     headerCell.style.borderBottom = "1px solid black"
     headerCell.style.textAlign = "center"
     if (i===0) {
@@ -1469,20 +1504,25 @@ function createLeagueRaceTable(data) {
       let cell = rows.insertCell(-1);
       if (k===0) {
         cell.innerText = usernames[j]
-        cell.style.borderRight = "1px solid black"
-        cell.style.paddingLeft = "5px"
+        cell.setAttribute('id', usernames[j])
+        cell.setAttribute('class', 'usernameInTable')
+        cell.style.padding = "3px 10px"
+        cell.setAttribute('onclick', 'requestParticularUser(this.id)')
         cell.style.textAlign = "left"
+        cell.style.borderRadius = "8px"
       } else if (k===1) {
         cell.innerText = data[usernames[j]]["TT"]
-        cell.style.textAlign = "left"
-        cell.style.paddingLeft = "10px"
+        cell.style.textAlign = "center"
+        cell.style.borderRight = "1px solid black"
+        cell.style.borderLeft = "1px solid black"
       } else if (k===2) {
         cell.innerText = data[usernames[j]]["RE"]
-        cell.style.textAlign = "left"
-        cell.style.paddingLeft = "10px"
+        cell.style.textAlign = "center"
+        cell.style.borderRight = "1px solid black"
       } else if (k===3) {
         cell.innerText = data[usernames[j]]["Total"]
         cell.style.fontWeight = "bold"
+        cell.style.textAlign = "center"
       }
     }
   }
@@ -1513,7 +1553,16 @@ function createChampVarTable(info) {
   let listToSum = []
   let realChamp = info.actual;
   let username = Object.keys(info)[0]
-  let driverList = Object.keys(info[username])
+  ///////////////////////////////////
+  let toPairs = s => Object.keys(s).map(k => [k, s[k]]);
+  let fromPairs = a => a.reduce((s, [k, v]) => Object.assign(s, {[k]: v}), {});
+  let cmp = (a, b) => (a > b) - (a < b);
+  /////////////////////////////////////
+  b = fromPairs(
+      toPairs(info[username]).sort((x, y) =>
+          cmp(y[1], x[1]) || cmp(y[0], x[0])))
+  //////////////////////////////////////
+  let driverList = Object.keys(b)
   let columnNumbers = 5;
   let rowNumbers = (driverList.length)-1;
   ////////////////////////////////////////////////////////
@@ -1541,11 +1590,11 @@ function createChampVarTable(info) {
       rows.appendChild(headerCell);
     } else if (i===1) {
       headerCell.style.width = "60px";
-      headerCell.innerText = "Actual Championship Points"
+      headerCell.innerText = "User Championship Points"
       rows.appendChild(headerCell);
     } else if (i===2){
       headerCell.style.width = "60px";
-      headerCell.innerText = "User Championship Points"
+      headerCell.innerText = "Actual Championship Points"
       rows.appendChild(headerCell);
     } else if (i===3){
       headerCell.innerText = "Point Delta"
@@ -1564,29 +1613,36 @@ function createChampVarTable(info) {
       if (k===0) {
         cell.style.textAlign = "left"
         cell.style.paddingLeft = "6px"
-        cell.style.paddingRight = "4px"
+        cell.style.paddingRight = "10px"
+        cell.style.fontWeight = "bold"
         cell.style.borderRight = "1px solid black";
+        //cell.style.fontWeight = "bold"
         cell.innerText = driverList[j+1]
       } else if (k===1) {
-        cell.innerText = realChamp[driverList[j+1]];
+        cell.innerText = info[username][driverList[j+1]];
+        cell.style.textAlign = "center"
+        cell.style.fontWeight = "bold"
         cell.style.borderRight = "1px solid black";
         if (j!=rowNumbers-1) {
           cell.style.borderBottom = "1px solid black";
         }
       } else if (k===2) {
-        cell.innerText = info[username][driverList[j+1]];
+        cell.innerText = realChamp[driverList[j+1]];
         cell.style.borderRight = "1px solid black";
+        cell.style.textAlign = "center"
         if (j!=rowNumbers-1) {
           cell.style.borderBottom = "1px solid black";
         }
       } else if (k===3) {
         cell.style.borderRight = "1px solid black";
+        cell.style.textAlign = "center"
         if ((info[username][driverList[j+1]]-realChamp[driverList[j+1]])>0) {
           cell.innerText = "+"+(info[username][driverList[j+1]]-realChamp[driverList[j+1]]);
         } else {
           cell.innerText = (info[username][driverList[j+1]]-realChamp[driverList[j+1]]);
         }
       } else if (k===4) {
+        cell.style.textAlign = "center"
         let varSq = (realChamp[driverList[j+1]]-info[username][driverList[j+1]]);
         cell.innerText = Math.pow(varSq, 2);
         let varSqq = Math.pow(varSq, 2);
@@ -1619,34 +1675,37 @@ function createChampVarTable(info) {
         cell.style.borderTop = "1px solid black";
         cell.style.borderRight = "1px solid black";
         if (a===0) {
-          cell.style.textAlign = "left"
+          cell.style.textAlign = "center"
           cell.style.paddingLeft = "5px"
           cell.style.fontSize = "75%"
           cell.innerText = "Value Summed"
         } else if (a===1) {
-          cell.style.textAlign = "left"
+          cell.style.textAlign = "center"
           cell.style.paddingLeft = "5px"
           cell.style.fontSize = "75%"
           cell.innerText = "Square Root"
         } else if (a===2) {
-          cell.style.textAlign = "left"
+          cell.style.textAlign = "center"
           cell.style.paddingLeft = "5px"
           cell.style.fontSize = "75%"
-          cell.innerText = "Rounded"
+          cell.innerText = "Contribution to Score"
         }
       } else if (b===4) {
         cell.style.borderTop = "1px solid black";
         let total = listToSum.reduce((accumulator, currentValue) => accumulator + currentValue, 0)
         let sqRoot = Math.sqrt(total);
         var decimal = sqRoot.toFixed(2);
-        var rounded = sqRoot.toFixed(0);
+        var rounded = -sqRoot.toFixed(0);
         if (a===0) {
           cell.innerText = total
+          cell.style.textAlign = "center"
         } else if (a===1) {
           cell.innerText = decimal;
+          cell.style.textAlign = "center"
         } else if (a===2) {
           cell.style.fontSize = "110%";
           cell.style.fontWeight = "bold"
+          cell.style.textAlign = "center"
           cell.innerText = rounded;
         }
       }

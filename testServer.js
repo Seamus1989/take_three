@@ -3,12 +3,15 @@ const app = express();
 const port = 3001;
 const path = require('path')
 const bodyParser = require('body-parser');
-const engines = require('consolidate');
+//const engines = require('consolidate');
 const sqlite3 = require('sqlite3')
 const bcrypt = require('bcrypt')
 const saltRounds = 10;
-const { spawn } = require('child_process')
+const { spawn } = require('child_process') //////////////////////////////// NOT ON SERVER
 ////////////////////////////////////////////////////////////////////////////////
+var cookieParser = require('cookie-parser') //////////////////// NOT ON SERVER
+
+app.use(cookieParser())
 ////////////////////////////////////////////////////////////////////////////////
 app.listen(port, function(){
   console.log('Port listening');
@@ -30,8 +33,8 @@ db.serialize(function() {
 ////////////////////////////////////////////////////////////////////////////////
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', __dirname + '/views');
-app.engine('html', engines.mustache);
-app.set('view engine', 'html');
+//app.engine('html', engines.mustache);
+//app.set('view engine', 'html');
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 app.get('/', function (req, res, next) {
@@ -301,7 +304,6 @@ app.post('/formPredictionSubmission', function(req, res, next) {
     let FL = req.body["Fastest Lap of the Race"];
     let pit =  req.body["Winning Pit Stop Strategy"];
     if (req.body.Race === "The Australian Grand Prix, Albert Park") {
-      //console.log("AUS")
       db.serialize(function() {
         db.run('CREATE TABLE IF NOT EXISTS Australia (Name TEXT, First TEXT, Second TEXT, Third TEXT, Fourth TEXT, Fifth TEXT, Sixth TEXT, Seventh TEXT, Eighth TEXT, Ninth TEXT, Tenth TEXT, PoleD TEXT, PoleT TEXT, TeamDriver TEXT, DriverDay TEXT, BestFirst TEXT, MostPG TEXT, FastestLap TEXT, Pit TEXT)');
         db.get('SELECT Name FROM Australia WHERE Name = ?', (userVariable), function(err, row) {
@@ -496,11 +498,9 @@ passport.use('login', new LocalStrategy({
       if (!row) {
         return done(null, false, {message : "Username not found! Please check your credentials!"})
       }
-      if (!bcrypt.compareSync(password, row.superSecret)) {  // THIS BIT AINT WORKKKKKEN PROPERLY
-        //console.log("Invalid password")
+      if (!bcrypt.compareSync(password, row.superSecret)) {
         return done(null, false, {message : "Incorrect password for "+username+"!"});
       }
-      //console.log(req.sessionID)
       return done(null, username);
     })
   }));
@@ -538,7 +538,6 @@ passport.use('login', new LocalStrategy({
                 if (err) {
                   throw err;
                 }
-                console.log(firstInput + " Just registered!")
                 return done(null, firstInput);
               });
             };
@@ -620,7 +619,6 @@ app.post('/login', function(req, res, next) {
 ////////////////////////////////////////////////////////////////////////////////
 app.post('/logout', function(req, res){
   req.logout();
-  //console.log("YEP")
   res.send({ success : true, message : "Logged Out!"})
 });
 
@@ -635,7 +633,7 @@ app.get('/getOldPredictionForTable', function(req, res, next) {
   if (!req.user) {
     res.send({success : false, message : "Please login before loading profile details!"});
   } else if (req.user) {
-    let userIdentify = req.user
+    let userIdentify = req.cookies.chosenUser
     let predictionObjectToSend = {};
     let resultObjectToSend = {};
     db.get("SELECT * FROM "+theRaceStringRequest+" Where Name = ?", (userIdentify), function(err, row) {
@@ -810,7 +808,6 @@ async function testing(res, pred, firedEvent) {
               console.log(err)
             } else if (!row) {
               db.run('INSERT INTO wholeScoresTable (UserID, TTRESum, latestCV, sum) VALUES (?, ?, ?, ?)', [usernameIdentifier, tTRESum, latestChampVar, wholeScore], function(err, rowE) {
-                //console.log("Creating rows")
                 if (err) {
                   console.log(err)
                 }
@@ -826,20 +823,20 @@ async function testing(res, pred, firedEvent) {
               })
             }
           })
-          db.run('CREATE TABLE IF NOT EXISTS champVarTable (User TEXT, Hamilton TEXT,  Bottas TEXT,  Vettel TEXT,  Leclerc TEXT,  Kubica TEXT,  Russell TEXT,  Perez TEXT,  Stroll TEXT,  Verstappen TEXT,  Gasly TEXT,  Kyvat TEXT,  Albon TEXT,  Giovinazzi TEXT,  Raikkonen TEXT,  Sainz TEXT,  Norris TEXT,  Hulkenberg TEXT,  Ricciardo TEXT,  Magnussen TEXT,  Grosjean TEXT)')
-          db.get('SELECT * FROM champVarTable WHERE User = ?', (usernameIdentifier) , function(err, row) {
+          db.run('CREATE TABLE IF NOT EXISTS champVarCompleteTable (User INTEGER, Hamilton INTEGER,  Bottas INTEGER,  Vettel INTEGER,  Leclerc INTEGER,  Kubica INTEGER,  Russell INTEGER,  Perez INTEGER,  Stroll INTEGER,  Verstappen INTEGER,  Gasly INTEGER,  Kyvat INTEGER,  Albon INTEGER,  Giovinazzi INTEGER,  Raikkonen INTEGER,  Sainz INTEGER,  Norris INTEGER,  Hulkenberg INTEGER,  Ricciardo INTEGER,  Magnussen INTEGER,  Grosjean INTEGER)')
+          db.get('SELECT * FROM champVarCompleteTable WHERE User = ?', (usernameIdentifier) , function(err, row) {
             if (err) {
               console.log(err)
             } else if (!row) {
-              db.run('INSERT INTO champVarTable (User, Hamilton, Bottas, Vettel, Leclerc, Kubica, Russell, Perez, Stroll, Verstappen, Gasly, Kyvat, Albon, Giovinazzi, Raikkonen, Sainz, Norris, Hulkenberg, Ricciardo, Magnussen, Grosjean) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',[usernameIdentifier, champVarObjectUser["Hamilton"], champVarObjectUser["Bottas"], champVarObjectUser["Vettel"], champVarObjectUser["Leclerc"], champVarObjectUser["Kubica"], champVarObjectUser["Russell"], champVarObjectUser["Perez"], champVarObjectUser["Stroll"], champVarObjectUser["Verstappen"], champVarObjectUser["Gasly"], champVarObjectUser["Kyvat"], champVarObjectUser["Albon"], champVarObjectUser["Giovinazzi"], champVarObjectUser["Raikkonen"], champVarObjectUser["Sainz"], champVarObjectUser["Norris"], champVarObjectUser["Hulkenberg"], champVarObjectUser["Ricciardo"], champVarObjectUser["Magnussen"], champVarObjectUser["Grosjean"]] , function(err) {
+              db.run('INSERT INTO champVarCompleteTable (User, Hamilton, Bottas, Vettel, Leclerc, Kubica, Russell, Perez, Stroll, Verstappen, Gasly, Kyvat, Albon, Giovinazzi, Raikkonen, Sainz, Norris, Hulkenberg, Ricciardo, Magnussen, Grosjean) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',[usernameIdentifier, champVarObjectUser["Hamilton"], champVarObjectUser["Bottas"], champVarObjectUser["Vettel"], champVarObjectUser["Leclerc"], champVarObjectUser["Kubica"], champVarObjectUser["Russell"], champVarObjectUser["Perez"], champVarObjectUser["Stroll"], champVarObjectUser["Verstappen"], champVarObjectUser["Gasly"], champVarObjectUser["Kyvat"], champVarObjectUser["Albon"], champVarObjectUser["Giovinazzi"], champVarObjectUser["Raikkonen"], champVarObjectUser["Sainz"], champVarObjectUser["Norris"], champVarObjectUser["Hulkenberg"], champVarObjectUser["Ricciardo"], champVarObjectUser["Magnussen"], champVarObjectUser["Grosjean"]] , function(err) {
                 if (err) {
                   console.log(err)
                 }
               })
             } else if (row) {
               db.serialize(function() {
-                db.run('DELETE FROM champVarTable Where User = ?', (usernameIdentifier));
-                db.run('INSERT INTO champVarTable (User, Hamilton, Bottas, Vettel, Leclerc, Kubica, Russell, Perez, Stroll, Verstappen, Gasly, Kyvat, Albon, Giovinazzi, Raikkonen, Sainz, Norris, Hulkenberg, Ricciardo, Magnussen, Grosjean) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',[usernameIdentifier, champVarObjectUser["Hamilton"], champVarObjectUser["Bottas"], champVarObjectUser["Vettel"], champVarObjectUser["Leclerc"], champVarObjectUser["Kubica"], champVarObjectUser["Russell"], champVarObjectUser["Perez"], champVarObjectUser["Stroll"], champVarObjectUser["Verstappen"], champVarObjectUser["Gasly"], champVarObjectUser["Kyvat"], champVarObjectUser["Albon"], champVarObjectUser["Giovinazzi"], champVarObjectUser["Raikkonen"], champVarObjectUser["Sainz"], champVarObjectUser["Norris"], champVarObjectUser["Hulkenberg"], champVarObjectUser["Ricciardo"], champVarObjectUser["Magnussen"], champVarObjectUser["Grosjean"]], function(err) {
+                db.run('DELETE FROM champVarCompleteTable Where User = ?', (usernameIdentifier));
+                db.run('INSERT INTO champVarCompleteTable (User, Hamilton, Bottas, Vettel, Leclerc, Kubica, Russell, Perez, Stroll, Verstappen, Gasly, Kyvat, Albon, Giovinazzi, Raikkonen, Sainz, Norris, Hulkenberg, Ricciardo, Magnussen, Grosjean) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',[usernameIdentifier, champVarObjectUser["Hamilton"], champVarObjectUser["Bottas"], champVarObjectUser["Vettel"], champVarObjectUser["Leclerc"], champVarObjectUser["Kubica"], champVarObjectUser["Russell"], champVarObjectUser["Perez"], champVarObjectUser["Stroll"], champVarObjectUser["Verstappen"], champVarObjectUser["Gasly"], champVarObjectUser["Kyvat"], champVarObjectUser["Albon"], champVarObjectUser["Giovinazzi"], champVarObjectUser["Raikkonen"], champVarObjectUser["Sainz"], champVarObjectUser["Norris"], champVarObjectUser["Hulkenberg"], champVarObjectUser["Ricciardo"], champVarObjectUser["Magnussen"], champVarObjectUser["Grosjean"]], function(err) {
                   if (err) {
                     console.log(err)
                   }
@@ -847,19 +844,19 @@ async function testing(res, pred, firedEvent) {
               })
             }
           })
-          db.get('SELECT * FROM champVarTable WHERE User = ?', ("actualChampionshipResults6089") , function(err, row) {
+          db.get('SELECT * FROM champVarCompleteTable WHERE User = ?', ("actualChampionshipResults6089") , function(err, row) {
             if (err) {
               console.log(err)
             } else if (!row) {
-              db.run('INSERT INTO champVarTable (User, Hamilton, Bottas, Vettel, Leclerc, Kubica, Russell, Perez, Stroll, Verstappen, Gasly, Kyvat, Albon, Giovinazzi, Raikkonen, Sainz, Norris, Hulkenberg, Ricciardo, Magnussen, Grosjean) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',["actualChampionshipResults6089", champVarObjectActual["Hamilton"], champVarObjectActual["Bottas"], champVarObjectActual["Vettel"], champVarObjectActual["Leclerc"], champVarObjectActual["Kubica"], champVarObjectActual["Russell"], champVarObjectActual["Perez"], champVarObjectActual["Stroll"], champVarObjectActual["Verstappen"], champVarObjectActual["Gasly"], champVarObjectActual["Kyvat"], champVarObjectActual["Albon"], champVarObjectActual["Giovinazzi"], champVarObjectActual["Raikkonen"], champVarObjectActual["Sainz"], champVarObjectActual["Norris"], champVarObjectActual["Hulkenberg"], champVarObjectActual["Ricciardo"], champVarObjectActual["Magnussen"], champVarObjectActual["Grosjean"]] , function(err) {
+              db.run('INSERT INTO champVarCompleteTable (User, Hamilton, Bottas, Vettel, Leclerc, Kubica, Russell, Perez, Stroll, Verstappen, Gasly, Kyvat, Albon, Giovinazzi, Raikkonen, Sainz, Norris, Hulkenberg, Ricciardo, Magnussen, Grosjean) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',["actualChampionshipResults6089", champVarObjectActual["Hamilton"], champVarObjectActual["Bottas"], champVarObjectActual["Vettel"], champVarObjectActual["Leclerc"], champVarObjectActual["Kubica"], champVarObjectActual["Russell"], champVarObjectActual["Perez"], champVarObjectActual["Stroll"], champVarObjectActual["Verstappen"], champVarObjectActual["Gasly"], champVarObjectActual["Kyvat"], champVarObjectActual["Albon"], champVarObjectActual["Giovinazzi"], champVarObjectActual["Raikkonen"], champVarObjectActual["Sainz"], champVarObjectActual["Norris"], champVarObjectActual["Hulkenberg"], champVarObjectActual["Ricciardo"], champVarObjectActual["Magnussen"], champVarObjectActual["Grosjean"]] , function(err) {
                 if (err) {
                   console.log(err)
                 }
               })
             } else if (row) {
               db.serialize(function() {
-                db.run('DELETE FROM champVarTable Where User = ?', ("actualChampionshipResults6089"));
-                db.run('INSERT INTO champVarTable (User, Hamilton, Bottas, Vettel, Leclerc, Kubica, Russell, Perez, Stroll, Verstappen, Gasly, Kyvat, Albon, Giovinazzi, Raikkonen, Sainz, Norris, Hulkenberg, Ricciardo, Magnussen, Grosjean) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',["actualChampionshipResults6089", champVarObjectActual["Hamilton"], champVarObjectActual["Bottas"], champVarObjectActual["Vettel"], champVarObjectActual["Leclerc"], champVarObjectActual["Kubica"], champVarObjectActual["Russell"], champVarObjectActual["Perez"], champVarObjectActual["Stroll"], champVarObjectActual["Verstappen"], champVarObjectActual["Gasly"], champVarObjectActual["Kyvat"], champVarObjectActual["Albon"], champVarObjectActual["Giovinazzi"], champVarObjectActual["Raikkonen"], champVarObjectActual["Sainz"], champVarObjectActual["Norris"], champVarObjectActual["Hulkenberg"], champVarObjectActual["Ricciardo"], champVarObjectActual["Magnussen"], champVarObjectActual["Grosjean"]] , function(err) {
+                db.run('DELETE FROM champVarCompleteTable Where User = ?', ("actualChampionshipResults6089"));
+                db.run('INSERT INTO champVarCompleteTable (User, Hamilton, Bottas, Vettel, Leclerc, Kubica, Russell, Perez, Stroll, Verstappen, Gasly, Kyvat, Albon, Giovinazzi, Raikkonen, Sainz, Norris, Hulkenberg, Ricciardo, Magnussen, Grosjean) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',["actualChampionshipResults6089", champVarObjectActual["Hamilton"], champVarObjectActual["Bottas"], champVarObjectActual["Vettel"], champVarObjectActual["Leclerc"], champVarObjectActual["Kubica"], champVarObjectActual["Russell"], champVarObjectActual["Perez"], champVarObjectActual["Stroll"], champVarObjectActual["Verstappen"], champVarObjectActual["Gasly"], champVarObjectActual["Kyvat"], champVarObjectActual["Albon"], champVarObjectActual["Giovinazzi"], champVarObjectActual["Raikkonen"], champVarObjectActual["Sainz"], champVarObjectActual["Norris"], champVarObjectActual["Hulkenberg"], champVarObjectActual["Ricciardo"], champVarObjectActual["Magnussen"], champVarObjectActual["Grosjean"]] , function(err) {
                   if (err) {
                     console.log(err)
                   }
@@ -880,7 +877,7 @@ app.get('/user_results', function(req, res, next) {
   if (!req.user) {
     res.send({success:false, message : "Please Log In"})
   } else if (req.user) {
-    let individualUser = req.user
+    let individualUser = req.cookies.chosenUser
     let race = req.query.race
     let returnObject = {};
     db.serialize(function() {
@@ -890,49 +887,19 @@ app.get('/user_results', function(req, res, next) {
         } else if (err) {
           console.log(err)
         } else if(!row) {
-          //console.log("ERROR ROEW DONT EXIST")
         }
       })
       db.get('SELECT * FROM '+race+'ResultScoresNew'+' WHERE Username = ?', (individualUser), function(err, row) {
         if (row) {
           returnObject["scores"] = row;
         } else if (err){
-          //console.log(err + "for scores table")
         }
       })
       db.get("SELECT * FROM "+race+" Where Name = ?", (individualUser), function(err, row) {
         if (err) {
-          //console.log(err)
           res.send({success : false, message : "Error, no predictions"})
         } else if (!row) {
           res.send({success : false, message : "None found for selected event"})
-          /*
-          // CURRENTLY ONLY WORKS FOR PREVIOUS TWO RACES!
-          let raceArray = Object.values(raceObject);
-          let indexOfPreviousRace = raceArray.indexOf(race);
-          let previousRace = raceArray[indexOfPreviousRace-1];
-          db.get("SELECT * FROM "+previousRace+" Where Name = ?", (individualUser), function(err, row2) {
-            if (!row2) {
-              let doublePreviousRace = raceArray[indexOfPreviousRace-2]
-              ///// NEXT ONE - THE DOUBLE DOUBLE
-              db.get("SELECT * FROM "+doublePreviousRace+" Where Name = ?", (individualUser), function(err, row3) {
-                if (!row3) {
-                  res.send({success:false, message :"You need to try harder."})
-                } else if (row3) {
-                  if (returnObject["scores"] && returnObject["results"]) {
-                    res.send({success : true, message:"Scores Loaded!", data:returnObject})
-                  }
-                }
-              })
-              ///// NEXT ONE - THE DOUBLE DOUBLE
-            } else if (row2) {
-              returnObject["prediction"] = row2;
-              if (returnObject["scores"] && returnObject["results"]) {
-                res.send({success : true, message:"Scores Loaded!", data:returnObject})
-              }
-            }
-          })*/
-        // CURRENTLY ONLY WORKS FOR PREVIOUS TWO RACES!
         } else if (row) {
           returnObject["prediction"] = row
           if (returnObject["scores"] && returnObject["results"]) {
@@ -954,7 +921,6 @@ app.get('/league_results', function(req, res, next) {
       if (err) {
         console.log(err)
       } else if (!row) {
-        console.log("BOPE")
       } else if (row) {
         let individualUser = row.Username;
         if ((individualUser!= "Orbogink") && (individualUser!= "luciereev13") && (individualUser!= "Joshgt87") && (individualUser!= "Kayossf1Team") && (individualUser!= "Jamantmill") && (individualUser!= "SeamoReevus")) {
@@ -977,16 +943,17 @@ app.get("/getChampVar", function(req, res, next) {
   if (!req.user) {
     res.send({success:false, message : "Please Log In"})
   } else if (req.user) {
+    let requiredUser = req.cookies.chosenUser
     let returnData = {}
     db.serialize(function() {
-      db.get('SELECT * FROM champVarTable WHERE User = ?' ,(req.user), function(err, row) {
+      db.get('SELECT * FROM champVarCompleteTable WHERE User = ?' ,(requiredUser), function(err, row) {
         if (err) {
           console.log(err)
         } else if (row) {
-          returnData[req.user] = row;
+          returnData[requiredUser] = row;
         }
       })
-      db.get('SELECT * FROM champVarTable WHERE User = ?',("actualChampionshipResults6089"), function(err, row) {
+      db.get('SELECT * FROM champVarCompleteTable WHERE User = ?',("actualChampionshipResults6089"), function(err, row) {
         if (err) {
           console.log(err)
         } else if (!row) {
@@ -1029,4 +996,54 @@ app.get("/getChampVar", function(req, res, next) {
 8. We have the table front end, with races as selctions. Need to add to that dont we.
   OR What happens if we click on one and it doesnt exist yet? Can we do that?
  .//////////////////////////////////////////////////////////////////////////////////
+
+ ALSO GOT the front end select menus - these do work for all races though innit SON.
 */
+
+
+/////send.o set cookie thing on login, or page load, or is authenticated or whatevers.
+  //    then creatce request on user name click,
+  //    then for each profile request change it do cookie.user or whatever
+
+  // https://stackoverflow.com/questions/48126998/sort-json-by-value-in-descending-order
+
+  // alos check that lot motherfucker.
+
+  // the profile click table system is a bitch son
+
+  //getOldPredictionForTable/?, user_results/?, /getChampVar
+
+  // AND
+app.post('/requestParticularUser', function(req, res, next) {
+  if(!req.user) {
+    res.send({success : false, message : "Please login before loading profile details!", currentUser:"Not Logged In", differentUser : false, score : false});
+  } else if(req.user) {
+    if (req.body.specifiedUser === "no user") {
+      let currentSpecifiedUser = req.user
+      res.cookie('chosenUser', currentSpecifiedUser)
+      db.get('SELECT * FROM wholeScoresTable WHERE UserID = ?',[currentSpecifiedUser], function(err, row) {
+        if (err) {
+          console.log(err)
+          res.send({success:false, message:"Error", currentUser:req.user, differentUser : false, score : false})
+        } else if (!row) {
+          res.send({success:false, message : "Profile not found", currentUser:req.user, differentUser : false, score : false})
+        } else if (row) {
+          res.send({success:true, differentUser:false, message : "Loaded "+currentSpecifiedUser +"'s profile!", currentUser:req.user, score : row})
+        }
+      })
+    } else if (req.body.specifiedUser != "no user") {
+      let currentSpecifiedUser = req.body.specifiedUser
+      res.cookie('chosenUser', currentSpecifiedUser)
+      db.get('SELECT * FROM wholeScoresTable WHERE UserID = ?',[currentSpecifiedUser], function(err, row) {
+        if (err) {
+          console.log(err)
+          res.send({success:false, message:"Error", currentUser:req.user, differentUser : false, score : false})
+        } else if (!row) {
+          res.send({success:false, message : "Profile not found", currentUser:req.user, differentUser : false, score : false})
+        } else if (row) {
+          res.send({success:true, differentUser:true,message : "Loaded "+currentSpecifiedUser +"'s profile!", currentUser:currentSpecifiedUser, score : row})
+        }
+      })
+    }
+  }
+})
