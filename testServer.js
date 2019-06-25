@@ -4,7 +4,7 @@ const port = 3001;
 const path = require('path')
 const bodyParser = require('body-parser');
 //const engines = require('consolidate');
-const sqlite3 = require('sqlite3')
+const sqlite3 = require('sqlite3')//
 const bcrypt = require('bcrypt')
 const saltRounds = 10;
 const { spawn } = require('child_process') //////////////////////////////// NOT ON SERVER
@@ -97,7 +97,10 @@ let frontEndRaceKeyString = {
   "MON" : "Monaco",
   "CAN" : "Canada",
   "FRA":"France",
-  "RBR":"Austria"
+  "RBR":"Austria",
+  "BRI" : "Britain",
+  "GER" : "Germany",
+  "HUN" : "Hungary"
 }
 app.post('/getUserPredictionToEdit', function(req, res, next) {
   if (!req.user) {
@@ -126,7 +129,10 @@ raceObject = {
   "The Monaco Grand Prix, Monte Carlo" : "Monaco",
   "The Canadian Grand Prix, Circuit Gilles Villneuve": "Canada",
   "The French Grand Prix, Circuit Paul Ricard" : "France",
-  "The Austrian Grand Prix, Red Bull Ring" : "Austria"
+  "The Austrian Grand Prix, Red Bull Ring" : "Austria",
+  "The British Grand Prix, Silverstone Circuit" : "Britain",
+  "The German Grand Prix, Hockenheimring" : "Germany",
+  "The Hungarian Grand Prix, Hungaroring" : "Hungary"
 }
 app.post('/SeamusResultsSend', function(req, res, next) {
   if (!req.user) {
@@ -257,12 +263,35 @@ app.post('/SeamusResultsSend', function(req, res, next) {
             db.get("SELECT * FROM Austria Where Name = ?", (individualUser), function(err, row) {
               if(!row) {
                 predictionObjectToSend["Austria"] = predictionObjectToSend["France"]
+              } else if (row) {
+                predictionObjectToSend["Austria"] = row;
+              }
+            })
+            db.get("SELECT * FROM Britain Where Name = ?", (individualUser), function(err, row) {
+              if(!row) {
+                predictionObjectToSend["Britain"] = predictionObjectToSend["France"];
+              } else if (row) {
+                predictionObjectToSend["Britain"] = row;
+              }
+            })
+            db.get("SELECT * FROM Germany Where Name = ?", (individualUser), function(err, row) {
+              if(!row) {
+                predictionObjectToSend["Germany"] = predictionObjectToSend["Britain"];
+              } else if (row) {
+                predictionObjectToSend["Germany"] = row;
+              }
+            })
+            db.get("SELECT * FROM Hungary Where Name = ?", (individualUser), function(err, row) {
+              if(!row) {
+                predictionObjectToSend["Hungary"] = predictionObjectToSend["Germany"];
                 if (predictionObjectToSend["Australia"] != false) {
+                  //console.log(predictionObjectToSend)
                   testing(resultObjectToSend, predictionObjectToSend, raceEvent)
                 }
               } else if (row) {
-                predictionObjectToSend["Austria"] = row;
+                predictionObjectToSend["Hungary"] = row;
                 if (predictionObjectToSend["Australia"] != false) {
+                  //console.log(predictionObjectToSend)
                   testing(resultObjectToSend, predictionObjectToSend, raceEvent)
                 }
               }
@@ -466,6 +495,63 @@ app.post('/formPredictionSubmission', function(req, res, next) {
             db.serialize(function() {
               db.run('DELETE FROM Austria WHERE Name = ?', (userVariable));
               db.run('INSERT INTO Austria (Name, First, Second, Third, Fourth, Fifth, Sixth, Seventh, Eighth, Ninth, Tenth, PoleD, PoleT, TeamDriver, DriverDay, BestFirst, MostPG, FastestLap, Pit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [userVariable, first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, poleD, poleT, TDD, DotD, BFL, MPG, FL, pit]);
+              res.send({success : true, message : "Prediction Updated!"});
+            })
+          };
+        });
+      });
+    } else if (req.body.Race === "The British Grand Prix, Silverstone Circuit") {
+      db.serialize(function() {
+        db.run('CREATE TABLE IF NOT EXISTS Britain (Name TEXT, First TEXT, Second TEXT, Third TEXT, Fourth TEXT, Fifth TEXT, Sixth TEXT, Seventh TEXT, Eighth TEXT, Ninth TEXT, Tenth TEXT, PoleD TEXT, PoleT TEXT, TeamDriver TEXT, DriverDay TEXT, BestFirst TEXT, MostPG TEXT, FastestLap TEXT, Pit TEXT)');
+        db.get('SELECT Name FROM Britain WHERE Name = ?', (userVariable), function(err, row) {
+          if(err) {
+            console.log(err)
+            res.send({success : false, message : "An error occured, please try again."})
+          } else if (!row) {
+            res.send({success : true, message : "First Submission Saved!"})
+            db.run('INSERT INTO Britain (Name, First, Second, Third, Fourth, Fifth, Sixth, Seventh, Eighth, Ninth, Tenth, PoleD, PoleT, TeamDriver, DriverDay, BestFirst, MostPG, FastestLap, Pit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [userVariable, first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, poleD, poleT, TDD, DotD, BFL, MPG, FL, pit]);
+          } else if (row) {
+            db.serialize(function() {
+              db.run('DELETE FROM Britain WHERE Name = ?', (userVariable));
+              db.run('INSERT INTO Britain (Name, First, Second, Third, Fourth, Fifth, Sixth, Seventh, Eighth, Ninth, Tenth, PoleD, PoleT, TeamDriver, DriverDay, BestFirst, MostPG, FastestLap, Pit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [userVariable, first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, poleD, poleT, TDD, DotD, BFL, MPG, FL, pit]);
+              res.send({success : true, message : "Prediction Updated!"});
+            })
+          };
+        });
+      });
+    } else if (req.body.Race === "The German Grand Prix, Hockenheimring") {
+      db.serialize(function() {
+        db.run('CREATE TABLE IF NOT EXISTS Germany (Name TEXT, First TEXT, Second TEXT, Third TEXT, Fourth TEXT, Fifth TEXT, Sixth TEXT, Seventh TEXT, Eighth TEXT, Ninth TEXT, Tenth TEXT, PoleD TEXT, PoleT TEXT, TeamDriver TEXT, DriverDay TEXT, BestFirst TEXT, MostPG TEXT, FastestLap TEXT, Pit TEXT)');
+        db.get('SELECT Name FROM Germany WHERE Name = ?', (userVariable), function(err, row) {
+          if(err) {
+            console.log(err)
+            res.send({success : false, message : "An error occured, please try again."})
+          } else if (!row) {
+            res.send({success : true, message : "First Submission Saved!"})
+            db.run('INSERT INTO Germany (Name, First, Second, Third, Fourth, Fifth, Sixth, Seventh, Eighth, Ninth, Tenth, PoleD, PoleT, TeamDriver, DriverDay, BestFirst, MostPG, FastestLap, Pit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [userVariable, first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, poleD, poleT, TDD, DotD, BFL, MPG, FL, pit]);
+          } else if (row) {
+            db.serialize(function() {
+              db.run('DELETE FROM Germany WHERE Name = ?', (userVariable));
+              db.run('INSERT INTO Germany (Name, First, Second, Third, Fourth, Fifth, Sixth, Seventh, Eighth, Ninth, Tenth, PoleD, PoleT, TeamDriver, DriverDay, BestFirst, MostPG, FastestLap, Pit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [userVariable, first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, poleD, poleT, TDD, DotD, BFL, MPG, FL, pit]);
+              res.send({success : true, message : "Prediction Updated!"});
+            })
+          };
+        });
+      });
+    } else if (req.body.Race === "The Hungarian Grand Prix, Hungaroring") {
+      db.serialize(function() {
+        db.run('CREATE TABLE IF NOT EXISTS Hungary (Name TEXT, First TEXT, Second TEXT, Third TEXT, Fourth TEXT, Fifth TEXT, Sixth TEXT, Seventh TEXT, Eighth TEXT, Ninth TEXT, Tenth TEXT, PoleD TEXT, PoleT TEXT, TeamDriver TEXT, DriverDay TEXT, BestFirst TEXT, MostPG TEXT, FastestLap TEXT, Pit TEXT)');
+        db.get('SELECT Name FROM Hungary WHERE Name = ?', (userVariable), function(err, row) {
+          if(err) {
+            console.log(err)
+            res.send({success : false, message : "An error occured, please try again."})
+          } else if (!row) {
+            res.send({success : true, message : "First Submission Saved!"})
+            db.run('INSERT INTO Hungary (Name, First, Second, Third, Fourth, Fifth, Sixth, Seventh, Eighth, Ninth, Tenth, PoleD, PoleT, TeamDriver, DriverDay, BestFirst, MostPG, FastestLap, Pit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [userVariable, first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, poleD, poleT, TDD, DotD, BFL, MPG, FL, pit]);
+          } else if (row) {
+            db.serialize(function() {
+              db.run('DELETE FROM Hungary WHERE Name = ?', (userVariable));
+              db.run('INSERT INTO Hungary (Name, First, Second, Third, Fourth, Fifth, Sixth, Seventh, Eighth, Ninth, Tenth, PoleD, PoleT, TeamDriver, DriverDay, BestFirst, MostPG, FastestLap, Pit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [userVariable, first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, poleD, poleT, TDD, DotD, BFL, MPG, FL, pit]);
               res.send({success : true, message : "Prediction Updated!"});
             })
           };
@@ -705,6 +791,7 @@ function runAsyncCalc(resultPyPass, predPyPass, firedEvent) {
         return
       }
       try {
+        //console.log(out[0])
         resolve(JSON.parse(out[0]))
       } catch(e) {
         reject(e);
@@ -733,11 +820,13 @@ async function testing(res, pred, firedEvent) {
       let theLatestRace = outputScoreObject["RACE"]
       ///////////////////////////////////////////////////////
       let champVarStringJSON = outputScoreObject["ChampVar"]
+      let champVarObject = JSON.parse(champVarStringJSON)
+      let latestChampVar = champVarObject[theLatestRace]
+      ///////////////////////////////////////////////////////
+      //   These contain each driver inside User/Actual /////
       let champVarObjectsJSON = JSON.parse(outputScoreObject["champVarObjects"]);
       let champVarObjectUser = champVarObjectsJSON[usernameIdentifier]
       let champVarObjectActual = champVarObjectsJSON["actual"]
-      let champVarObject = JSON.parse(champVarStringJSON)
-      let latestChampVar = champVarObject[theLatestRace]
       ///////////////////////////////////////////////////////
       let scoreStringJSON = outputScoreObject["SCORE"]
       let parsedScore = JSON.parse(scoreStringJSON)
