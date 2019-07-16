@@ -47,8 +47,9 @@ const passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
 
 const expressSession = require('express-session');
-
+var sqlLiteStore = require('connect-sqlite3')(expressSession);
 app.use(expressSession({
+  store : new sqlLiteStore,
   secret: 'mysuperSecretKey that legit nobody knows all about, oh look a friend. HEY FRIEND!',
   resave: false,
   saveUninitialized: false,
@@ -608,7 +609,7 @@ passport.use('login', new LocalStrategy({
               return done(err);
             }
             if (row) { //user existsin
-              console.log("Username already exists!")
+              //console.log("Username already exists!")
               return done(null, false);
             } else {
               let firstInput = req.body.uname2;
@@ -619,13 +620,17 @@ passport.use('login', new LocalStrategy({
               let city = req.body.city;
               let year = req.body.yearJoined;
               let hash = createHash(secondInput);
-              db.run('INSERT INTO tableUsers (Username, superSecret, EmailAddress, Nationality, Favourite, City, Year) VALUES (?, ?, ?, ?, ?, ?, ?)', [firstInput, hash, emailAddress, nationality, fave, city, year], function(error) {
-              //db.run('INSERT INTO tableUsers (Username, superSecret, EmailAddress, Nationality, Favourite, city, year) VALUES (?, ?, ?, ?, ?, ?, ?)', [firstInput, hash, emailAddress, nationality, fave, city, year], function(error) {
-                if (err) {
-                  throw err;
-                }
-                return done(null, firstInput);
-              });
+              if (firstInput.length < 30 && secondInput.length < 30 && emailAddress.length < 30 && nationality.length < 30 && fave.length < 30 && city.length < 30 && year.length < 10) {
+                db.run('INSERT INTO tableUsers (Username, superSecret, EmailAddress, Nationality, Favourite, City, Year) VALUES (?, ?, ?, ?, ?, ?, ?)', [firstInput, hash, emailAddress, nationality, fave, city, year], function(error) {
+                //db.run('INSERT INTO tableUsers (Username, superSecret, EmailAddress, Nationality, Favourite, city, year) VALUES (?, ?, ?, ?, ?, ?, ?)', [firstInput, hash, emailAddress, nationality, fave, city, year], function(error) {
+                  if (err) {
+                    throw err;
+                  }
+                  return done(null, firstInput);
+                });
+              } else {
+
+              }
             };
           });
         };

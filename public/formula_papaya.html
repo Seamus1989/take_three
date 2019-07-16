@@ -200,14 +200,15 @@
   <div id = "regModalId" class="regModal-content">
     <span class="close" onclick = "closeRegFunction()">&times;</span>
     <div class = "regModal-header">
-<h2 id = "changableHeader">Login</h2>
+<h2 id = "changableHeader">Logijnbn</h2>
     </div>
     <div class = "regModal-body">
       <div id = "Login">
-
-          <input id = "loginUsername" class = "loginFields" type = "text" placeholder =  "Username" name = "uname" required>
-          <input id = "loginPassword" class = "loginFields" type="password" placeholder="Password" name="psw" required><p id = "check3"></p>
+        <form autocomplete="on">
+          <input id = "loginUsername" class = "loginFields" type = "text" placeholder =  "Username" name = "uname" autocomplete="on" required>
+          <input id = "loginPassword" class = "loginFields" type="password" placeholder="Password" name="psw" autocomplete="on" required><p id = "check3"></p>
           <button type = "button" class = "registerOne" onclick = "submitTheLoginForm()" >Login</button><button id = "registerButton" type = "button" class = "registerThree" onclick = "registerScrollFunction(this.id)">Register</button>
+        </form>
       </div>
       <div id = "registerForm">
         <br><br>
