@@ -725,10 +725,6 @@ async function submitTheLoginForm() {
         const ourResponse = await responseObject.json();
         let theMessage = ourResponse.message;
         if (ourResponse.success === true) {
-          document.getElementById("loginUsername").setAttribute("value", "");
-          document.getElementById("loginPassword").setAttribute("value", "");
-          document.getElementById("loginUsername").setAttribute("name", "");
-          document.getElementById("loginPassword").setAttribute("name", "");
           regModal.style.display = "none";
           document.getElementById("navLogin").innerHTML = "Logout";
           document.getElementById("navLogin").setAttribute( "onClick", "Boo()" );
@@ -752,6 +748,8 @@ async function submitTheLoginForm() {
 //           Register FUNCTION       //  //           Register FUNCTION       //
 //           Register FUNCTION       //  //           Register FUNCTION       //
 async function registrationSendFunction() {
+  alert("Registration Closed")
+  /*
   let regVariable1 = document.getElementById("username").value;
   let regVariable2 = document.getElementById("psw2").value;
   let regVariable3 = document.getElementById("city").value;
@@ -851,7 +849,7 @@ async function logoutFunction() {
       }
     }
     catch(error) {
-  }
+  }*/
 }
 
 async function getItMate(race) {
@@ -1064,7 +1062,7 @@ function createAllUserTable(allResults) {
 }
 
 async function submitTheSeamus() {
-  messageModal("Offline only!", 3000);
+  //messageModal("Offline only!", 3000);
   let newDriverString = splitPoleTimeAndDriverPartDriver();
   let newTimeString = splitPoleTimeAndDriverPartTime();
   let listDataToSendInForm = [document.getElementById("raceBtn").name, document.getElementById("P1").name, document.getElementById("P2").name, document.getElementById("P3").name, document.getElementById("P4").name, document.getElementById("P5").name, document.getElementById("P6").name, document.getElementById("P7").name, document.getElementById("P8").name, document.getElementById("P9").name, document.getElementById("P10").name,
