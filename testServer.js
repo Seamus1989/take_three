@@ -101,7 +101,12 @@ let frontEndRaceKeyString = {
   "RBR":"Austria",
   "BRI" : "Britain",
   "GER" : "Germany",
-  "HUN" : "Hungary"
+  "HUN" : "Hungary",
+  "SPA" : "Belgium",
+  "MNZ" : "Italy",
+  "MBS" : "Singapore",
+  "RUS" : "Russia"
+
 }
 app.post('/getUserPredictionToEdit', function(req, res, next) {
   if (!req.user) {
@@ -133,7 +138,11 @@ raceObject = {
   "The Austrian Grand Prix, Red Bull Ring" : "Austria",
   "The British Grand Prix, Silverstone Circuit" : "Britain",
   "The German Grand Prix, Hockenheimring" : "Germany",
-  "The Hungarian Grand Prix, Hungaroring" : "Hungary"
+  "The Hungarian Grand Prix, Hungaroring" : "Hungary",
+  "The Belgian Grand Prix, Spa-Francorchamps" : "Belgium",
+  "The Italian Grand Prix, Autodromo Nazionale Monza" : "Italy",
+  "The Singapore Grand Prix, Marina Bay Street Circuit" : "Singapore",
+  "The Russian Grand Prix, Sochi Autodrom" : "Russia"
 }
 app.post('/SeamusResultsSend', function(req, res, next) {
   if (!req.user) {
@@ -284,13 +293,41 @@ app.post('/SeamusResultsSend', function(req, res, next) {
             })
             db.get("SELECT * FROM Hungary Where Name = ?", (individualUser), function(err, row) {
               if(!row) {
-                predictionObjectToSend["Hungary"] = predictionObjectToSend["Germany"];
+                predictionObjectToSend["Hungary"] = predictionObjectToSend["Germany"];//{"Name":"N/A","First":" - - ","Second":" - - ","Third":" - - ","Fourth":" - - ","Fifth":" - - ","Sixth":" - - ","Seventh":" - - ","Eighth":" - - ","Ninth":" - - ","Tenth":" - - ","PoleD":" - - ","PoleT":"00:00.000","TeamDriver":" - - ","DriverDay":" - - ","BestFirst":" - - ","MostPG":" - - ","FastestLap":" - - ","Pit":" - - "}
+              } else if (row) {
+                predictionObjectToSend["Hungary"] = row;
+              }
+            })
+            db.get("SELECT * FROM Belgium Where Name = ?", (individualUser), function(err, row) {
+              if(!row) {
+                predictionObjectToSend["Belgium"] = predictionObjectToSend["Hungary"];//{"Name":"N/A","First":" - - ","Second":" - - ","Third":" - - ","Fourth":" - - ","Fifth":" - - ","Sixth":" - - ","Seventh":" - - ","Eighth":" - - ","Ninth":" - - ","Tenth":" - - ","PoleD":" - - ","PoleT":"00:00.000","TeamDriver":" - - ","DriverDay":" - - ","BestFirst":" - - ","MostPG":" - - ","FastestLap":" - - ","Pit":" - - "}
+              } else if (row) {
+                predictionObjectToSend["Belgium"] = row;
+              }
+            })
+            db.get("SELECT * FROM Italy Where Name = ?", (individualUser), function(err, row) {
+              if(!row) {
+                predictionObjectToSend["Italy"] = predictionObjectToSend["Belgium"];//{"Name":"N/A","First":" - - ","Second":" - - ","Third":" - - ","Fourth":" - - ","Fifth":" - - ","Sixth":" - - ","Seventh":" - - ","Eighth":" - - ","Ninth":" - - ","Tenth":" - - ","PoleD":" - - ","PoleT":"00:00.000","TeamDriver":" - - ","DriverDay":" - - ","BestFirst":" - - ","MostPG":" - - ","FastestLap":" - - ","Pit":" - - "}
+              } else if (row) {
+                predictionObjectToSend["Italy"] = row;
+              }
+            })
+            db.get("SELECT * FROM Singapore Where Name = ?", (individualUser), function(err, row) {
+              if(!row) {
+                predictionObjectToSend["Singapore"] = predictionObjectToSend["Italy"];//{"Name":"N/A","First":" - - ","Second":" - - ","Third":" - - ","Fourth":" - - ","Fifth":" - - ","Sixth":" - - ","Seventh":" - - ","Eighth":" - - ","Ninth":" - - ","Tenth":" - - ","PoleD":" - - ","PoleT":"00:00.000","TeamDriver":" - - ","DriverDay":" - - ","BestFirst":" - - ","MostPG":" - - ","FastestLap":" - - ","Pit":" - - "}
+              } else if (row) {
+                predictionObjectToSend["Singapore"] = row;
+              }
+            })
+            db.get("SELECT * FROM Russia Where Name = ?", (individualUser), function(err, row) {
+              if(!row) {
+                predictionObjectToSend["Russia"] = predictionObjectToSend["Singapore"];
                 if (predictionObjectToSend["Australia"] != false) {
                   //console.log(predictionObjectToSend)
                   testing(resultObjectToSend, predictionObjectToSend, raceEvent)
                 }
               } else if (row) {
-                predictionObjectToSend["Hungary"] = row;
+                predictionObjectToSend["Russia"] = row;
                 if (predictionObjectToSend["Australia"] != false) {
                   //console.log(predictionObjectToSend)
                   testing(resultObjectToSend, predictionObjectToSend, raceEvent)
@@ -553,6 +590,82 @@ app.post('/formPredictionSubmission', function(req, res, next) {
             db.serialize(function() {
               db.run('DELETE FROM Hungary WHERE Name = ?', (userVariable));
               db.run('INSERT INTO Hungary (Name, First, Second, Third, Fourth, Fifth, Sixth, Seventh, Eighth, Ninth, Tenth, PoleD, PoleT, TeamDriver, DriverDay, BestFirst, MostPG, FastestLap, Pit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [userVariable, first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, poleD, poleT, TDD, DotD, BFL, MPG, FL, pit]);
+              res.send({success : true, message : "Prediction Updated!"});
+            })
+          };
+        });
+      });
+    } else if (req.body.Race === "The Belgian Grand Prix, Spa-Francorchamps") {
+      db.serialize(function() {
+        db.run('CREATE TABLE IF NOT EXISTS Belgium (Name TEXT, First TEXT, Second TEXT, Third TEXT, Fourth TEXT, Fifth TEXT, Sixth TEXT, Seventh TEXT, Eighth TEXT, Ninth TEXT, Tenth TEXT, PoleD TEXT, PoleT TEXT, TeamDriver TEXT, DriverDay TEXT, BestFirst TEXT, MostPG TEXT, FastestLap TEXT, Pit TEXT)');
+        db.get('SELECT Name FROM Belgium WHERE Name = ?', (userVariable), function(err, row) {
+          if(err) {
+            console.log(err)
+            res.send({success : false, message : "An error occured, please try again."})
+          } else if (!row) {
+            res.send({success : true, message : "First Submission Saved!"})
+            db.run('INSERT INTO Belgium (Name, First, Second, Third, Fourth, Fifth, Sixth, Seventh, Eighth, Ninth, Tenth, PoleD, PoleT, TeamDriver, DriverDay, BestFirst, MostPG, FastestLap, Pit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [userVariable, first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, poleD, poleT, TDD, DotD, BFL, MPG, FL, pit]);
+          } else if (row) {
+            db.serialize(function() {
+              db.run('DELETE FROM Belgium WHERE Name = ?', (userVariable));
+              db.run('INSERT INTO Belgium (Name, First, Second, Third, Fourth, Fifth, Sixth, Seventh, Eighth, Ninth, Tenth, PoleD, PoleT, TeamDriver, DriverDay, BestFirst, MostPG, FastestLap, Pit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [userVariable, first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, poleD, poleT, TDD, DotD, BFL, MPG, FL, pit]);
+              res.send({success : true, message : "Prediction Updated!"});
+            })
+          };
+        });
+      });
+    } else if (req.body.Race === "The Italian Grand Prix, Autodromo Nazionale Monza") {
+      db.serialize(function() {
+        db.run('CREATE TABLE IF NOT EXISTS Italy (Name TEXT, First TEXT, Second TEXT, Third TEXT, Fourth TEXT, Fifth TEXT, Sixth TEXT, Seventh TEXT, Eighth TEXT, Ninth TEXT, Tenth TEXT, PoleD TEXT, PoleT TEXT, TeamDriver TEXT, DriverDay TEXT, BestFirst TEXT, MostPG TEXT, FastestLap TEXT, Pit TEXT)');
+        db.get('SELECT Name FROM Italy WHERE Name = ?', (userVariable), function(err, row) {
+          if(err) {
+            console.log(err)
+            res.send({success : false, message : "An error occured, please try again."})
+          } else if (!row) {
+            res.send({success : true, message : "First Submission Saved!"})
+            db.run('INSERT INTO Italy (Name, First, Second, Third, Fourth, Fifth, Sixth, Seventh, Eighth, Ninth, Tenth, PoleD, PoleT, TeamDriver, DriverDay, BestFirst, MostPG, FastestLap, Pit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [userVariable, first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, poleD, poleT, TDD, DotD, BFL, MPG, FL, pit]);
+          } else if (row) {
+            db.serialize(function() {
+              db.run('DELETE FROM Italy WHERE Name = ?', (userVariable));
+              db.run('INSERT INTO Italy (Name, First, Second, Third, Fourth, Fifth, Sixth, Seventh, Eighth, Ninth, Tenth, PoleD, PoleT, TeamDriver, DriverDay, BestFirst, MostPG, FastestLap, Pit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [userVariable, first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, poleD, poleT, TDD, DotD, BFL, MPG, FL, pit]);
+              res.send({success : true, message : "Prediction Updated!"});
+            })
+          };
+        });
+      });
+    } else if (req.body.Race === "The Singapore Grand Prix, Marina Bay Street Circuit") {
+      db.serialize(function() {
+        db.run('CREATE TABLE IF NOT EXISTS Singapore (Name TEXT, First TEXT, Second TEXT, Third TEXT, Fourth TEXT, Fifth TEXT, Sixth TEXT, Seventh TEXT, Eighth TEXT, Ninth TEXT, Tenth TEXT, PoleD TEXT, PoleT TEXT, TeamDriver TEXT, DriverDay TEXT, BestFirst TEXT, MostPG TEXT, FastestLap TEXT, Pit TEXT)');
+        db.get('SELECT Name FROM Singapore WHERE Name = ?', (userVariable), function(err, row) {
+          if(err) {
+            console.log(err)
+            res.send({success : false, message : "An error occured, please try again."})
+          } else if (!row) {
+            res.send({success : true, message : "First Submission Saved!"})
+            db.run('INSERT INTO Singapore (Name, First, Second, Third, Fourth, Fifth, Sixth, Seventh, Eighth, Ninth, Tenth, PoleD, PoleT, TeamDriver, DriverDay, BestFirst, MostPG, FastestLap, Pit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [userVariable, first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, poleD, poleT, TDD, DotD, BFL, MPG, FL, pit]);
+          } else if (row) {
+            db.serialize(function() {
+              db.run('DELETE FROM Singapore WHERE Name = ?', (userVariable));
+              db.run('INSERT INTO Singapore (Name, First, Second, Third, Fourth, Fifth, Sixth, Seventh, Eighth, Ninth, Tenth, PoleD, PoleT, TeamDriver, DriverDay, BestFirst, MostPG, FastestLap, Pit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [userVariable, first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, poleD, poleT, TDD, DotD, BFL, MPG, FL, pit]);
+              res.send({success : true, message : "Prediction Updated!"});
+            })
+          };
+        });
+      });
+    } else if (req.body.Race === "The Russian Grand Prix, Sochi Autodrom") {
+      db.serialize(function() {
+        db.run('CREATE TABLE IF NOT EXISTS Russia (Name TEXT, First TEXT, Second TEXT, Third TEXT, Fourth TEXT, Fifth TEXT, Sixth TEXT, Seventh TEXT, Eighth TEXT, Ninth TEXT, Tenth TEXT, PoleD TEXT, PoleT TEXT, TeamDriver TEXT, DriverDay TEXT, BestFirst TEXT, MostPG TEXT, FastestLap TEXT, Pit TEXT)');
+        db.get('SELECT Name FROM Russia WHERE Name = ?', (userVariable), function(err, row) {
+          if(err) {
+            console.log(err)
+            res.send({success : false, message : "An error occured, please try again."})
+          } else if (!row) {
+            res.send({success : true, message : "First Submission Saved!"})
+            db.run('INSERT INTO Russia (Name, First, Second, Third, Fourth, Fifth, Sixth, Seventh, Eighth, Ninth, Tenth, PoleD, PoleT, TeamDriver, DriverDay, BestFirst, MostPG, FastestLap, Pit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [userVariable, first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, poleD, poleT, TDD, DotD, BFL, MPG, FL, pit]);
+          } else if (row) {
+            db.serialize(function() {
+              db.run('DELETE FROM Russia WHERE Name = ?', (userVariable));
+              db.run('INSERT INTO Russia (Name, First, Second, Third, Fourth, Fifth, Sixth, Seventh, Eighth, Ninth, Tenth, PoleD, PoleT, TeamDriver, DriverDay, BestFirst, MostPG, FastestLap, Pit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [userVariable, first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, poleD, poleT, TDD, DotD, BFL, MPG, FL, pit]);
               res.send({success : true, message : "Prediction Updated!"});
             })
           };
